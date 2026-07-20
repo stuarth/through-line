@@ -1,0 +1,5 @@
+interface:
+  display_name: "Through-line"
+  short_description: "Drive a large effort by its through-line of principles"
+policy:
+  allow_implicit_invocation: false
