@@ -24,6 +24,7 @@ _Evidence_: [Queue selection](…) — confirmed.
 
 - **A principle must forbid something.** If no conceivable decision would violate it, it is a platitude, not a principle — sharpen the statement until it bites, or leave it out.
 - **Keep statements tight.** One or two sentences. The statement is the commitment; rationale lives in the evidence and ADRs it links.
+- **Preserve interpretability.** Record the exact operational statement adopted through [Admission](./SKILL.md#admission). The statement carries the rule's full meaning; its mnemonic name, evidence, and examples support it.
 - **Speak the domain's language.** Where `CONTEXT.md` defines a canonical term, the statement uses it. Domain-general principles are fine; domain-blind ones are not.
 - **Stay few.** Dilution is a portfolio failure: every admitted principle spends the attention readers give the others. A rule-shaped candidate whose violation would leave the system merely inconsistent — not wrong about the domain — is a local policy for an effort's map, however good its evidence.
 - **Boundaries record tested edges, not hypotheticals.** Write a _Holds even when_ or _Does not extend to_ line only when a real decision — or an invented scenario the human confirmed — actually pressed that edge. Untested boundaries are speculation wearing the format.

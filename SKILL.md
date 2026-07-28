@@ -19,17 +19,18 @@ Each principle has a **name**, a statement, the **boundaries** of where it holds
 
 ### Admission
 
-**Adoption is slow; derivation is fast.** A badly framed principle multiplies one error into many, so friction belongs at the door: candidates may be previewed together, but each is put to the human one at a time — adopted standing, adopted as a local policy, amended, or rejected before the next; the agent proposes the scope by the altitude test, the human disposes. On top of **Falsifiable only**, a candidate must pass four tests:
+**Adoption is slow; derivation is fast.** A badly framed principle multiplies one error into many, so friction belongs at the door: candidates may be previewed together, but each is put to the human one at a time — adopted standing, adopted as a local policy, amended, or rejected before the next; the agent proposes the scope by the altitude test, the human disposes. On top of **Falsifiable only**, a candidate must pass five tests:
 
 - **Recurrence** — grounded in at least two independent decisions, or in an explicit human commitment tested against two materially different scenarios.
 - **Atomicity** — violating one part cannot leave the rest intact; if it can, split the candidate.
+- **Interpretability** — from the statement alone, an uninvolved reader familiar with the domain can apply it to a new scenario and identify one choice it requires and one it forbids. Demonstrate both before presenting the candidate; any explanation needed to connect the statement to those choices belongs in the statement.
 - **Counterexample** — a plausible scenario where following it gives the wrong answer has been probed, and the statement or a boundary survived.
 - **Leverage** — it has shaped, or will plausibly shape, more than one decision, and it holds beyond this effort's destination. A commitment that only explains a single hard-to-reverse choice is an ADR; one true only for this route is at most a local policy — neither is standing doctrine.
 
 A candidate that passes is put to the human **grounded** — never the statement alone:
 
-- **Statement** — the exact standing text; abstract is fine, this is what is adopted verbatim.
-- **Concretely** — the statement re-said in the effort's domain language: what it means *here*. A second abstraction in this field is a failed field.
+- **Statement** — the exact standing text that passed **Interpretability**; this is adopted verbatim.
+- **Example** — one concrete decision showing how the statement applies here. It uses only meaning already present in the statement; adoption waits until it does.
 - **Evidence** — the decisions it distills from, named and linked; on adoption these seed the principle's evidence trail.
 - **Predictions** — the frontier tickets it would determine or constrain, and how; a named alternative it forbids; a plausible scenario where no applicable ticket exists yet. Predictions preview the validation pass, and a prediction the human dislikes is a boundary found before adoption — the cheapest time to find one.
 
