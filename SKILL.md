@@ -10,14 +10,18 @@ The effort has a **destination** — the spec, decision, or change it is finding
 
 ## Decision rights
 
-Each effort adopts **decision rights**: a working agreement in the map's **Notes** declaring which decisions are human-owned and which the builder may resolve without stopping. Decision rights calibrate involvement; every ticket still holds one sharp decision.
+Each effort adopts **decision rights**: a working agreement in the map's **Notes** declaring which decisions are human-owned and which the builder may resolve without stopping. Every ticket still holds one sharp decision, whoever owns it.
 
 During charting, recommend one of two postures from the human's stated preference, the repo's background information, and the destination:
 
 - **Human-owned** — put every decision to the human. Use legwork to establish facts.
-- **Builder-owned within guardrails** — the builder owns a decision only when one choice is clearly preferable under established facts and consistent with adopted principles or local policies; it is reversible within a concrete budget stated in **Notes**; its blast radius stays inside the agreed scope; and it creates no new external interface, domain commitment, or irreversible data effect. A decision that fails any check is human-owned.
+- **Builder-owned within guardrails** — the builder owns a decision only while every guardrail holds; failing any one makes it human-owned:
+  - **Clearly preferable** — one choice wins under established facts, consistent with adopted principles or local policies.
+  - **Reversible** — within a concrete budget stated in **Notes**.
+  - **Contained** — its blast radius stays inside the agreed scope.
+  - **No new commitments** — no new external interface, domain commitment, or irreversible data effect.
 
-The human always owns the decision rights themselves; the destination and scope; the adoption, revision, boundary, priority, or refutation of a principle or local policy; and a newly adopted principle's validation pass. Put the recommended posture, reversal budget, and any effort-specific protected classes to the human as one proposal. Decision rights are settled when **Notes** can classify every known class of decision as builder-owned or human-owned and names the conditions that escalate a builder-owned choice. The human may revise them at any time; otherwise revisit them only when a newly surfaced class cannot be classified.
+The human always owns the decision rights themselves; the destination and scope; and the adoption, revision, boundary, priority, or refutation of a principle or local policy. Put the recommended posture, reversal budget, and any effort-specific protected classes to the human as one proposal. Decision rights are settled when **Notes** can classify every known class of decision as builder-owned or human-owned and names the conditions that escalate a builder-owned choice. The human may revise them at any time; otherwise revisit them only when a newly surfaced class cannot be classified.
 
 ## First principles
 
@@ -108,11 +112,16 @@ A session **claims** a ticket by assigning it to the dev driving the map, **firs
 
 ## The round
 
-First classify every frontier `decision` ticket along two axes: against the adopted principles and the map's local policies, then against the adopted decision rights.
+First classify every frontier `decision` ticket along two axes.
+
+By **principle reach**, against the adopted principles and the map's local policies:
 
 - **Determines** — the recommendation follows from the principle with no material judgment left.
 - **Constrains** — the principle rules out some answers, but material judgment remains.
 - **Does not reach** — the principle has no real bearing here.
+
+By **ownership**, against the adopted decision rights:
+
 - **Human-owned** — the decision rights reserve the choice for the human.
 - **Builder-owned** — every guardrail for delegated judgment holds.
 
@@ -147,7 +156,7 @@ A rejection is diagnosed, not just recorded — which link broke?
 
 ## Individual judgment
 
-A frontier ticket no principle determines — unreached, or merely constrained — gets decided one at a time. For a human-owned ticket, use `/grilling` and `/domain-modeling`. For a builder-owned ticket, do the same legwork, compare the credible alternatives, and resolve it only while one recommendation remains clearly preferable inside every guardrail; otherwise reclassify it as human-owned. Record its ownership and reasoning like any other resolution. Take individual judgment gladly rather than stretching a principle to cover it. Watch for the cluster: several such tickets leaning the same direction are not several problems — they are one missing principle. Distill it, adopt it, and the cluster collapses into coming rounds' derivations. Individual judgment funds derivation.
+A frontier ticket no principle determines — unreached, or merely constrained — gets decided one at a time. For a human-owned ticket, use `/grilling` and `/domain-modeling`. For a builder-owned ticket, do the same legwork, compare the credible alternatives, and resolve it only while every guardrail still holds; otherwise reclassify it as human-owned. Record its ownership and reasoning like any other resolution. Take individual judgment gladly rather than stretching a principle to cover it. Watch for the cluster: several such tickets leaning the same direction are not several problems — they are one missing principle. Distill it, adopt it, and the cluster collapses into coming rounds' derivations. Individual judgment funds derivation.
 
 ## Distill
 
@@ -171,7 +180,7 @@ A counterexample that survives scrutiny resolves one of three ways, each adopted
 
 ## Fog and scope
 
-The map is deliberately incomplete — don't chart what you can't yet see. Above the decision rights' specification threshold, **fog or ticket?** The test is whether you can state the question precisely now — not whether you can answer it. Sharp enough to state, it's a ticket — even if it's blocked; not yet, it stays in **Not yet specified** — the fog. Ordinary builder-owned choices below the threshold stay as discretion under **Notes**, neither tickets nor fog. Don't pre-slice the fog into ticket-sized pieces: one patch may graduate into several tickets, or none, once answers sharpen it.
+The map is deliberately incomplete — don't chart what you can't yet see. Above the specification threshold, **fog or ticket?** The test is whether you can state the question precisely now — not whether you can answer it. Sharp enough to state, it's a ticket — even if it's blocked; not yet, it stays in **Not yet specified** — the fog. Don't pre-slice the fog into ticket-sized pieces: one patch may graduate into several tickets, or none, once answers sharpen it.
 
 Work ruled beyond the destination goes to **Out of scope** and never graduates — scope, not sharpness, lands it there. Ruling a ticket out is a scoping act, not a step on the route: **close it** and record the gist plus why it's out, linking the closed ticket — and keep it out of **Decisions so far**, which records only the route actually walked.
 
@@ -182,9 +191,9 @@ Work ruled beyond the destination goes to **Out of scope** and never graduates �
 User invokes with a loose idea.
 
 1. **Name the destination** — `/grilling` and `/domain-modeling`; the destination fixes the scope.
-2. **Set decision rights.** Recommend a posture and concrete guardrails from the destination and available background; the human confirms the agreement. Keep testing it as the frontier emerges until every known decision class is classifiable, then record it in **Notes**.
+2. **Propose decision rights.** Recommend a posture and concrete guardrails from the destination and available background; the human confirms the agreement — it settles, per [Decision rights](#decision-rights), as the frontier is mapped.
 3. **Distill first.** Run Distill's mining pass over the record and grill the human on their commitments — philosophy before questions, because the principles decide how many questions there really are. Candidates pass [Admission](#admission) and are adopted one at a time into `PRINCIPLES.md`.
-4. **Map the frontier.** Grill breadth-first at the specification threshold set by the decision rights: ticket every sharp human-owned question, but only the builder-owned choices that block another mapped decision, test a principle, or need a durable record. **If this surfaces no fog** — the whole journey fits one session — you don't need a map: stop and ask the user how they'd like to proceed.
+4. **Map the frontier.** Grill breadth-first: ticket every sharp human-owned question, and builder-owned choices only above the specification threshold. **If this surfaces no fog** — the whole journey fits one session — you don't need a map: stop and ask the user how they'd like to proceed.
 5. **Create the map** (label `through-line:map`) and the tickets you can specify now as its children — then wire blocking edges in a **second pass** (issues need ids before they can reference each other). Everything not yet sharp stays in **Not yet specified**. Fire a `/research` subagent per research ticket.
 6. Stop — charting is one session's work; it adopts principles and decision rights, not answers.
 

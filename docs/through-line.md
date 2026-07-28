@@ -14,7 +14,7 @@ npx skills update through-line
 
 `through-line` takes a huge effort full of apparently separate decisions, finds the recurring commitments beneath them, and turns those commitments into standing principles in `PRINCIPLES.md`. It then uses the adopted principles to derive batches of open decisions under decision rights you agree once for the effort, so the effort stays coherent without making every choice from scratch.
 
-Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer. You can retain every substantive decision or delegate obvious, cheaply reversible choices within explicit guardrails.
+Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer.
 
 ## When to reach for it
 
@@ -28,7 +28,7 @@ The effort's map and child tickets live on the repo's issue tracker, so `through
 
 ## Decision rights
 
-Decision rights let you choose where the builder can keep moving and where it must stop for you. You can retain every substantive decision, or delegate obvious, cheaply reversible choices within agreed guardrails. Delegated choices stay below the ticket threshold; ambiguity, meaningful commitment, or a broken guardrail brings the decision back to you.
+Decision rights let you choose where the builder can keep moving and where it must stop for you. You can retain every substantive decision, or delegate obvious, cheaply reversible choices within agreed guardrails. Ordinary delegated choices stay below the ticket threshold; ambiguity, meaningful commitment, or a broken guardrail brings a decision back to you.
 
 The direction of the effort is never delegated. You own the destination and scope, adopt every principle and local policy, and validate each new principle before it can guide builder-owned decisions. Through-line delegates routine judgment, not doctrine.
 
