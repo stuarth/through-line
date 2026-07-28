@@ -28,7 +28,7 @@ The effort's map and child tickets live on the repo's issue tracker, so `through
 
 ## Adoption is slow; derivation is fast
 
-A principle has leverage because one statement can decide many cases, which also makes a bad principle unusually expensive. Admission is deliberately slow: each candidate must recur across independent decisions, be atomic, survive a counterexample, and promise leverage beyond the current destination. You adopt candidates one at a time, grounded in concrete evidence and predictions.
+A principle has leverage because one statement can decide many cases, which also makes a bad principle unusually expensive. Admission is deliberately slow: each candidate must recur across independent decisions, be atomic, be interpretable by an uninvolved reader familiar with the domain, survive a counterexample, and promise leverage beyond the current destination. The principle itself carries its full meaning in plain domain language; its evidence and example support that meaning.
 
 Once adopted, derivation is fast. Frontier tickets are classified by whether a principle **determines**, **constrains**, or **does not reach** them. Only determined decisions enter a round, and each derivation must leave no material judgment hidden. You see the round together for coherence, then confirm one decision at a time.
 
@@ -40,7 +40,7 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 
 ## It's working if
 
-- Every adopted principle forbids a plausible choice and cites independent evidence.
+- Every adopted principle lets a reader identify from the statement alone one choice it requires and one it forbids, and cites independent evidence.
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
 - A round contains only decisions fully determined by an adopted principle or local policy, and you confirm each derivation separately.
 - Decisions no principle determines go through the slow way instead of forcing a vague principle to reach them.
