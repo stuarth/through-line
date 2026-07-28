@@ -10,7 +10,7 @@ The effort has a **destination** — the spec, decision, or change it is finding
 
 ## Decision rights
 
-Each effort adopts **decision rights**: a working agreement in the map's **Notes** declaring which decisions are human-owned and which the builder may resolve without stopping. Every ticket still holds one sharp decision, whoever owns it.
+Each effort adopts **decision rights**: a working agreement in the map's **Notes** declaring which decisions are human-owned and which the builder may resolve without stopping. Every `decision` ticket still holds one sharp decision, whoever owns it.
 
 During charting, recommend one of two postures from the human's stated preference, the repo's background information, and the destination:
 
@@ -21,7 +21,7 @@ During charting, recommend one of two postures from the human's stated preferenc
   - **Contained** — its blast radius stays inside the agreed scope.
   - **No new commitments** — no new external interface, domain commitment, or irreversible data effect.
 
-The human always owns the decision rights themselves; the destination and scope; and the adoption, revision, boundary, priority, or refutation of a principle or local policy. Put the recommended posture, reversal budget, and any effort-specific protected classes to the human as one proposal. Decision rights are settled when **Notes** can classify every known class of decision as builder-owned or human-owned and names the conditions that escalate a builder-owned choice. The human may revise them at any time; otherwise revisit them only when a newly surfaced class cannot be classified.
+The human always owns the decision rights themselves; the destination and scope; the adoption, revision, boundary, priority, or refutation of a principle or local policy; and a newly adopted principle's validation pass. Put the recommended posture, reversal budget, and any effort-specific protected classes to the human as one proposal. Decision rights are settled when **Notes** can classify every known class of decision as builder-owned or human-owned and names the conditions that escalate a builder-owned choice. The human may revise them at any time; otherwise revisit them only when a newly surfaced class cannot be classified.
 
 ## First principles
 
@@ -127,7 +127,7 @@ By **ownership**, against the adopted decision rights:
 
 A principle supplies direction, never missing facts: a ticket is determined only when its material factual premises are established — or stated as explicit assumptions in its **Scenario**. If an unresolved fact could change the recommendation, create or link the `research` ticket that resolves it, wire it as a blocker, and let the ticket wait off the frontier.
 
-A round holds only **determined** tickets of one ownership class — a merely compatible answer is not a derivation; constrained and unreached tickets take individual judgment. Size a round to about five materially different scenarios and leave the rest open for later. A newly adopted principle gets a human-owned **validation pass** first, holding at most three tickets. **Claim the round's tickets** — and only those — so concurrent sessions skip them.
+A round holds only **determined** tickets of one ownership class — a merely compatible answer is not a derivation; constrained and unreached tickets take individual judgment. Size a round to about five materially different scenarios and leave the rest open for later. A newly adopted principle's **validation pass** comes first and holds at most three tickets. **Claim the round's tickets** — and only those — so concurrent sessions skip them.
 
 Phrase each as a **derivation**:
 
