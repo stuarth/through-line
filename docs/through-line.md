@@ -12,7 +12,7 @@ npx skills update through-line
 
 ## What it does
 
-`through-line` takes a huge effort full of apparently separate decisions, finds the recurring commitments beneath them, and turns those commitments into standing principles in `PRINCIPLES.md`. It then uses the adopted principles to derive batches of open decisions for you to confirm, so the effort stays coherent without making every choice from scratch.
+`through-line` takes a huge effort full of apparently separate decisions, finds the recurring commitments beneath them, and turns those commitments into standing principles in `PRINCIPLES.md`. It then uses the adopted principles to derive batches of open decisions under decision rights you agree once for the effort, so the effort stays coherent without making every choice from scratch.
 
 Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer.
 
@@ -26,11 +26,17 @@ Reach for it when an effort is too large for one session and many of its decisio
 
 The effort's map and child tickets live on the repo's issue tracker, so `through-line` needs the tracker wiring that [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) provides. If no tracker is configured, it falls back to the local-markdown tracker. It creates `PRINCIPLES.md` lazily when the first standing principle is adopted.
 
+## Decision rights
+
+Decision rights let you choose where the builder can keep moving and where it must stop for you. You can retain every substantive decision, or delegate obvious, cheaply reversible choices within agreed guardrails. Ordinary delegated choices stay below the ticket threshold; ambiguity, meaningful commitment, or a broken guardrail brings a decision back to you.
+
+The direction of the effort is never delegated. You own the destination and scope, adopt every principle and local policy, and validate each new principle before it can guide builder-owned decisions. Through-line delegates routine judgment, not doctrine.
+
 ## Adoption is slow; derivation is fast
 
 A principle has leverage because one statement can decide many cases, which also makes a bad principle unusually expensive. Admission is deliberately slow: each candidate must recur across independent decisions, be atomic, be interpretable by an uninvolved reader familiar with the domain, survive a counterexample, and promise leverage beyond the current destination. The principle itself carries its full meaning in plain domain language; its evidence and example support that meaning.
 
-Once adopted, derivation is fast. Frontier tickets are classified by whether a principle **determines**, **constrains**, or **does not reach** them. Only determined decisions enter a round, and each derivation must leave no material judgment hidden. You see the round together for coherence, then confirm one decision at a time.
+Once adopted, derivation is fast. Frontier tickets are classified by whether a principle **determines**, **constrains**, or **does not reach** them, and by who owns the decision. Only determined decisions enter a round, and each derivation must leave no material judgment hidden. Human-owned rounds are confirmed one decision at a time; builder-owned rounds are resolved inside the agreed guardrails and reported as an overview.
 
 ## Standing principles, local policies
 
@@ -41,9 +47,10 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 ## It's working if
 
 - Every adopted principle lets a reader identify from the statement alone one choice it requires and one it forbids, and cites independent evidence.
+- The map's decision rights classify every known choice and, where choices are builder-owned, state a concrete reversal budget and escalation conditions.
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
-- A round contains only decisions fully determined by an adopted principle or local policy, and you confirm each derivation separately.
-- Decisions no principle determines go through the slow way instead of forcing a vague principle to reach them.
+- A round contains one ownership class and only decisions fully determined by an adopted principle or local policy.
+- Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 
 ## Where it fits
 

@@ -1,12 +1,27 @@
 ---
 name: through-line
-description: Find the through-line of a huge effort — distill the principles running through its thousand decisions into a standing PRINCIPLES.md, then resolve open questions in batched derivation rounds you confirm.
+description: Find the through-line of a huge effort — distill the principles running through its thousand decisions into a standing PRINCIPLES.md, then resolve open questions in derivation rounds under agreed decision rights.
 disable-model-invocation: true
 ---
 
-A loose idea has arrived — too big for one agent session, and dense with open questions. Worked one at a time, those questions become a thousand one-off decisions — each sound, none generalised, all quietly obeying commitments nobody has written down. Those commitments are the effort's **through-line**: the thread of intent running through every decision. This skill finds it and writes it down — first principles in `PRINCIPLES.md` — then lets derivation do the deciding: once articulated, the principles imply answers to whole batches of open questions, and the human confirms **derivations** instead of reasoning out every decision from scratch. Only the genuinely novel questions get decided the slow way — and a cluster of those is the signal the through-line has a gap.
+A loose idea has arrived — too big for one agent session, and dense with open questions. Worked one at a time, those questions become a thousand one-off decisions — each sound, none generalised, all quietly obeying commitments nobody has written down. Those commitments are the effort's **through-line**: the thread of intent running through every decision. This skill finds it and writes it down — first principles in `PRINCIPLES.md` — then lets derivation do the deciding: once articulated, the principles imply answers to whole batches of open questions, resolved under **decision rights** agreed once for the effort. The human confirms the decisions they own; the builder resolves the guardrailed decisions delegated to them. Only the genuinely novel questions take individual judgment — and a cluster of those is the signal the through-line has a gap.
 
 The effort has a **destination** — the spec, decision, or change it is finding its way to — named first, because it fixes the scope. Produce decisions, not deliverables, unless the map's **Notes** says otherwise.
+
+## Decision rights
+
+Each effort adopts **decision rights**: a working agreement in the map's **Notes** declaring which decisions are human-owned and which the builder may resolve without stopping. Every `decision` ticket still holds one sharp decision, whoever owns it.
+
+During charting, recommend one of two postures from the human's stated preference, the repo's background information, and the destination:
+
+- **Human-owned** — put every decision to the human. Use legwork to establish facts.
+- **Builder-owned within guardrails** — the builder owns a decision only while every guardrail holds; failing any one makes it human-owned:
+  - **Clearly preferable** — one choice wins under established facts, consistent with adopted principles or local policies.
+  - **Reversible** — within a concrete budget stated in **Notes**.
+  - **Contained** — its blast radius stays inside the agreed scope.
+  - **No new commitments** — no new external interface, domain commitment, or irreversible data effect.
+
+The human always owns the decision rights themselves; the destination and scope; the adoption, revision, boundary, priority, or refutation of a principle or local policy; and a newly adopted principle's validation pass. Put the recommended posture, reversal budget, and any effort-specific protected classes to the human as one proposal. Decision rights are settled when **Notes** can classify every known class of decision as builder-owned or human-owned and names the conditions that escalate a builder-owned choice. The human may revise them at any time; otherwise revisit them only when a newly surfaced class cannot be classified.
 
 ## First principles
 
@@ -53,7 +68,7 @@ The map is the whole effort at low resolution, loaded once per session. Open tic
 
 ## Notes
 
-<domain; skills every session should consult; effort preferences; whether execution is in scope>
+<domain; skills every session should consult; whether execution is in scope; adopted decision rights — posture, reversal budget, protected classes, and escalation conditions>
 
 ## Local policies
 
@@ -61,9 +76,9 @@ The map is the whole effort at low resolution, loaded once per session. Open tic
 
 ## Decisions so far
 
-<!-- the index — one line per closed ticket: gist of the confirmed answer, detail on the ticket -->
+<!-- the index — one line per closed ticket: gist of the resolved answer, detail on the ticket -->
 
-- [<closed ticket title>](link) — <gist of the confirmed answer>
+- [<closed ticket title>](link) — <gist of the resolved answer>
 
 ## Not yet specified
 
@@ -86,50 +101,62 @@ Each ticket is a child issue of the map; its body is the question it resolves:
 
 Each carries a `through-line:<type>` label:
 
-- **decision** (HITL) — the default: a question whose resolution is a decision. Resolved by derivation in a round when an adopted principle determines it, the slow way when none does.
+- **decision** (HITL or AFK) — the default: a question whose resolution is a decision. Decision rights make it HITL when human-owned and AFK when builder-owned. Resolve it by derivation in a round when an adopted principle determines it, by individual judgment when none does.
 - **research** (AFK) — a fact a decision waits on, outside the working directory; resolved by a `/research` subagent.
 - **prototype** (AFK build, HITL reaction) — a cheap concrete artifact to react to; build it, link it as an asset, and the human reacts in session.
 - **task** (HITL or AFK) — manual legwork that unblocks a decision: provisioning, data moves, sign-ups.
+
+A human-owned question sharp enough to state gets a ticket. A builder-owned choice gets one only when its resolution blocks another mapped decision, tests a principle, or needs a durable record; ordinary choices below that **specification threshold** remain builder discretion under the decision rights, neither tickets nor fog.
 
 A session **claims** a ticket by assigning it to the dev driving the map, **first**, before any work; the assignee _is_ the claim. Blocking uses the tracker's **native** dependency relationship, so the **frontier** — the open, unblocked, unclaimed tickets — renders visually in the tracker's own UI. The answer isn't part of the body; it's recorded on resolution. Assets are linked from the ticket, not pasted in.
 
 ## The round
 
-First classify every frontier `decision` ticket against the adopted principles and the map's local policies:
+First classify every frontier `decision` ticket along two axes.
+
+By **principle reach**, against the adopted principles and the map's local policies:
 
 - **Determines** — the recommendation follows from the principle with no material judgment left.
 - **Constrains** — the principle rules out some answers, but material judgment remains.
 - **Does not reach** — the principle has no real bearing here.
 
+By **ownership**, against the adopted decision rights:
+
+- **Human-owned** — the decision rights reserve the choice for the human.
+- **Builder-owned** — every guardrail for delegated judgment holds.
+
 A principle supplies direction, never missing facts: a ticket is determined only when its material factual premises are established — or stated as explicit assumptions in its **Scenario**. If an unresolved fact could change the recommendation, create or link the `research` ticket that resolves it, wire it as a blocker, and let the ticket wait off the frontier.
 
-A round holds only **determined** tickets — a merely compatible answer is not a derivation; constrained and unreached tickets take the slow way. Size the round to what the human can genuinely weigh side by side — about five, favouring materially different scenarios — and leave the rest open for a later round. A newly adopted principle gets a **validation pass** first: its first round holds at most three tickets. **Claim the round's tickets** — and only those — so concurrent sessions skip them.
+A round holds only **determined** tickets of one ownership class — a merely compatible answer is not a derivation; constrained and unreached tickets take individual judgment. Size a round to about five materially different scenarios and leave the rest open for later. A newly adopted principle's **validation pass** comes first and holds at most three tickets. **Claim the round's tickets** — and only those — so concurrent sessions skip them.
 
 Phrase each as a **derivation**:
 
+- **Decision right** — `human-owned` or `builder-owned`, citing the applicable agreement in **Notes**.
 - **Principle** — cited by name; a local policy is cited as *local*.
 - **Scenario** — the concrete situation this ticket presents.
 - **Implications** — what the principle rules in or rules out here.
-- **Residual judgment** — `none`, and mean it: if material judgment remains, the ticket was constrained, not determined — drop it from the round and take it the slow way.
+- **Residual judgment** — `none`, and mean it: if material judgment remains, the ticket was constrained, not determined — drop it from the round and take it through individual judgment.
 - **Recommendation** — the answer that follows.
 
-Present the round at two resolutions. First the **overview** — every ticket's name and one-line recommendation, side by side. The overview is the coherency test: derivations viewed together expose an incoherence each would hide alone, and when a principle pulls different directions across items, say so right there — that friction is data about a boundary, not noise to smooth over. Then zoom: **one derivation per turn**, at full detail, the human's verdict given before the next is presented. Each item is confirmed on its own — a round-level "confirm all" confirms nothing. A material amendment — one that changes the recommendation — is a rejection of the presented derivation: diagnose which link broke before resolving the ticket; a wording clarification that leaves the recommendation unchanged is confirmation. A round is human-in-the-loop by definition — an agent that answers its own round items has broken the skill.
+For a human-owned round, present at two resolutions. First the **overview** — every ticket's name and one-line recommendation, side by side. The overview is the coherency test: derivations viewed together expose an incoherence each would hide alone, and when a principle pulls different directions across items, say so right there — that friction is data about a boundary, not noise to smooth over. Then zoom: **one derivation per turn**, at full detail, the human's verdict given before the next is presented. Each item is confirmed on its own — a round-level "confirm all" confirms nothing. A material amendment — one that changes the recommendation — is a rejection of the presented derivation: diagnose which link broke before resolving the ticket; a wording clarification that leaves the recommendation unchanged is confirmation. A human-owned round is human-in-the-loop by definition — an agent that answers its own items has broken the skill.
 
-Principles collide, too: when two adopted principles determine one ticket incompatibly, residual judgment is not `none` — drop the ticket from the round and audit both boundaries. If both genuinely still hold, the trade-off is the human's, made in the open the slow way. Its resolution may set a boundary, expose a missing higher-order principle, adopt a standing priority — itself principle-shaped, so it enters through [Admission](#admission) — or stay a one-off decision; weakening either principle is one possible outcome, never the automatic one.
+For a builder-owned round, complete the same full derivations, then re-check every item against every guardrail. Reclassify any item that no longer passes as human-owned and leave it open. Record the rest, then present their overview as a report rather than a request for confirmation. A later material amendment reopens the ticket, follows the rejection diagnosis below, and makes the replacement decision human-owned.
+
+Principles collide, too: when two adopted principles determine one ticket incompatibly, residual judgment is not `none` — drop the ticket from the round and audit both boundaries. If both genuinely still hold, the trade-off is the human's, made in the open through individual judgment. Its resolution may set a boundary, expose a missing higher-order principle, adopt a standing priority — itself principle-shaped, so it enters through [Admission](#admission) — or stay a one-off decision; weakening either principle is one possible outcome, never the automatic one.
 
 A rejection is diagnosed, not just recorded — which link broke?
 
 - **Wrong principle cited** — re-derive under the right one; the principles are untouched.
 - **Scenario outside the boundary** — the principle doesn't hold here; record the boundary in `PRINCIPLES.md`.
 - **Bad derivation** — the reasoning slipped; fix it and re-present.
-- **Constrained, not determined** — the round was assembled too aggressively; unclaim the ticket and take it the slow way. The principle needn't change.
+- **Constrained, not determined** — the round was assembled too aggressively; unclaim the ticket and take it through individual judgment. The principle needn't change.
 - **The principle itself is wrong** — the deepest outcome: bound, split, or refute it (see Falsify).
 
-**Record each confirmed item on its ticket**: post the derivation — principle cited, scenario, implications, confirmed answer — as a resolution comment, **close** the ticket, and gist it into **Decisions so far**. Update `PRINCIPLES.md` inline for every boundary set or revision adopted; a ticket that set or tested a boundary joins the principle's evidence trail. One decision, one ticket, one link.
+**Record each resolved item on its ticket**: post the derivation — decision right, principle cited, scenario, implications, and confirmed or builder-resolved answer — as a resolution comment, **close** the ticket, and gist it into **Decisions so far**. Update `PRINCIPLES.md` inline for every boundary set or revision adopted; a ticket that set or tested a boundary joins the principle's evidence trail. One decision, one ticket, one link.
 
-## The slow way
+## Individual judgment
 
-A frontier ticket no principle determines — unreached, or merely constrained — gets decided the slow way: `/grilling` and `/domain-modeling`, one ticket at a time, its resolution recorded like any other. Take it gladly rather than stretching a principle to cover it. Watch for the cluster: several such tickets leaning the same direction are not several problems — they are one missing principle. Distill it, adopt it, and the cluster collapses into coming rounds' derivations. The slow way funds the fast way.
+A frontier ticket no principle determines — unreached, or merely constrained — gets decided one at a time. For a human-owned ticket, use `/grilling` and `/domain-modeling`. For a builder-owned ticket, do the same legwork, compare the credible alternatives, and resolve it only while every guardrail still holds; otherwise reclassify it as human-owned. Record its ownership and reasoning like any other resolution. Take individual judgment gladly rather than stretching a principle to cover it. Watch for the cluster: several such tickets leaning the same direction are not several problems — they are one missing principle. Distill it, adopt it, and the cluster collapses into coming rounds' derivations. Individual judgment funds derivation.
 
 ## Distill
 
@@ -144,16 +171,16 @@ Either way, a candidate is grilled through the [Admission](#admission) tests and
 
 A principle is held the way science holds a law: adopted on evidence, applied by derivation, revised the moment a counterexample survives. Hunt counterexamples two ways:
 
-- **Vigilance** — every session applying principles watches for contradictions: code that violates one, a past decision that defies one, a fresh confirmation that sits badly against one. Surface it immediately.
+- **Vigilance** — every session applying principles watches for contradictions: code that violates one, a past decision that defies one, a fresh resolution that sits badly against one. Surface it immediately.
 - **Audit** — on request, a dedicated pass that stress-tests the principles against the code, the decision record, and invented edge scenarios.
 
-An audit is also **event-driven**: pause derivation rounds and audit a principle when two of its derivations are rejected or materially amended; when exceptions or boundary qualifications recur; when the destination or its context shifts; when its boundary text grows more complex than its statement; or when confirmed answers keep needing material residual judgment despite citing it. Each signals a principle due to be bounded, split, or refuted — never one to reword more permissively.
+An audit is also **event-driven**: pause derivation rounds and audit a principle when two of its derivations are rejected or materially amended; when exceptions or boundary qualifications recur; when the destination or its context shifts; when its boundary text grows more complex than its statement; or when resolved answers keep needing material residual judgment despite citing it. Each signals a principle due to be bounded, split, or refuted — never one to reword more permissively.
 
 A counterexample that survives scrutiny resolves one of three ways, each adopted by the human: it **bounds** the principle (it sits outside where the principle holds — record the boundary), **splits** it (two principles were hiding in one), or **refutes** it. When a principle is revised or refuted, its evidence trail and the resolution comments find every ticket derived from it; surface them as a **review round** — same overview-then-zoom format — and the human decides which to revisit. Nothing is silently re-decided.
 
 ## Fog and scope
 
-The map is deliberately incomplete — don't chart what you can't yet see. **Fog or ticket?** The test is whether you can state the question precisely now — not whether you can answer it. Sharp enough to state, it's a ticket — even if it's blocked; not yet, it stays in **Not yet specified** — the fog. Don't pre-slice the fog into ticket-sized pieces: one patch may graduate into several tickets, or none, once answers sharpen it.
+The map is deliberately incomplete — don't chart what you can't yet see. Above the specification threshold, **fog or ticket?** The test is whether you can state the question precisely now — not whether you can answer it. Sharp enough to state, it's a ticket — even if it's blocked; not yet, it stays in **Not yet specified** — the fog. Don't pre-slice the fog into ticket-sized pieces: one patch may graduate into several tickets, or none, once answers sharpen it.
 
 Work ruled beyond the destination goes to **Out of scope** and never graduates — scope, not sharpness, lands it there. Ruling a ticket out is a scoping act, not a step on the route: **close it** and record the gist plus why it's out, linking the closed ticket — and keep it out of **Decisions so far**, which records only the route actually walked.
 
@@ -164,17 +191,18 @@ Work ruled beyond the destination goes to **Out of scope** and never graduates �
 User invokes with a loose idea.
 
 1. **Name the destination** — `/grilling` and `/domain-modeling`; the destination fixes the scope.
-2. **Distill first.** Run Distill's mining pass over the record and grill the human on their commitments — philosophy before questions, because the principles decide how many questions there really are. Candidates pass [Admission](#admission) and are adopted one at a time into `PRINCIPLES.md`.
-3. **Map the frontier.** Grill breadth-first for the open questions. **If this surfaces no fog** — the whole journey fits one session — you don't need a map: stop and ask the user how they'd like to proceed.
-4. **Create the map** (label `through-line:map`) and the tickets you can specify now as its children — then wire blocking edges in a **second pass** (issues need ids before they can reference each other). Everything not yet sharp stays in **Not yet specified**. Fire a `/research` subagent per research ticket.
-5. Stop — charting is one session's work; it adopts principles, not answers.
+2. **Propose decision rights.** Recommend a posture and concrete guardrails from the destination and available background; the human confirms the agreement — it settles, per [Decision rights](#decision-rights), as the frontier is mapped.
+3. **Distill first.** Run Distill's mining pass over the record and grill the human on their commitments — philosophy before questions, because the principles decide how many questions there really are. Candidates pass [Admission](#admission) and are adopted one at a time into `PRINCIPLES.md`.
+4. **Map the frontier.** Grill breadth-first: ticket every sharp human-owned question, and builder-owned choices only above the specification threshold. **If this surfaces no fog** — the whole journey fits one session — you don't need a map: stop and ask the user how they'd like to proceed.
+5. **Create the map** (label `through-line:map`) and the tickets you can specify now as its children — then wire blocking edges in a **second pass** (issues need ids before they can reference each other). Everything not yet sharp stays in **Not yet specified**. Fire a `/research` subagent per research ticket.
+6. Stop — charting is one session's work; it adopts principles and decision rights, not answers.
 
 ### Work
 
 User invokes with a map.
 
-1. Load `PRINCIPLES.md` and the map — the low-res view; harvest any completed legwork tickets.
-2. **Run one round** — at most one per session: classify the frontier (determines / constrains / does not reach), claim the determined tickets, present. If nothing is determined, distill when the record shows rhyme — a cluster on the frontier, or slow-way decisions since the last pass that lean together; otherwise grill one ticket the slow way.
+1. Load `PRINCIPLES.md` and the map — including its decision rights — as the low-res view; harvest any completed legwork tickets.
+2. **Run one round** — at most one per session: classify the frontier by principle reach and ownership, then claim a determined batch of one ownership class. Present a human-owned round; resolve and report a builder-owned round. If nothing is determined, distill when the record shows rhyme — a cluster on the frontier, or individually judged decisions since the last pass that lean together; otherwise resolve one ticket through individual judgment under its decision right.
 3. Record: resolution comments, closed tickets, **Decisions so far**, `PRINCIPLES.md` updates inline.
 4. Re-chart: add newly surfaced tickets (create-then-wire), graduate fog the answers have sharpened, rule mis-scoped tickets out of scope.
 5. **Destination reached? Close the map** with a **closing sweep** of its local policies: record each policy's track record — derivations determined, scenario spread, whether its evidence predates the effort; review the group for common threads, distilling any higher-altitude candidate the policies jointly imply; promote through normal Admission wherever the evidence is already independent. The rest stay on the closed map — persistent and minable — for a future effort to supply the missing independence.
