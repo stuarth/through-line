@@ -28,9 +28,9 @@ The effort's map and child tickets live on the repo's issue tracker, so `through
 
 ## Decision rights
 
-Decision rights set the specification threshold for the effort: which choices belong to you and which the builder may settle without stopping. Through-line recommends a posture from the destination and the available background, then records the agreement in the map's Notes. A guardrailed builder-owned choice needs an obvious principle-consistent answer, a concrete reversal budget, contained blast radius, and no new external or domain commitment; everything else returns to you. Ordinary choices below that threshold stay as builder discretion rather than becoming tickets.
+Decision rights let you choose where the builder can keep moving and where it must stop for you. You can retain every substantive decision, or delegate obvious, cheaply reversible choices within agreed guardrails. Delegated choices stay below the ticket threshold; ambiguity, meaningful commitment, or a broken guardrail brings the decision back to you.
 
-The destination, scope, principles, local policies, and every new principle's validation pass remain human-owned. Delegation speeds up ordinary decisions without delegating the doctrine that produces them.
+The direction of the effort is never delegated. You own the destination and scope, adopt every principle and local policy, and validate each new principle before it can guide builder-owned decisions. Through-line delegates routine judgment, not doctrine.
 
 ## Adoption is slow; derivation is fast
 
