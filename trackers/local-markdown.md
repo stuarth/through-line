@@ -20,4 +20,4 @@ Create child files first, then wire blockers once their numbers exist. In prose,
 ticket names and links; bare numbers are tracker metadata only.
 
 After charting or recording, run the bundled
-[validator](../scripts/validate_local_map.py) against the map.
+[state validator](../scripts/validate_local_map.py) against the map.

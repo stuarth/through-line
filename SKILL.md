@@ -117,9 +117,9 @@ Recording is done when the tracker agrees with reality:
 
 Record principle boundaries and revisions inline in `PRINCIPLES.md`; add tickets that
 set or tested a boundary to the evidence trail. For local Markdown, run the bundled
-[validator](./scripts/validate_local_map.py); otherwise run the tracker validator
-when provided. The checklist always applies, and recording is not done until every
-available validator passes.
+[state validator](./scripts/validate_local_map.py) to compare blockers, indexes, and
+child status; otherwise run the tracker validator when provided. The checklist always
+applies, and recording is not done until every available validator passes.
 
 ## Principles
 
