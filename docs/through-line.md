@@ -16,8 +16,6 @@ npx skills update through-line
 
 Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer.
 
-When the map explicitly puts repository execution in scope, the same map can carry the effort into implementation. Each fresh session owns one coherent slice, passes one complete quality gate, records its evidence, and hands off.
-
 ## When to reach for it
 
 You invoke this by typing `/through-line` — the agent won't reach for it on its own.
@@ -46,12 +44,6 @@ The altitude test keeps `PRINCIPLES.md` from turning into a rule dump: if violat
 
 When a principle stops predicting good answers, the skill treats that as evidence rather than friction. Rejected derivations and counterexamples trigger a boundary, split, or refutation, followed by a review of decisions previously derived from it.
 
-## One slice, one handoff
-
-Execution is finite by construction: one implementation ticket owns one outcome, explicit exclusions, acceptance checks, and a review fixed point. Standards and Spec stay independently reviewed inside one review event, with extra reviewers reserved for distinct risks rather than repeated general passes.
-
-A blocked slice records its owner and observable resume condition, releases its claim, and hands off. A slice that grows beyond the session keeps only integrated and verified work and re-charts the remainder. Waiting and polling never become hidden work.
-
 ## It's working if
 
 - Every adopted principle lets a reader identify from the statement alone one choice it requires and one it forbids, and cites independent evidence.
@@ -59,8 +51,7 @@ A blocked slice records its owner and observable resume condition, releases its 
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
 - A round contains one ownership class and only decisions fully determined by an adopted principle or local policy.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
-- Every invocation reaches a handoff with no claimed ticket left ownerless, and each execution slice gets one complete quality gate rather than an open-ended review loop.
 
 ## Where it fits
 
-`through-line` is a huge-effort **on-ramp** to the main build flow. It is the principle-driven sibling of [wayfinder](https://aihero.dev/skills-wayfinder): both chart multi-session uncertainty, but through-line also extracts standing doctrine and uses it to settle decisions in rounds. It draws on [grilling](https://aihero.dev/skills-grilling) and [domain-modeling](https://aihero.dev/skills-domain-modeling) for decisions no principle determines, then hands a completed map to [to-spec](https://aihero.dev/skills-to-spec) or, when its Notes explicitly authorize execution, advances one implementation slice per fresh session. When you're unsure which flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
+`through-line` is a huge-effort **on-ramp** to the main build flow. It is the principle-driven sibling of [wayfinder](https://aihero.dev/skills-wayfinder): both chart multi-session uncertainty, but through-line also extracts standing doctrine and uses it to settle decisions in rounds. It draws on [grilling](https://aihero.dev/skills-grilling) and [domain-modeling](https://aihero.dev/skills-domain-modeling) for decisions no principle determines, then hands a completed map to [to-spec](https://aihero.dev/skills-to-spec) unless execution was explicitly put in scope. When you're unsure which flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.

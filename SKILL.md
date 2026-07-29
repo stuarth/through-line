@@ -91,9 +91,7 @@ The map is the whole effort at low resolution, loaded once per session. Open tic
 
 ## Tickets
 
-Each ticket is a child issue of the map; its body is the question it resolves.
-An `implementation` ticket instead uses the slice contract in
-[EXECUTION.md](./EXECUTION.md).
+Each ticket is a child issue of the map; its body is the question it resolves:
 
 ```markdown
 ## Question
@@ -107,7 +105,6 @@ Each carries a `through-line:<type>` label:
 - **research** (AFK) — a fact a decision waits on, outside the working directory; resolved by a `/research` subagent.
 - **prototype** (AFK build, HITL reaction) — a cheap concrete artifact to react to; build it, link it as an asset, and the human reacts in session.
 - **task** (HITL or AFK) — manual legwork that unblocks a decision: provisioning, data moves, sign-ups.
-- **implementation** (AFK build; HITL where decision rights require) — one coherent repository change realizing resolved decisions. Create one only when the map's **Notes** puts execution in scope; read [EXECUTION.md](./EXECUTION.md) before creating or claiming one.
 
 A human-owned question sharp enough to state gets a ticket. A builder-owned choice gets one only when its resolution blocks another mapped decision, tests a principle, or needs a durable record; ordinary choices below that **specification threshold** remain builder discretion under the decision rights, neither tickets nor fog.
 
@@ -187,18 +184,6 @@ The map is deliberately incomplete — don't chart what you can't yet see. Above
 
 Work ruled beyond the destination goes to **Out of scope** and never graduates — scope, not sharpness, lands it there. Ruling a ticket out is a scoping act, not a step on the route: **close it** and record the gist plus why it's out, linking the closed ticket — and keep it out of **Decisions so far**, which records only the route actually walked.
 
-## Handoff
-
-Every invocation ends at a **handoff**. The handoff is complete when:
-
-- every ticket claimed in this session is closed, or unclaimed with its
-  blocker, owner, and observable resume condition recorded on the ticket;
-- durable decisions, evidence, verification, and newly surfaced work are
-  recorded in the map or the repository.
-
-Begin the next round or implementation slice in a fresh session reconstructed
-from the map and repository artifacts.
-
 ## Invocation
 
 ### Chart
@@ -210,7 +195,7 @@ User invokes with a loose idea.
 3. **Distill first.** Run Distill's mining pass over the record and grill the human on their commitments — philosophy before questions, because the principles decide how many questions there really are. Candidates pass [Admission](#admission) and are adopted one at a time into `PRINCIPLES.md`.
 4. **Map the frontier.** Grill breadth-first: ticket every sharp human-owned question, and builder-owned choices only above the specification threshold. **If this surfaces no fog** — the whole journey fits one session — you don't need a map: stop and ask the user how they'd like to proceed.
 5. **Create the map** (label `through-line:map`) and the tickets you can specify now as its children — then wire blocking edges in a **second pass** (issues need ids before they can reference each other). Everything not yet sharp stays in **Not yet specified**. Fire a `/research` subagent per research ticket.
-6. **Handoff** — charting adopts principles and decision rights, not answers.
+6. Stop — charting is one session's work; it adopts principles and decision rights, not answers.
 
 ### Work
 
@@ -221,15 +206,5 @@ User invokes with a map.
 3. Record: resolution comments, closed tickets, **Decisions so far**, `PRINCIPLES.md` updates inline.
 4. Re-chart: add newly surfaced tickets (create-then-wire), graduate fog the answers have sharpened, rule mis-scoped tickets out of scope.
 5. **Destination reached? Close the map** with a **closing sweep** of its local policies: record each policy's track record — derivations determined, scenario spread, whether its evidence predates the effort; review the group for common threads, distilling any higher-altitude candidate the policies jointly imply; promote through normal Admission wherever the evidence is already independent. The rest stay on the closed map — persistent and minable — for a future effort to supply the missing independence.
-6. **Handoff.**
 
 Expect other sessions to edit the tracker concurrently; the map and its tickets, not the conversation, are the shared state.
-
-### Execute
-
-Use this branch only when the map's **Notes** puts repository execution in scope.
-
-1. Load `PRINCIPLES.md` and the map — decision rights, local policies, and **Notes** — then read [EXECUTION.md](./EXECUTION.md).
-2. Claim one open, unblocked implementation ticket that passes the slice bar.
-3. Build the slice; run the quality gate.
-4. Record the result on the ticket, re-chart newly surfaced work, and handoff.
