@@ -16,6 +16,10 @@ npx skills update through-line
 
 Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer.
 
+The map keeps resolved **Findings** separate from decisions, so a decision can proceed
+only when its material facts are already established or made explicit as assumptions.
+Each ticket holds one independently confirmable choice.
+
 ## When to reach for it
 
 You invoke this by typing `/through-line` — the agent won't reach for it on its own.
@@ -24,7 +28,7 @@ Reach for it when an effort is too large for one session and many of its decisio
 
 ## Prerequisites
 
-The effort's map and child tickets live on the repo's issue tracker, so `through-line` needs the tracker wiring that [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) provides. If no tracker is configured, it falls back to the local-markdown tracker. It creates `PRINCIPLES.md` lazily when the first standing principle is adopted.
+The effort's map and child tickets live on the repo's issue tracker, so `through-line` needs the tracker wiring that [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) provides. If no tracker is configured, it falls back to a bundled local-markdown tracker and validator. It creates `PRINCIPLES.md` lazily when the first standing principle is adopted.
 
 ## Decision rights
 
@@ -48,9 +52,12 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 
 - Every adopted principle lets a reader identify from the statement alone one choice it requires and one it forbids, and cites independent evidence.
 - The map's decision rights classify every known choice and, where choices are builder-owned, state a concrete reversal budget and escalation conditions.
+- Every decision ticket contains one choice the human must confirm or reject as a whole.
+- Every material factual premise is already in the map's Findings or explicit in the decision's Scenario.
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
 - A round contains one ownership class and only decisions fully determined by an adopted principle or local policy.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
+- The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.
 
 ## Where it fits
 

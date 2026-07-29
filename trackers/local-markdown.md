@@ -1,0 +1,23 @@
+# Local Markdown wayfinding operations
+
+Use this fallback only when the repo has no issue-tracker doc.
+
+- **Map:** `.scratch/<effort>/map.md`, with `Label: through-line:map` and
+  `Status: open|resolved`.
+- **Child:** `.scratch/<effort>/issues/NN-<slug>.md`, with `Type:
+  decision|research|prototype|task`, `Status: open|claimed|blocked|resolved`, and the
+  question under `## Question`.
+- **Claim:** add `Assignee: <dev>` and set `Status: claimed` before work.
+- **Unclaim:** remove `Assignee` and set `Status: blocked` when an unresolved blocker
+  exists, otherwise `Status: open`.
+- **Blocking:** add `Blocked by: NN, NN`. Use `blocked` only while at least one named
+  blocker is unresolved.
+- **Frontier:** open, unblocked, unclaimed child files, ordered by number.
+- **Resolve:** append `## Resolution`, set `Status: resolved`, retain the assignee,
+  then update the map through [Record](../SKILL.md#record).
+
+Create child files first, then wire blockers once their numbers exist. In prose, use
+ticket names and links; bare numbers are tracker metadata only.
+
+After charting or recording, run the bundled
+[state validator](../scripts/validate_local_map.py) against the map.

@@ -1,6 +1,9 @@
-# PRINCIPLES.md Format
+# PRINCIPLES.md format
 
-## Structure
+Admission, scope, and graduation rules live in [ADMISSION.md](./ADMISSION.md). This
+file owns only entry and file structure.
+
+## Entry
 
 ```md
 # {Context Name} Principles
@@ -12,30 +15,24 @@ Every feature is owned end-to-end by one team; no handoffs mid-feature.
 _Holds even when_: the feature spans two services.
 _Does not extend to_: platform and infra work.
 _Evidence_: [Billing rewrite](…) — confirmed; [Auth migration](…) — set the infra boundary.
-
-**Prefer boring tech**:
-A new dependency must be older than the problem it solves; novelty needs a champion and an exit plan.
-_Holds even when_: the shiny option is faster to adopt.
-_Does not extend to_: throwaway prototypes.
-_Evidence_: [Queue selection](…) — confirmed.
 ```
 
-## Rules
+- Keep the adopted statement to one or two sentences; rationale belongs in linked
+  evidence and ADRs.
+- Use canonical terms from `CONTEXT.md`.
+- Record a boundary only after a real decision or human-confirmed scenario tests it.
+- Keep formative evidence only: decisions that set or test a boundary, gist + link.
+- Group entries under subheadings only when natural clusters emerge.
 
-- **A principle must forbid something.** If no conceivable decision would violate it, it is a platitude, not a principle — sharpen the statement until it bites, or leave it out.
-- **Keep statements tight.** One or two sentences. The statement is the commitment; rationale lives in the evidence and ADRs it links.
-- **Preserve interpretability.** Record the exact operational statement adopted through [Admission](./SKILL.md#admission). The statement carries the rule's full meaning; its mnemonic name, evidence, and examples support it.
-- **Speak the domain's language.** Where `CONTEXT.md` defines a canonical term, the statement uses it. Domain-general principles are fine; domain-blind ones are not.
-- **Stay few.** Dilution is a portfolio failure: every admitted principle spends the attention readers give the others. A rule-shaped candidate whose violation would leave the system merely inconsistent — not wrong about the domain — is a local policy for an effort's map, however good its evidence.
-- **Boundaries record tested edges, not hypotheticals.** Write a _Holds even when_ or _Does not extend to_ line only when a real decision — or an invented scenario the human confirmed — actually pressed that edge. Untested boundaries are speculation wearing the format.
-- **Evidence is formative only.** The trail keeps the decisions that set or tested a boundary — gist plus link, index-style. Routine confirmations stay on the tickets they resolved.
-- **Group under subheadings** when natural clusters emerge. If all principles belong to one cohesive area, a flat list is fine.
+## File placement
 
-## Single vs multi-context repos
+`PRINCIPLES.md` follows `CONTEXT.md`'s shape, though vocabulary and principle pressure
+can justify splits independently.
 
-`PRINCIPLES.md` shares `CONTEXT.md`'s shape and infers the structure the same way — but contexts are the shared *unit*, not a shared *trigger*: vocabulary pressure and principle pressure each justify a split independently.
-
-- **`CONTEXT-MAP.md` exists** — multi-context: a `PRINCIPLES.md` beside each context's `CONTEXT.md`, holding the principles local to that context. Principles that span contexts live in a root `PRINCIPLES.md` — the analog of the root `docs/adr/` that holds system-wide decisions. Infer which file the current principle belongs to; if unclear, ask.
-- **No `CONTEXT-MAP.md`** — one `PRINCIPLES.md` at the repo root. A principle that holds only in part of the repo stays here, scoped by its boundaries (`_Does not extend to_`) — no file split needed.
-- **A cluster shares a territorial boundary** — several principles all bounded to the same part of the repo is a bounded context announcing itself: raise it with `/domain-modeling` rather than splitting `PRINCIPLES.md` unilaterally; once the context map records the context, its principles move beside its `CONTEXT.md`.
-- **Create files lazily** — the first adopted principle a file would hold creates it.
+- With `CONTEXT-MAP.md`, put context-local principles beside that context's
+  `CONTEXT.md`; put cross-context principles at the root.
+- Without `CONTEXT-MAP.md`, use one root `PRINCIPLES.md` and express narrower scope
+  through tested boundaries.
+- When several principles share one territorial boundary, raise the emerging bounded
+  context through `/domain-modeling` before splitting files.
+- Create a principles file only when its first principle is adopted.
