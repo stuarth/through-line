@@ -1,15 +1,19 @@
 # Work
 
-Run at most one decision round per session. Completed legwork may be harvested first.
+Run one seed round—or one individual decision when nothing is determined—per session,
+then propagate its verdicts and resolutions to convergence. Exception reviews and
+builder resolutions raised by propagation belong to that cascade. Completed legwork
+may be harvested first.
 
 ## Orient
 
 1. Load `PRINCIPLES.md`, the map, its **Findings**, decision rights, and the tracker
    frontier.
 2. Reconcile completed legwork and tracker state through [Record](./SKILL.md#record).
-3. Classify every frontier decision by principle reach and ownership.
+3. Classify every frontier decision by the reach of adopted principles, local
+   policies, and recorded premises, and by ownership.
 
-Principle reach:
+Reach:
 
 - **Determines** — the recommendation follows with no material judgment.
 - **Constrains** — the principle rules answers out but leaves material judgment.
@@ -35,16 +39,21 @@ validation pass comes first and holds at most three. Claim only the round's tick
 Write each derivation as:
 
 - **Decision right**
-- **Principle** — name it; mark local policies as local
+- **Principle or premise** — name it; mark local policies as local
 - **Scenario**
 - **Implications**
 - **Residual judgment** — `none`; otherwise remove it from the round
 - **Recommendation**
 
 For a human-owned round, first present every ticket name and one-line recommendation
-side by side. Surface incoherence or conflicting pull in that overview. Then present
-one full derivation per turn and wait for its verdict; there is no round-level
-confirmation.
+side by side. Surface incoherence or conflicting pull in that overview, then ask for
+one **exception review** of the listed recommendations. Confirmation resolves only
+those recommendations as presented; a challenged ticket leaves the round and follows
+Rejection. Keep full derivations in the tickets, and expand one in conversation when
+the human asks or must understand an incoherence.
+
+A new principle's validation pass presents its full derivations. Its exception review
+still covers at most three tickets.
 
 For a builder-owned round, complete every derivation, re-check decision-rights
 guardrails, resolve the items that still qualify, and report their overview. Leave
@@ -69,16 +78,51 @@ A wording clarification that preserves the recommendation is confirmation. A lat
 material amendment to a builder-owned answer reopens the ticket and makes its
 replacement human-owned.
 
+## Propagate
+
+After every human verdict or resolved individual decision, and after each round's
+resolutions, propagate the new premise through every remaining open decision ticket
+before presenting another human question:
+
+1. Record the smallest durable premise in the deciding ticket: a non-final premise
+   goes under **Verdict history**; a final premise goes in **Resolution** and its
+   **Decisions so far** gist. When the verdict changes doctrine, its adopted principle
+   or local-policy entry is the durable premise. A decision may become a downstream
+   premise without becoming doctrine; take recurring rhyme through
+   [Admission](./ADMISSION.md) before proposing a principle or local policy.
+2. Reclassify reach and ownership using the new premise:
+   - resolve determined builder-owned decisions inside their guardrails;
+   - collect determined human-owned decisions for the cascade's next Round;
+   - rewrite a constrained ticket's **Question** to name only its residual judgment;
+   - close moot decisions under **Decisions so far**, using the mooting premise as
+     the gist, and close scope departures under **Out of scope**; and
+   - audit a contradicted principle through [Falsify](#falsify).
+3. Keep a ticket blocked whenever a missing fact could change the recommendation.
+4. Record every changed ticket, dependency, map index, and principle evidence trail,
+   then report the propagation delta:
+   - **Resolved**
+   - **Narrowed**
+   - **Still needs human judgment**
+
+Propagation is complete when every open decision has been checked, tracker state
+records every resulting change, and the next human question—if any—states one
+residual judgment.
+
 ## Individual judgment
 
 When nothing is determined, first look for rhyme: a frontier cluster or recent judged
 decisions leaning together. Name that candidate, then read
 [ADMISSION.md](./ADMISSION.md) and take it through the gate before another round.
 
-Without such a cluster, decide one ticket. For human-owned choices use `/grilling`
-and `/domain-modeling`; for builder-owned choices compare credible alternatives and
-resolve only while every guardrail holds. Individual judgment funds derivation; do
-not stretch a principle to avoid it.
+Without such a cluster, decide one ticket. Before asking a human-owned question,
+write its one-sentence residual judgment and move its derived implications and
+builder discretion out of the Question. Present the recommendation and only the
+evidence or trade-off that can change the verdict; use examples when the distinction
+remains ambiguous. If no residual judgment remains, reclassify the ticket as
+determined and collect it for the cascade's next Round. Use `/grilling` and
+`/domain-modeling` for genuine human judgment; for builder-owned choices compare
+credible alternatives and resolve only while every guardrail holds. Individual
+judgment funds derivation; do not stretch a principle to avoid it.
 
 ## Falsify
 
