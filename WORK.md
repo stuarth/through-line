@@ -97,7 +97,11 @@ before presenting another human question:
    - close moot decisions under **Decisions so far**, using the mooting premise as
      the gist, and close scope departures under **Out of scope**; and
    - audit a contradicted principle through [Falsify](#falsify).
-3. Keep a ticket blocked whenever a missing fact could change the recommendation.
+3. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
+   When a ticket claimed by another session would change, leave it read-only, surface
+   the ownership conflict, and coordinate with its assignee before either session
+   resolves it. Keep a ticket blocked whenever a missing fact could change the
+   recommendation.
 4. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
    - **Resolved**
