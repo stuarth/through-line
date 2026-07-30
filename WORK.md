@@ -20,6 +20,9 @@ Reach:
   judgment.
 - **Does not reach** — it has no real bearing.
 
+Treat a non-final premise as constraining only; never use it to determine or moot a
+decision.
+
 Ownership:
 
 - **Human-owned** — reserved by the map's decision rights.
@@ -92,7 +95,9 @@ ticket before presenting another human question:
    premise without becoming doctrine; take recurring rhyme through
    [Admission](./ADMISSION.md) before proposing a principle or local policy.
 2. Reclassify reach and ownership using the new premise:
-   - resolve determined builder-owned decisions inside their guardrails;
+   - resolve determined builder-owned decisions inside their guardrails, naming the
+     determining principle, local policy, or recorded final premise in
+     **Resolution**;
    - collect determined human-owned decisions for the cascade's next Round;
    - rewrite a constrained ticket's **Question** to name only its residual
      judgment, and move the ruled-out choices into **Derived implications** with

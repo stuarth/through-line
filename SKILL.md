@@ -26,10 +26,10 @@ Each map records one working agreement classifying decisions as:
 
 - **Human-owned** — put every decision to the human; use legwork to establish facts.
 - **Builder-owned within guardrails** — resolve without stopping only while the
-  choice is clearly preferable under established facts and adopted principles or
-  local policies, reversible within the map's concrete budget, contained to its
-  scope, and creates no new external interface, domain commitment, or irreversible
-  data effect.
+  choice is clearly preferable under established facts and at least one adopted
+  principle, local policy, or recorded final premise; is reversible within the map's
+  concrete budget; is contained to its scope; and creates no new external interface,
+  domain commitment, or irreversible data effect.
 
 The human always owns the decision rights themselves; destination and scope;
 adoption, revision, boundary, priority, or refutation of a principle or local policy;

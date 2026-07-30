@@ -41,7 +41,7 @@ The direction of the effort is never delegated. You own the destination and scop
 
 A principle has leverage because one statement can decide many cases, which also makes a bad principle unusually expensive. Admission is deliberately slow: each candidate must recur across independent decisions, be atomic, be interpretable by an uninvolved reader familiar with the domain, survive a counterexample, and promise leverage beyond the current destination. The principle itself carries its full meaning in plain domain language; its evidence and example support that meaning.
 
-Once adopted, propagation is fast. After each verdict, the agent checks every remaining decision: determined choices resolve, constrained questions shrink to their residual judgment, and moot choices close. Human-owned consequences that already follow receive one exception review; builder-owned consequences resolve inside the agreed guardrails. The next individual question contains only the product or domain judgment the existing answers could not settle.
+Once adopted, propagation is fast. After each verdict, the agent checks every remaining decision: determined choices resolve, constrained questions shrink to their residual judgment, and moot choices close. A non-final verdict can narrow questions but cannot resolve or moot them; its downstream consequences stay open until the premise becomes final. Human-owned consequences that already follow receive one exception review; builder-owned consequences resolve inside the agreed guardrails. The next individual question contains only the product or domain judgment the existing answers could not settle.
 
 ## Standing principles, local policies
 
@@ -56,7 +56,7 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every human-owned decision ticket puts one residual judgment in its Question and keeps derived implications and builder discretion outside it.
 - Every material factual premise is already in the map's Findings or explicit in the decision's Scenario.
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
-- A round contains one ownership class and only decisions fully determined by an adopted principle, local policy, or recorded premise.
+- A round contains one ownership class and only decisions fully determined by an adopted principle, local policy, or recorded final premise.
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.
