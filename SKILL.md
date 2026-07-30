@@ -96,7 +96,7 @@ guardrails. Split either ticket when a partial resolution is possible.
 For a human-owned ticket, put only its residual judgment in **Question**. Put
 principle-derived consequences in **Derived implications** and below-threshold
 choices in **Builder discretion**; the human verdict covers only the Question.
-Record a non-final verdict under **Verdict history**.
+Record a non-final or superseded verdict under **Verdict history**.
 
 Ticket every sharp human-owned question. Ticket a builder-owned choice only when it
 blocks another mapped decision, tests a principle, or needs a durable record;

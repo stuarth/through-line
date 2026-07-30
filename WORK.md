@@ -79,8 +79,8 @@ before proceeding:
 - principle itself wrong → falsify it.
 
 A wording clarification that preserves the recommendation is confirmation. A later
-material amendment to a builder-owned answer reopens the ticket and makes its
-replacement human-owned.
+material amendment to a final premise follows Propagate's replacement-premise sweep.
+When the amended answer was builder-owned, its replacement becomes human-owned.
 
 ## Propagate
 
@@ -90,11 +90,19 @@ ticket before presenting another human question:
 
 1. Record the smallest durable premise in the deciding ticket: a non-final premise
    goes under **Verdict history**; a final premise goes in **Resolution** and its
-   **Decisions so far** gist. When the verdict changes doctrine, its adopted principle
-   or local-policy entry is the durable premise. A decision may become a downstream
-   premise without becoming doctrine; take recurring rhyme through
-   [Admission](./ADMISSION.md) before proposing a principle or local policy.
-2. Reclassify reach and ownership using the new premise:
+   **Decisions so far** gist. When replacing a final premise, preserve the superseded
+   premise under **Verdict history** before recording its replacement. When the
+   verdict changes doctrine, its adopted principle or local-policy entry is the
+   durable premise. A decision may become a downstream premise without becoming
+   doctrine; take recurring rhyme through [Admission](./ADMISSION.md) before
+   proposing a principle or local policy.
+2. For a final-premise replacement, run the **replacement-premise sweep**. Trace
+   every decision that names the old premise in its derivation,
+   **Derived implications**, **Resolution**, or map gist, including transitively
+   through decisions that became downstream premises. Through the claim protocol
+   below, reopen every closed dependent, remove its stale map entry, and include it
+   in reclassification.
+3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in
      **Resolution**;
@@ -105,14 +113,15 @@ ticket before presenting another human question:
    - close moot decisions under **Decisions so far**, using the mooting premise as
      the gist, and close scope departures under **Out of scope**; and
    - audit a contradicted principle through [Falsify](#falsify).
-3. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
+4. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
    When a ticket claimed by another session would change, leave it read-only, surface
    the ownership conflict, and coordinate with its assignee before either session
    resolves it. Unclaim every still-open ticket claimed for propagation unless this
    session is retaining it for the cascade's next Round. Keep a ticket blocked
    whenever a missing fact could change the recommendation.
-4. Record every changed ticket, dependency, map index, and principle evidence trail,
+5. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
+   - **Reopened**
    - **Resolved**
    - **Narrowed**
    - **Still needs human judgment**
