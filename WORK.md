@@ -8,7 +8,8 @@ Completed legwork may be harvested first.
 ## Orient
 
 1. Load `PRINCIPLES.md`, the map, its **Findings**, decision rights, the tracker
-   frontier, and **Verdict history** from every unresolved decision.
+   frontier, and only `State: active` entries from **Verdict history** in every
+   unresolved decision.
 2. Reconcile completed legwork and tracker state through [Record](./SKILL.md#record).
 3. Classify every frontier decision by the reach of adopted principles, local
    policies, and recorded premises, and by ownership.
@@ -88,22 +89,29 @@ After every human verdict or resolved individual decision, and after each round'
 resolutions, propagate the new premise through every remaining unresolved decision
 ticket before presenting another human question:
 
-1. Record the smallest durable premise in the deciding ticket: a non-final premise
-   goes under **Verdict history**; a final premise goes in **Resolution** and its
-   **Decisions so far** gist. When replacing a final premise, preserve the superseded
-   premise under **Verdict history** before recording its replacement. When the
-   verdict changes doctrine, its adopted principle or local-policy entry is the
-   durable premise. A decision may become a downstream premise without becoming
+1. Record the smallest durable premise in the deciding ticket:
+   - When replacing a final premise, first move the old **Resolution** under
+     **Verdict history** as `State: superseded`.
+   - A non-final premise goes under **Verdict history** as `State: active`; first
+     mark any earlier active entry `State: superseded`. When it replaces a final
+     premise, clear the stale map entry, then reopen the deciding ticket through the
+     claim protocol below.
+   - A final premise goes in **Resolution** and its **Decisions so far** gist.
+   When the verdict changes doctrine, its adopted principle or local-policy entry is
+   the durable premise. A decision may become a downstream premise without becoming
    doctrine; take recurring rhyme through [Admission](./ADMISSION.md) before
    proposing a principle or local policy.
 2. For a final-premise replacement, run the **replacement-premise sweep**. Trace
    every decision that names the old premise in its derivation,
    **Derived implications**, **Resolution**, or map gist, including transitively
    through decisions that became downstream premises. Through the claim protocol
-   below, move each closed dependent's superseded **Resolution** under
-   **Verdict history**, clear that **Resolution** and every implication derived from
-   the old premise, remove its stale map entry, reopen it, and include it in
-   reclassification.
+   below, re-check whether an adopted principle, local policy, or surviving final
+   premise still supports each implication or ruled-out choice. Restore to each
+   dependent's **Question** every choice ruled out only by the old premise, and
+   clear each implication derived from it, re-attributing any that still holds.
+   Include every dependent in reclassification. For each closed dependent, also
+   move its **Resolution** under **Verdict history** as `State: superseded`, clear
+   that **Resolution**, remove its stale map entry, and reopen it.
 3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in
