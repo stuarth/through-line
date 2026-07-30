@@ -101,17 +101,19 @@ ticket before presenting another human question:
    the durable premise. A decision may become a downstream premise without becoming
    doctrine; take recurring rhyme through [Admission](./ADMISSION.md) before
    proposing a principle or local policy.
-2. For a final-premise replacement, run the **replacement-premise sweep**. Trace
-   every decision that names the old premise in its derivation,
+2. Whenever an earlier recorded premise becomes `State: superseded`, run the
+   **replacement-premise sweep**. Trace every decision that names the old premise in
+   its derivation,
    **Derived implications**, **Resolution**, or map gist, including transitively
    through decisions that became downstream premises. Through the claim protocol
-   below, re-check whether an adopted principle, local policy, or surviving final
-   premise still supports each implication or ruled-out choice. Restore to each
-   dependent's **Question** every choice ruled out only by the old premise, and
-   clear each implication derived from it, re-attributing any that still holds.
-   Include every dependent in reclassification. For each closed dependent, also
-   move its **Resolution** under **Verdict history** as `State: superseded`, clear
-   that **Resolution**, remove its stale map entry, and reopen it.
+   below, re-check whether an adopted principle, local policy, surviving active
+   premise, or surviving recorded final premise still supports each implication or
+   ruled-out choice. Restore to each dependent's **Question** every choice ruled out
+   only by the old premise, and clear each implication derived from it,
+   re-attributing any that still holds. Include every dependent in reclassification.
+   For each closed dependent, also move its **Resolution** under **Verdict history**
+   as `State: superseded`, clear that **Resolution**, remove its stale map entry, and
+   reopen it.
 3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in

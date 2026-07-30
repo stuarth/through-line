@@ -10,7 +10,8 @@ interview.
   builder-resolvable choice, with established findings for every material factual
   premise.
 - Propagate each verdict through the remaining decisions before asking the human
-  another question, and transitively reopen dependents when a final premise changes.
+  another question, and transitively reopen dependents when any recorded premise is
+  superseded.
 - Separate resolved findings from decisions on the map and make recording complete
   only when tracker state agrees with reality.
 - Add a validated local-Markdown fallback and map-state checker.
