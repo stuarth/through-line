@@ -8,8 +8,8 @@ Use this fallback only when the repo has no issue-tracker doc.
   decision|research|prototype|task`, `Status: open|claimed|blocked|resolved`, and the
   question under `## Question`. A human-owned decision also separates
   `## Derived implications` and `## Builder discretion` from that one residual
-  judgment, and records any non-final or superseded answer under
-  `## Verdict history`.
+  judgment and records any non-final answer under `## Verdict history`. Any
+  superseded resolution also moves under `## Verdict history`.
 - **Claim:** add `Assignee: <dev>` and set `Status: claimed` before work.
 - **Unclaim:** remove `Assignee` and set `Status: blocked` when an unresolved blocker
   exists, otherwise `Status: open`.

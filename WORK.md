@@ -1,9 +1,9 @@
 # Work
 
-Run one seed round—or one individual decision when nothing is determined—per session,
-then propagate its verdicts and resolutions to convergence. Exception reviews and
-builder resolutions raised by propagation belong to that cascade. Completed legwork
-may be harvested first.
+Run one seed per session: a round, or one individual decision when nothing is
+determined. Then propagate its verdicts and resolutions to convergence. Exception
+reviews and builder resolutions raised by propagation belong to that cascade.
+Completed legwork may be harvested first.
 
 ## Orient
 
@@ -100,8 +100,10 @@ ticket before presenting another human question:
    every decision that names the old premise in its derivation,
    **Derived implications**, **Resolution**, or map gist, including transitively
    through decisions that became downstream premises. Through the claim protocol
-   below, reopen every closed dependent, remove its stale map entry, and include it
-   in reclassification.
+   below, move each closed dependent's superseded **Resolution** under
+   **Verdict history**, clear that **Resolution** and every implication derived from
+   the old premise, remove its stale map entry, reopen it, and include it in
+   reclassification.
 3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in
@@ -116,9 +118,10 @@ ticket before presenting another human question:
 4. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
    When a ticket claimed by another session would change, leave it read-only, surface
    the ownership conflict, and coordinate with its assignee before either session
-   resolves it. Unclaim every still-open ticket claimed for propagation unless this
-   session is retaining it for the cascade's next Round. Keep a ticket blocked
-   whenever a missing fact could change the recommendation.
+   resolves it. Unclaim every unresolved seed ticket unless this session is
+   explicitly continuing it. Unclaim every still-open ticket claimed for propagation
+   unless this session is retaining it for the cascade's next Round. Keep a ticket
+   blocked whenever a missing fact could change the recommendation.
 5. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
    - **Reopened**
