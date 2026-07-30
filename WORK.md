@@ -7,8 +7,8 @@ may be harvested first.
 
 ## Orient
 
-1. Load `PRINCIPLES.md`, the map, its **Findings**, decision rights, and the tracker
-   frontier.
+1. Load `PRINCIPLES.md`, the map, its **Findings**, decision rights, the tracker
+   frontier, and **Verdict history** from every unresolved decision.
 2. Reconcile completed legwork and tracker state through [Record](./SKILL.md#record).
 3. Classify every frontier decision by the reach of adopted principles, local
    policies, and recorded premises, and by ownership.
@@ -16,7 +16,8 @@ may be harvested first.
 Reach:
 
 - **Determines** — the recommendation follows with no material judgment.
-- **Constrains** — the principle or premise rules answers out but leaves material judgment.
+- **Constrains** — the principle or premise rules answers out but leaves material
+  judgment.
 - **Does not reach** — it has no real bearing.
 
 Ownership:
@@ -81,8 +82,8 @@ replacement human-owned.
 ## Propagate
 
 After every human verdict or resolved individual decision, and after each round's
-resolutions, propagate the new premise through every remaining open decision ticket
-before presenting another human question:
+resolutions, propagate the new premise through every remaining unresolved decision
+ticket before presenting another human question:
 
 1. Record the smallest durable premise in the deciding ticket: a non-final premise
    goes under **Verdict history**; a final premise goes in **Resolution** and its
@@ -111,7 +112,7 @@ before presenting another human question:
    - **Narrowed**
    - **Still needs human judgment**
 
-Propagation is complete when every open decision has been checked, tracker state
+Propagation is complete when every unresolved decision has been checked, tracker state
 records every resulting change, and the next human question—if any—states one
 residual judgment.
 
