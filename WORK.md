@@ -102,8 +102,9 @@ before presenting another human question:
 3. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
    When a ticket claimed by another session would change, leave it read-only, surface
    the ownership conflict, and coordinate with its assignee before either session
-   resolves it. Keep a ticket blocked whenever a missing fact could change the
-   recommendation.
+   resolves it. Unclaim every still-open ticket claimed for propagation unless this
+   session is retaining it for the cascade's next Round. Keep a ticket blocked
+   whenever a missing fact could change the recommendation.
 4. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
    - **Resolved**
