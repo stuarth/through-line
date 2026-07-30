@@ -17,10 +17,11 @@ the route's decision tickets.
    human on recurring commitments. Before presenting the first candidate, read
    [ADMISSION.md](./ADMISSION.md) and take each candidate through it one at a time.
 4. **Map breadth-first.** Ticket every sharp human-owned question and each
-   above-threshold builder-owned choice. The frontier is mapped when each decision
-   ticket's **Question** holds one independently rejectable residual judgment,
-   derived implications and builder discretion sit outside it, and the remaining
-   in-scope uncertainty is honestly fog.
+   above-threshold builder-owned choice. The frontier is mapped when each human-owned
+   decision's **Question** holds one independently rejectable residual judgment,
+   each builder-owned decision holds one independently resolvable choice, derived
+   implications and builder discretion sit outside human Questions, and the
+   remaining in-scope uncertainty is honestly fog.
 5. **Create, then wire.** Create the map and currently specifiable tickets, then add
    native blocking edges in a second pass. For pre-existing completed legwork, create
    and claim its ticket, record its resolution, close it, and link it from

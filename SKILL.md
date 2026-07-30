@@ -88,9 +88,10 @@ Each ticket contains one question and carries `through-line:<type>`:
 - **prototype** — a cheap artifact to react to; build AFK, react HITL;
 - **task** — manual legwork such as provisioning or a data move.
 
-A decision ticket is atomic when its **Question** asks for one verdict the human must
-confirm or reject as a whole. Split the Question before presenting if a partial
-verdict is possible.
+A human-owned decision ticket is atomic when its **Question** asks for one verdict
+the human must confirm or reject as a whole. A builder-owned decision ticket is
+atomic when it names one choice the builder can resolve as a whole inside the
+guardrails. Split either ticket when a partial resolution is possible.
 
 For a human-owned ticket, put only its residual judgment in **Question**. Put
 principle-derived consequences in **Derived implications** and below-threshold

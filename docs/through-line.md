@@ -18,7 +18,8 @@ Principles are adopted only by the human and must be falsifiable: the agent can 
 
 The map keeps resolved **Findings** separate from decisions, so a decision can proceed
 only when its material facts are already established or made explicit as assumptions.
-Each ticket holds one independently confirmable choice.
+Each decision ticket stays atomic: one human-confirmable residual judgment or one
+builder-resolvable choice.
 
 ## When to reach for it
 
