@@ -82,10 +82,14 @@ not stretch a principle to avoid it.
 
 ## Falsify
 
-Watch every application for contradicting code, past decisions, or new resolutions.
-Audit a principle on request and whenever two of its derivations are rejected or
-materially amended, exceptions recur, the destination shifts, boundary text outgrows
-the statement, or cited resolutions keep needing material residual judgment.
+A principle is a strong prior, not a law: the deference it earns from its evidence
+yields to stronger contradicting evidence. Watch every application for contradicting
+code, past decisions, or new resolutions; evidence strong enough to contradict the
+statement outright warrants an immediate audit, before any further derivation. Audit
+also on request, and whenever slower signs accumulate: two derivations rejected or
+materially amended, recurring exceptions, a shifted destination, boundary text
+outgrowing the statement, or cited resolutions that keep needing material residual
+judgment.
 
 A surviving counterexample yields a human-adopted boundary, split, or refutation
 through [ADMISSION.md](./ADMISSION.md). Trace the evidence trail to every derived
@@ -96,8 +100,8 @@ ticket and present a review round; the human chooses what to revisit.
 1. Record resolved tickets and principle changes through
    [Record](./SKILL.md#record).
 2. Re-chart: create then wire newly sharp tickets, graduate fog, and close mis-scoped
-   tickets into **Out of scope**.
-3. Run the tracker validator when provided.
+   tickets into **Out of scope**; then take the re-charted tracker through
+   [Record](./SKILL.md#record) again.
 
 When the destination is reached, close the map with a local-policy sweep: record each
 policy's determined derivations, scenario spread, and pre-effort evidence; look for

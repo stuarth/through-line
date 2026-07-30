@@ -14,7 +14,7 @@ npx skills update through-line
 
 `through-line` takes a huge effort full of apparently separate decisions, finds the recurring commitments beneath them, and turns those commitments into standing principles in `PRINCIPLES.md`. It then uses the adopted principles to derive batches of open decisions under decision rights you agree once for the effort, so the effort stays coherent without making every choice from scratch.
 
-Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer.
+Principles are adopted only by the human and must be falsifiable: the agent can propose, challenge, and derive from them, but it cannot quietly add doctrine or stretch a principle to cover a convenient answer. An adopted principle is a strong prior, not an inviolable law — derivation defers to it by default, and evidence strong enough to contradict it triggers a re-examination rather than a forced derivation.
 
 The map keeps resolved **Findings** separate from decisions, so a decision can proceed
 only when its material facts are already established or made explicit as assumptions.
@@ -46,7 +46,7 @@ Once adopted, derivation is fast. Frontier tickets are classified by whether a p
 
 The altitude test keeps `PRINCIPLES.md` from turning into a rule dump: if violating a commitment would make the system wrong about its domain, it may be a standing principle; if it would only make this effort inconsistent, it belongs on the map as a local policy. Local policies get the same derivation power for the current route but die with the map unless later, independent evidence earns promotion.
 
-When a principle stops predicting good answers, the skill treats that as evidence rather than friction. Rejected derivations and counterexamples trigger a boundary, split, or refutation, followed by a review of decisions previously derived from it.
+When a principle stops predicting good answers, the skill treats that as evidence rather than friction. Repeated rejected derivations, or a single application that meets strong enough contradicting evidence, trigger a boundary, split, or refutation, followed by a review of decisions previously derived from it. Re-examination is still adoption: the human confirms any change to the principle.
 
 ## It's working if
 

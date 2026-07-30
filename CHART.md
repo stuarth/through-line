@@ -19,8 +19,8 @@ the route's decision tickets.
    native blocking edges in a second pass. For pre-existing completed legwork, create
    and claim its ticket, record its resolution, close it, and link it from
    **Findings**. Fire one `/research` agent per new research ticket.
-6. **Validate and stop.** Run the tracker validator when provided. Charting is one
-   session: stop before resolving any route decision.
+6. **Validate and stop.** Take the new map through [Record](./SKILL.md#record).
+   Charting is one session: stop before resolving any route decision.
 
 If breadth-first grilling produces no fog and the whole journey fits one session,
 skip the map and ask the human how to proceed.
