@@ -7,14 +7,21 @@ the route's decision tickets.
    decision, or change the effort is finding its way to. The human adopts its scope.
 2. **Set decision rights.** Propose one posture using the repo background and the
    destination: reversal budget, protected classes, and escalation conditions
-   included. The human confirms it once every known decision class can be classified.
+   included. Define protected classes by consequence—domain meaning, external
+   behaviour, irreversible effect, or reversal cost—rather than by implementation
+   noun. Keep internal representations builder-owned when they implement meaning
+   already settled by principles or resolved decisions within the reversal budget,
+   unless the human reserves them. The human confirms the posture once every known
+   decision class can be classified.
 3. **Distill first.** Mine prior decisions, ADRs, code, and closed maps; grill the
    human on recurring commitments. Before presenting the first candidate, read
    [ADMISSION.md](./ADMISSION.md) and take each candidate through it one at a time.
 4. **Map breadth-first.** Ticket every sharp human-owned question and each
-   above-threshold builder-owned choice. The frontier is mapped when each decision
-   ticket holds one independently rejectable choice and the remaining in-scope
-   uncertainty is honestly fog.
+   above-threshold builder-owned choice. The frontier is mapped when each human-owned
+   decision's **Question** holds one independently rejectable residual judgment,
+   each builder-owned decision holds one independently resolvable choice, derived
+   implications and builder discretion sit outside human Questions, and the
+   remaining in-scope uncertainty is honestly fog.
 5. **Create, then wire.** Create the map and currently specifiable tickets, then add
    native blocking edges in a second pass. For pre-existing completed legwork, create
    and claim its ticket, record its resolution, close it, and link it from
