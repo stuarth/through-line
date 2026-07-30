@@ -16,8 +16,5 @@ Use this fallback only when the repo has no issue-tracker doc.
 - **Resolve:** append `## Resolution`, set `Status: resolved`, retain the assignee,
   then update the map through [Record](../SKILL.md#record).
 
-Create child files first, then wire blockers once their numbers exist. In prose, use
-ticket names and links; bare numbers are tracker metadata only.
-
-After charting or recording, run the bundled
-[state validator](../scripts/validate_local_map.py) against the map.
+Create child files first, then wire blockers once their numbers exist. Bare numbers
+are tracker metadata only.

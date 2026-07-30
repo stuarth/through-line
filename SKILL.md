@@ -130,6 +130,9 @@ placement follow [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md).
   except through [ADMISSION.md](./ADMISSION.md) and the human's explicit adoption.
 - **Falsifiable only.** A principle must forbid a plausible decision; otherwise
   sharpen it or leave it out.
+- **Priors, not laws.** An adopted principle is a strong prior earned by its
+  evidence, not an inviolable rule: derive under it by default, and take evidence
+  strong enough to contradict it through [Falsify](./WORK.md#falsify).
 
 An ADR records one hard-to-reverse decision and its trade-off; a principle distills
 several decisions. Cross-cite them.
