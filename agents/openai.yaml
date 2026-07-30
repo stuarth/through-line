@@ -1,5 +1,5 @@
 interface:
   display_name: "Through-line"
-  short_description: "Propagate verdicts along a large effort's through-line"
+  short_description: "Drive a large effort by propagating verdicts along its through-line"
 policy:
   allow_implicit_invocation: false

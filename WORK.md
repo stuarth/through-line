@@ -16,7 +16,7 @@ may be harvested first.
 Reach:
 
 - **Determines** — the recommendation follows with no material judgment.
-- **Constrains** — the principle rules answers out but leaves material judgment.
+- **Constrains** — the principle or premise rules answers out but leaves material judgment.
 - **Does not reach** — it has no real bearing.
 
 Ownership:
@@ -93,7 +93,9 @@ before presenting another human question:
 2. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails;
    - collect determined human-owned decisions for the cascade's next Round;
-   - rewrite a constrained ticket's **Question** to name only its residual judgment;
+   - rewrite a constrained ticket's **Question** to name only its residual
+     judgment, and move the ruled-out choices into **Derived implications** with
+     the determining principle or premise;
    - close moot decisions under **Decisions so far**, using the mooting premise as
      the gist, and close scope departures under **Out of scope**; and
    - audit a contradicted principle through [Falsify](#falsify).
