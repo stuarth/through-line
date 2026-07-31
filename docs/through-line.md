@@ -86,7 +86,7 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
-- Work that lands in a repository is discoverable from the tracker alone: the claim names the repository and branch, and the resolution links the durable commits or pull request.
+- Work that lands in a repository is discoverable from the tracker alone: the claim names the repository and branch, and the resolution records the durable commits or pull request.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.
 
 ## Where it fits

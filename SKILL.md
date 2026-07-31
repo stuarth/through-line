@@ -133,8 +133,9 @@ Recording is done when the tracker agrees with reality:
 - every claimed or resolved ticket has an assignee, and open or blocked tickets do
   not;
 - every resolved ticket is closed with its resolution;
-- every resolved ticket that landed work in a repository links the durable commits
-  or pull request in **Resolution**;
+- every resolved ticket that landed work in a repository records the durable
+  commits or pull request in **Resolution**—linked when a remote exists, by hash
+  otherwise;
 - every resolved decision records provenance in **Resolution**: a human verdict is
   quoted or linked from its durable artifact; otherwise name the adopted principle,
   local policy, or recorded final premise that justified, determined, or mooted the
