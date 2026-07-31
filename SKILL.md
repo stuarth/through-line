@@ -18,6 +18,8 @@ scope.
 ## Invocation
 
 - Invoked with a loose idea: read [CHART.md](./CHART.md) and follow it.
+- Invoked with an existing map and a request to **advance unattended**: read
+  [SUPERVISE.md](./SUPERVISE.md) and follow it.
 - Invoked with an existing map: read [WORK.md](./WORK.md) and follow it.
 
 ## Decision rights
@@ -93,6 +95,10 @@ the human must confirm or reject as a whole. A builder-owned decision ticket is
 atomic when it names one choice the builder can resolve as a whole inside the
 guardrails. Split either ticket when a partial resolution is possible.
 
+When work inside any ticket exposes a separable human-owned judgment, create its
+atomic decision ticket, wire it as a blocker, and unclaim the exposing ticket until
+that decision resolves.
+
 For a human-owned ticket, put only its residual judgment in **Question**. Put
 principle-derived consequences in **Derived implications** and below-threshold
 choices in **Builder discretion**; the human verdict covers only the Question.
@@ -111,9 +117,12 @@ Sharp enough to state means **ticket**, even when blocked. Otherwise it remains 
 do not pre-slice fog. Work beyond the destination goes to **Out of scope**. Close a
 mis-scoped ticket with its gist and reason there, never in the route indexes.
 
-Claim a ticket by assigning it before any work. Use the tracker's native dependencies
-so the **frontier** is the open, unblocked, unclaimed set. Link assets from tickets
-rather than pasting them into the body.
+Claim an unresolved ticket by assigning it before any work; an unresolved ticket
+already assigned to another session is claimed—surface the conflict rather than
+reassign it. An assignee retained on a resolved ticket is attribution, not an active
+claim; clear it before reopening the ticket, then claim the reopened ticket normally.
+Use the tracker's native dependencies so the **frontier** is the open, unblocked,
+unclaimed set. Link assets from tickets rather than pasting them into the body.
 
 ## Record
 
@@ -122,6 +131,10 @@ Recording is done when the tracker agrees with reality:
 - every claimed or resolved ticket has an assignee, and open or blocked tickets do
   not;
 - every resolved ticket is closed with its resolution;
+- every resolved decision records provenance in **Resolution**: a human verdict is
+  quoted or linked from its durable artifact; otherwise name the adopted principle,
+  local policy, or recorded final premise that justified, determined, or mooted the
+  closure;
 - **Decisions so far** indexes exactly the closed in-scope decision tickets;
 - **Findings** indexes exactly the closed in-scope research, prototype, and task
   tickets;
@@ -151,5 +164,10 @@ placement follow [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md).
 An ADR records one hard-to-reverse decision and its trade-off; a principle distills
 several decisions. Cross-cite them.
 
-Expect concurrent sessions. The tracker, map, and principles—not the conversation—are
-the shared state.
+Expect concurrent sessions and delegates. The tracker, map, and principles—not the
+conversation—are the shared state. Delegate a bounded research, prototype, or task
+ticket when it can proceed without further judgment. A delegate works only that
+selected ticket; the coordinating session retains human-owned questions, propagation,
+and tracker reconciliation. Give each delegate its ticket, the premises that reach
+it, required references, and verification commands. Include conversation excerpts
+only when the assigned work depends on a prior exchange.

@@ -1,9 +1,12 @@
 # Work
 
-Run one seed per session: a round, or one individual decision when nothing is
-determined. Then propagate its verdicts and resolutions to convergence. Exception
-reviews and builder resolutions raised by propagation belong to that cascade.
-Completed legwork may be harvested first.
+Run exactly one of the following per session: one round; one individual decision
+ticket when nothing is determined; one research or prototype ticket; or, when
+execution is in scope, one task ticket. Then propagate its verdicts and resolutions
+to convergence. Exception reviews and builder resolutions raised by propagation
+belong to that session's cascade; completed legwork may be harvested first.
+Finishing one listed round or ticket and its cascade is a stop condition: an
+automatic continuation, compaction, or resumed turn is still the same session.
 
 ## Orient
 
@@ -27,7 +30,7 @@ decision.
 Ownership:
 
 - **Human-owned** — reserved by the map's decision rights.
-- **Builder-owned** — every delegation guardrail holds.
+- **Builder-owned** — every decision-rights guardrail holds.
 
 A decision is resolvable only when every material factual premise appears in
 **Findings** or is stated as an explicit assumption in its Scenario. This includes
@@ -52,10 +55,12 @@ Write each derivation as:
 
 For a human-owned round, first present every ticket name and one-line recommendation
 side by side. Surface incoherence or conflicting pull in that overview, then ask for
-one **exception review** of the listed recommendations. Confirmation resolves only
-those recommendations as presented; a challenged ticket leaves the round and follows
-Rejection. Keep full derivations in the tickets, and expand one in conversation when
-the human asks or must understand an incoherence.
+one **exception review** of the listed recommendations. Resolve the round only from
+an explicit verdict on that overview. Silence, an automatic continuation, a generic
+"continue" or "next ticket", and earlier approval of a plan or graph carry no verdict.
+Confirmation resolves only those recommendations as presented; a challenged ticket
+leaves the round and follows Rejection. Keep full derivations in the tickets, and
+expand one in conversation when the human asks or must understand an incoherence.
 
 A new principle's validation pass presents its full derivations. Its exception review
 still covers at most three tickets.
@@ -85,11 +90,14 @@ When the amended answer was builder-owned, its replacement becomes human-owned.
 
 ## Propagate
 
-After every human verdict or resolved individual decision, and after each round's
-resolutions, propagate the new premise through every remaining unresolved decision
-ticket before presenting another human question:
+After every human verdict or resolved individual decision, after every resolved
+research, prototype, or task ticket, and after each round's resolutions, propagate the
+new premise or Finding through every remaining unresolved decision ticket before
+presenting another human question:
 
-1. Record the smallest durable premise in the deciding ticket:
+1. Record the session's smallest durable result:
+   - A research, prototype, or task ticket goes in **Resolution** and its **Findings**
+     gist.
    - When replacing a final premise, first move the old **Resolution** under
      **Verdict history** as `State: superseded`.
    - A non-final premise goes under **Verdict history** as `State: active`; first
@@ -113,7 +121,7 @@ ticket before presenting another human question:
    re-attributing any that still holds. Include every dependent in reclassification.
    For each closed dependent, also move its **Resolution** under **Verdict history**
    as `State: superseded`, clear that **Resolution**, remove its stale map entry, and
-   reopen it.
+   clear its retained assignee before reopening it.
 3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in
@@ -128,10 +136,11 @@ ticket before presenting another human question:
 4. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
    When a ticket claimed by another session would change, leave it read-only, surface
    the ownership conflict, and coordinate with its assignee before either session
-   resolves it. Unclaim every unresolved seed ticket unless this session is
-   explicitly continuing it. Unclaim every still-open ticket claimed for propagation
-   unless this session is retaining it for the cascade's next Round. Keep a ticket
-   blocked whenever a missing fact could change the recommendation.
+   resolves it. Unclaim every unresolved ticket initially claimed for this session
+   unless the cascade is explicitly continuing it. Unclaim every still-open ticket
+   claimed for propagation unless this session is retaining it for the cascade's next
+   Round. Keep a ticket blocked whenever a missing fact could change the
+   recommendation.
 5. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
    - **Reopened**
@@ -181,6 +190,8 @@ ticket and present a review round; the human chooses what to revisit.
 2. Re-chart: create then wire newly sharp tickets, graduate fog, and close mis-scoped
    tickets into **Out of scope**; then take the re-charted tracker through
    [Record](./SKILL.md#record) again.
+3. Report the frontier and stop. A fresh session resumes from the tracker and takes
+   the next round or ticket.
 
 When the destination is reached, close the map with a local-policy sweep: record each
 policy's determined derivations, scenario spread, and pre-effort evidence; look for
