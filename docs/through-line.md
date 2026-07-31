@@ -46,7 +46,7 @@ Once adopted, propagation is fast. After each verdict, the agent checks every re
 ## One seed, one session
 
 Each session spends one seed: a determined round, one individual decision when
-nothing is determined, one research ticket, or one prototype or task ticket when
+nothing is determined, one research or prototype ticket, or one task ticket when
 execution is in scope. Propagation triggered by that seed belongs to the same unit.
 Once the map is reconciled and re-charted, the agent reports the frontier and stops;
 a fresh session reloads the durable state before taking the next seed. Automatic

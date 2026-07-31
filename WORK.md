@@ -1,7 +1,7 @@
 # Work
 
 A seed is one round; one individual decision when nothing is determined; one
-research ticket; or, when execution is in scope, one prototype or task ticket. Run
+research or prototype ticket; or, when execution is in scope, one task ticket. Run
 one seed per session, then propagate its verdicts and resolutions to convergence.
 Exception reviews and builder resolutions raised by propagation belong to that
 seed's cascade; completed legwork may be harvested first. One seed per session is a
@@ -30,7 +30,7 @@ decision.
 Ownership:
 
 - **Human-owned** — reserved by the map's decision rights.
-- **Builder-owned** — every delegation guardrail holds.
+- **Builder-owned** — every decision-rights guardrail holds.
 
 A decision is resolvable only when every material factual premise appears in
 **Findings** or is stated as an explicit assumption in its Scenario. This includes
