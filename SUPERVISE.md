@@ -13,18 +13,22 @@ conversation.
 
 1. Refresh the map, decision rights, tracker frontier, and active claims after the
    previous worker finishes.
-2. Stop and present the frontier when progress requires:
+2. If the destination is reached or the map is closed, report completion and stop.
+   If the frontier is empty, report whether no unresolved mapped work or fog remains
+   (completion) or what prevents progress—blocked or claimed tickets, or fog not yet
+   sharp enough to ticket—then stop.
+3. Stop and present the frontier when progress requires:
    - a human-owned verdict or exception review;
    - principle or local-policy admission, revision, boundary, or falsification;
    - a destination, scope, priority, or decision-rights change;
    - resolution of an external blocker or ownership conflict; or
    - work outside the map's execution scope.
-3. Otherwise select one non-human round or ticket from the current frontier:
+4. Otherwise select one non-human round or ticket from the current frontier:
    - one round of determined builder-owned decisions;
    - one builder-owned individual decision;
    - one research or prototype ticket; or
    - one task ticket when execution is in scope.
-4. Start a fresh, minimal-context worker session for that selection. Give it the map,
+5. Start a fresh, minimal-context worker session for that selection. Give it the map,
    the exact ticket or round, the premises that reach it, required references, and
    verification commands. Tell it to follow `WORK.md`: claim the ticket or every
    ticket in the round, advance it as far as the workflow permits, propagate and
@@ -32,7 +36,7 @@ conversation.
    is unattended: nothing it receives carries a human verdict or adoption, so
    determined human-owned decisions, residual questions, and admission candidates
    stay open on the frontier.
-5. Wait for the worker to finish, then treat the tracker—not its conversation—as the
+6. Wait for the worker to finish, then treat the tracker—not its conversation—as the
    result. Reload durable state and repeat from step 1 without asking the human to
    continue.
 

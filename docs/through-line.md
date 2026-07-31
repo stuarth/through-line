@@ -63,9 +63,10 @@ To keep moving without approving each non-human ticket, invoke `/through-line` w
 an existing map and say **advance unattended**. A lightweight supervisor starts a
 fresh Work session for each round or ticket and reloads the tracker between them. It
 continues through builder-owned decisions, factual or prototype legwork, and task
-tickets when execution is in scope, then returns when the frontier genuinely needs
-human judgment, doctrine, scope, external input, or a conflict resolved. This
-preserves the context boundary without making the human act as the session scheduler.
+tickets when execution is in scope, then returns when the destination is reached or
+the frontier genuinely needs human judgment, doctrine, scope, external input, or a
+conflict resolved. This preserves the context boundary without making the human act
+as the session scheduler.
 
 ## Standing principles, local policies
 

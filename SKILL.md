@@ -117,10 +117,12 @@ Sharp enough to state means **ticket**, even when blocked. Otherwise it remains 
 do not pre-slice fog. Work beyond the destination goes to **Out of scope**. Close a
 mis-scoped ticket with its gist and reason there, never in the route indexes.
 
-Claim a ticket by assigning it before any work; a ticket already assigned to another
-session is claimed—surface the conflict rather than reassign it. Use the tracker's
-native dependencies so the **frontier** is the open, unblocked, unclaimed set. Link
-assets from tickets rather than pasting them into the body.
+Claim an unresolved ticket by assigning it before any work; an unresolved ticket
+already assigned to another session is claimed—surface the conflict rather than
+reassign it. An assignee retained on a resolved ticket is attribution, not an active
+claim; clear it before reopening the ticket, then claim the reopened ticket normally.
+Use the tracker's native dependencies so the **frontier** is the open, unblocked,
+unclaimed set. Link assets from tickets rather than pasting them into the body.
 
 ## Record
 

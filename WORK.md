@@ -121,7 +121,7 @@ presenting another human question:
    re-attributing any that still holds. Include every dependent in reclassification.
    For each closed dependent, also move its **Resolution** under **Verdict history**
    as `State: superseded`, clear that **Resolution**, remove its stale map entry, and
-   reopen it.
+   clear its retained assignee before reopening it.
 3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in
