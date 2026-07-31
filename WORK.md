@@ -190,8 +190,7 @@ ticket and present a review round; the human chooses what to revisit.
    tickets into **Out of scope**; then take the re-charted tracker through
    [Record](./SKILL.md#record) again.
 3. Report the frontier and stop. The session's seed is spent. A fresh session resumes
-   from the tracker and takes the next seed; the human overrides this boundary only
-   by naming it or the next seed.
+   from the tracker and takes the next seed.
 
 When the destination is reached, close the map with a local-policy sweep: record each
 policy's determined derivations, scenario spread, and pre-effort evidence; look for
