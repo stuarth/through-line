@@ -52,6 +52,13 @@ reconciled and re-charted, the agent reports the frontier and stops; a fresh ses
 reloads the durable state before taking the next seed. Automatic continuation,
 compaction, and resumed turns do not widen that boundary.
 
+Delegation does not move the through-line control loop. A bounded research,
+prototype, or task ticket can go to a delegate when it needs no further judgment;
+the owning session still selects the seed, asks human-owned questions, propagates
+the result, and reconciles the tracker. Each delegate receives its ticket, the
+premises that reach it, required references, and verification commands rather than
+the whole conversation.
+
 ## Standing principles, local policies
 
 The altitude test keeps `PRINCIPLES.md` from turning into a rule dump: if violating a commitment would make the system wrong about its domain, it may be a standing principle; if it would only make this effort inconsistent, it belongs on the map as a local policy. Local policies get the same derivation power for the current route but die with the map unless later, independent evidence earns promotion.
