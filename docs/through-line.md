@@ -46,11 +46,11 @@ Once adopted, propagation is fast. After each verdict, the agent checks every re
 ## One seed, one session
 
 Each session spends one seed: a determined round, one individual decision when
-nothing is determined, or one research, prototype, or task ticket when execution is
-in scope. Propagation triggered by that seed belongs to the same unit. Once the map is
-reconciled and re-charted, the agent reports the frontier and stops; a fresh session
-reloads the durable state before taking the next seed. Automatic continuation,
-compaction, and resumed turns do not widen that boundary.
+nothing is determined, one research ticket, or one prototype or task ticket when
+execution is in scope. Propagation triggered by that seed belongs to the same unit.
+Once the map is reconciled and re-charted, the agent reports the frontier and stops;
+a fresh session reloads the durable state before taking the next seed. Automatic
+continuation, compaction, and resumed turns do not widen that boundary.
 
 Delegation does not move the through-line control loop. A bounded research,
 prototype, or task ticket can go to a delegate when it needs no further judgment;
@@ -74,7 +74,7 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
 - A round contains one ownership class and only decisions fully determined by an adopted principle, local policy, or recorded final premise.
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
-- Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the determining principle, local policy, or final premise.
+- Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each session ends after one seed and its propagation cascade, with the next frontier recorded for a fresh session.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.

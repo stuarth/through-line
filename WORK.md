@@ -1,11 +1,12 @@
 # Work
 
-A seed is one round; one individual decision when nothing is determined; or, when
-execution is in scope, one research, prototype, or task ticket. Run one seed
-per session, then propagate its verdicts and resolutions to convergence. Exception
-reviews and builder resolutions raised by propagation belong to that seed's cascade;
-completed legwork may be harvested first. One seed per session is a stop condition:
-an automatic continuation, compaction, or resumed turn is still the same session.
+A seed is one round; one individual decision when nothing is determined; one
+research ticket; or, when execution is in scope, one prototype or task ticket. Run
+one seed per session, then propagate its verdicts and resolutions to convergence.
+Exception reviews and builder resolutions raised by propagation belong to that
+seed's cascade; completed legwork may be harvested first. One seed per session is a
+stop condition: an automatic continuation, compaction, or resumed turn is still the
+same session.
 
 ## Orient
 
@@ -89,11 +90,14 @@ When the amended answer was builder-owned, its replacement becomes human-owned.
 
 ## Propagate
 
-After every human verdict or resolved individual decision, and after each round's
-resolutions, propagate the new premise through every remaining unresolved decision
-ticket before presenting another human question:
+After every human verdict or resolved individual decision, after every resolved
+research, prototype, or task seed, and after each round's resolutions, propagate the
+new premise or Finding through every remaining unresolved decision ticket before
+presenting another human question:
 
-1. Record the smallest durable premise in the deciding ticket:
+1. Record the seed's smallest durable result:
+   - A research, prototype, or task seed goes in **Resolution** and its **Findings**
+     gist.
    - When replacing a final premise, first move the old **Resolution** under
      **Verdict history** as `State: superseded`.
    - A non-final premise goes under **Verdict history** as `State: active`; first

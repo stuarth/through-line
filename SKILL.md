@@ -126,10 +126,10 @@ Recording is done when the tracker agrees with reality:
 - every claimed or resolved ticket has an assignee, and open or blocked tickets do
   not;
 - every resolved ticket is closed with its resolution;
-- every resolved decision records provenance: a human-owned **Resolution** quotes the
-  human's actual verdict or links its durable artifact, and a builder-owned
-  **Resolution** names its determining principle, local policy, or recorded final
-  premise;
+- every resolved decision records provenance in **Resolution**: a human verdict is
+  quoted or linked from its durable artifact; otherwise name the adopted principle,
+  local policy, or recorded final premise that justified, determined, or mooted the
+  closure;
 - **Decisions so far** indexes exactly the closed in-scope decision tickets;
 - **Findings** indexes exactly the closed in-scope research, prototype, and task
   tickets;
