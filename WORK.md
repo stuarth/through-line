@@ -1,9 +1,11 @@
 # Work
 
-Run one seed per session: a round, or one individual decision when nothing is
-determined. Then propagate its verdicts and resolutions to convergence. Exception
-reviews and builder resolutions raised by propagation belong to that cascade.
-Completed legwork may be harvested first.
+A seed is one round; one individual decision when nothing is determined; or, when
+execution is in scope, one research, prototype, or task ticket. Run one seed
+per session, then propagate its verdicts and resolutions to convergence. Exception
+reviews and builder resolutions raised by propagation belong to that seed's cascade;
+completed legwork may be harvested first. One seed per session is a stop condition:
+an automatic continuation, compaction, or resumed turn is still the same session.
 
 ## Orient
 
@@ -52,10 +54,12 @@ Write each derivation as:
 
 For a human-owned round, first present every ticket name and one-line recommendation
 side by side. Surface incoherence or conflicting pull in that overview, then ask for
-one **exception review** of the listed recommendations. Confirmation resolves only
-those recommendations as presented; a challenged ticket leaves the round and follows
-Rejection. Keep full derivations in the tickets, and expand one in conversation when
-the human asks or must understand an incoherence.
+one **exception review** of the listed recommendations. Resolve the round only from
+an explicit verdict on that overview. Silence, an automatic continuation, a generic
+"continue" or "next ticket", and earlier approval of a plan or graph carry no verdict.
+Confirmation resolves only those recommendations as presented; a challenged ticket
+leaves the round and follows Rejection. Keep full derivations in the tickets, and
+expand one in conversation when the human asks or must understand an incoherence.
 
 A new principle's validation pass presents its full derivations. Its exception review
 still covers at most three tickets.
@@ -181,6 +185,9 @@ ticket and present a review round; the human chooses what to revisit.
 2. Re-chart: create then wire newly sharp tickets, graduate fog, and close mis-scoped
    tickets into **Out of scope**; then take the re-charted tracker through
    [Record](./SKILL.md#record) again.
+3. Report the frontier and stop. The session's seed is spent. A fresh session resumes
+   from the tracker and takes the next seed; the human overrides this boundary only
+   by naming it or the next seed.
 
 When the destination is reached, close the map with a local-policy sweep: record each
 policy's determined derivations, scenario spread, and pre-effort evidence; look for

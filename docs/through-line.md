@@ -43,6 +43,15 @@ A principle has leverage because one statement can decide many cases, which also
 
 Once adopted, propagation is fast. After each verdict, the agent checks every remaining decision: determined choices resolve, constrained questions shrink to their residual judgment, and moot choices close. A non-final verdict can narrow questions but cannot resolve or moot them; its downstream consequences stay open until the premise becomes final. If an earlier premise is superseded, the agent traces its named dependents transitively, reopens closed ones, and rechecks them before propagating the replacement. Human-owned consequences that already follow receive one exception review; builder-owned consequences resolve inside the agreed guardrails. The next individual question contains only the product or domain judgment the existing answers could not settle.
 
+## One seed, one session
+
+Each session spends one seed: a determined round, one individual decision when
+nothing is determined, or one research, prototype, or task ticket when execution is
+in scope. Propagation triggered by that seed belongs to the same unit. Once the map is
+reconciled and re-charted, the agent reports the frontier and stops; a fresh session
+reloads the durable state before taking the next seed. Automatic continuation,
+compaction, and resumed turns do not widen that boundary.
+
 ## Standing principles, local policies
 
 The altitude test keeps `PRINCIPLES.md` from turning into a rule dump: if violating a commitment would make the system wrong about its domain, it may be a standing principle; if it would only make this effort inconsistent, it belongs on the map as a local policy. Local policies get the same derivation power for the current route but die with the map unless later, independent evidence earns promotion.
@@ -58,6 +67,8 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - The map names a destination, while `PRINCIPLES.md` holds only guidance that survives beyond that destination.
 - A round contains one ownership class and only decisions fully determined by an adopted principle, local policy, or recorded final premise.
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
+- Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the determining principle, local policy, or final premise.
+- Each session ends after one seed and its propagation cascade, with the next frontier recorded for a fresh session.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.
 

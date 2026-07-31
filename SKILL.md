@@ -93,6 +93,10 @@ the human must confirm or reject as a whole. A builder-owned decision ticket is
 atomic when it names one choice the builder can resolve as a whole inside the
 guardrails. Split either ticket when a partial resolution is possible.
 
+When work inside any ticket exposes a separable human-owned judgment, create its
+atomic decision ticket, wire it as a blocker, and unclaim the exposing ticket until
+that decision resolves.
+
 For a human-owned ticket, put only its residual judgment in **Question**. Put
 principle-derived consequences in **Derived implications** and below-threshold
 choices in **Builder discretion**; the human verdict covers only the Question.
@@ -122,6 +126,10 @@ Recording is done when the tracker agrees with reality:
 - every claimed or resolved ticket has an assignee, and open or blocked tickets do
   not;
 - every resolved ticket is closed with its resolution;
+- every resolved decision records provenance: a human-owned **Resolution** quotes the
+  human's actual verdict or links its durable artifact, and a builder-owned
+  **Resolution** names its determining principle, local policy, or recorded final
+  premise;
 - **Decisions so far** indexes exactly the closed in-scope decision tickets;
 - **Findings** indexes exactly the closed in-scope research, prototype, and task
   tickets;
@@ -151,5 +159,7 @@ placement follow [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md).
 An ADR records one hard-to-reverse decision and its trade-off; a principle distills
 several decisions. Cross-cite them.
 
-Expect concurrent sessions. The tracker, map, and principles—not the conversation—are
-the shared state.
+Expect concurrent sessions and delegates. The tracker, map, and principles—not the
+conversation—are the shared state. Give each delegate its ticket, the premises that
+reach it, required references, and verification commands. Include conversation
+excerpts only when the assigned work depends on a prior exchange.
