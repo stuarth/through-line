@@ -12,7 +12,9 @@ Use this fallback only when the repo has no issue-tracker doc.
   superseded resolution also moves under `## Verdict history`. Mark each history
   entry `State: active|finalized|superseded`; only `active` entries are premises.
 - **Claim:** when no assignee exists on an unresolved ticket, add `Assignee: <dev>`
-  and set `Status: claimed` before work. An existing assignee on an unresolved
+  and set `Status: claimed` before work. Work that lands in a repository also adds
+  `Repository: <repo>` when the map spans more than one, and `Branch: <branch>` once
+  it exists. An existing assignee on an unresolved
   ticket is a claim; surface the conflict rather than replacing it. An assignee
   retained on a resolved ticket is attribution, not a claim; remove it before
   reopening the ticket, then claim normally.
