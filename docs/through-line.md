@@ -52,12 +52,10 @@ Once the map is reconciled and re-charted, the agent reports the frontier and st
 a fresh session reloads the durable state before taking the next seed. Automatic
 continuation, compaction, and resumed turns do not widen that boundary.
 
-Delegation does not move the through-line control loop. A bounded research,
-prototype, or task ticket can go to a delegate when it needs no further judgment;
-that delegate works only the selected seed. The coordinating session still selects
-the seed, asks human-owned questions, propagates the result, and reconciles the
-tracker. Each delegate receives its ticket, the premises that reach it, required
-references, and verification commands rather than the whole conversation.
+Delegation parallelizes legwork, not the through-line itself. Each delegate stays
+within one selected seed, and the coordinating session carries its result back into
+durable shared state. This prevents parallel work from multiplying judgment loops or
+making conversation history part of the map.
 
 ## Standing principles, local policies
 
