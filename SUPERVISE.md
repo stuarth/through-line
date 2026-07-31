@@ -13,10 +13,11 @@ conversation.
 
 1. Refresh the map, decision rights, tracker frontier, and active claims after the
    previous worker finishes.
-2. If the destination is reached or the map is closed, report completion and stop.
-   If the frontier is empty, report whether no unresolved mapped work or fog remains
-   (completion) or what prevents progress—blocked or claimed tickets, or fog not yet
-   sharp enough to ticket—then stop.
+2. If the map is closed, report completion and stop. If the destination is reached
+   but the map remains open, report the closeout sweep, admission candidates, or
+   other work preventing closure, then stop. If the frontier is empty, report why no
+   Work session can start: blocked or claimed tickets, fog not yet sharp enough to
+   ticket, or a tracker/map reconciliation or closeout need. Then stop.
 3. Stop and present the frontier when progress requires:
    - a human-owned verdict or exception review;
    - principle or local-policy admission, revision, boundary, or falsification;
