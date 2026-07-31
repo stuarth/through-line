@@ -119,7 +119,9 @@ mis-scoped ticket with its gist and reason there, never in the route indexes.
 
 Claim an unresolved ticket by assigning it before any work; an unresolved ticket
 already assigned to another session is claimed—surface the conflict rather than
-reassign it. An assignee retained on a resolved ticket is attribution, not an active
+reassign it. A claim on work that lands in a repository also records where: the
+repository when the map spans more than one, and the working branch once it exists.
+An assignee retained on a resolved ticket is attribution, not an active
 claim; clear it before reopening the ticket, then claim the reopened ticket normally.
 Use the tracker's native dependencies so the **frontier** is the open, unblocked,
 unclaimed set. Link assets from tickets rather than pasting them into the body.
@@ -131,6 +133,9 @@ Recording is done when the tracker agrees with reality:
 - every claimed or resolved ticket has an assignee, and open or blocked tickets do
   not;
 - every resolved ticket is closed with its resolution;
+- every resolved ticket that landed work in a repository records the durable
+  commits or pull request in **Resolution**—linked when a remote exists, by hash
+  otherwise;
 - every resolved decision records provenance in **Resolution**: a human verdict is
   quoted or linked from its durable artifact; otherwise name the adopted principle,
   local policy, or recorded final premise that justified, determined, or mooted the
