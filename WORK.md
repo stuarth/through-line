@@ -1,12 +1,12 @@
 # Work
 
-A seed is one round; one individual decision when nothing is determined; one
-research or prototype ticket; or, when execution is in scope, one task ticket. Run
-one seed per session, then propagate its verdicts and resolutions to convergence.
-Exception reviews and builder resolutions raised by propagation belong to that
-seed's cascade; completed legwork may be harvested first. One seed per session is a
-stop condition: an automatic continuation, compaction, or resumed turn is still the
-same session.
+Run exactly one of the following per session: one round; one individual decision
+ticket when nothing is determined; one research or prototype ticket; or, when
+execution is in scope, one task ticket. Then propagate its verdicts and resolutions
+to convergence. Exception reviews and builder resolutions raised by propagation
+belong to that session's cascade; completed legwork may be harvested first.
+Finishing one listed round or ticket and its cascade is a stop condition: an
+automatic continuation, compaction, or resumed turn is still the same session.
 
 ## Orient
 
@@ -91,12 +91,12 @@ When the amended answer was builder-owned, its replacement becomes human-owned.
 ## Propagate
 
 After every human verdict or resolved individual decision, after every resolved
-research, prototype, or task seed, and after each round's resolutions, propagate the
+research, prototype, or task ticket, and after each round's resolutions, propagate the
 new premise or Finding through every remaining unresolved decision ticket before
 presenting another human question:
 
-1. Record the seed's smallest durable result:
-   - A research, prototype, or task seed goes in **Resolution** and its **Findings**
+1. Record the session's smallest durable result:
+   - A research, prototype, or task ticket goes in **Resolution** and its **Findings**
      gist.
    - When replacing a final premise, first move the old **Resolution** under
      **Verdict history** as `State: superseded`.
@@ -136,10 +136,11 @@ presenting another human question:
 4. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
    When a ticket claimed by another session would change, leave it read-only, surface
    the ownership conflict, and coordinate with its assignee before either session
-   resolves it. Unclaim every unresolved seed ticket unless this session is
-   explicitly continuing it. Unclaim every still-open ticket claimed for propagation
-   unless this session is retaining it for the cascade's next Round. Keep a ticket
-   blocked whenever a missing fact could change the recommendation.
+   resolves it. Unclaim every unresolved ticket initially claimed for this session
+   unless the cascade is explicitly continuing it. Unclaim every still-open ticket
+   claimed for propagation unless this session is retaining it for the cascade's next
+   Round. Keep a ticket blocked whenever a missing fact could change the
+   recommendation.
 5. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
    - **Reopened**
@@ -189,8 +190,8 @@ ticket and present a review round; the human chooses what to revisit.
 2. Re-chart: create then wire newly sharp tickets, graduate fog, and close mis-scoped
    tickets into **Out of scope**; then take the re-charted tracker through
    [Record](./SKILL.md#record) again.
-3. Report the frontier and stop. The session's seed is spent. A fresh session resumes
-   from the tracker and takes the next seed.
+3. Report the frontier and stop. A fresh session resumes from the tracker and takes
+   the next round or ticket.
 
 When the destination is reached, close the map with a local-policy sweep: record each
 policy's determined derivations, scenario spread, and pre-effort evidence; look for

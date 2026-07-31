@@ -43,19 +43,29 @@ A principle has leverage because one statement can decide many cases, which also
 
 Once adopted, propagation is fast. After each verdict, the agent checks every remaining decision: determined choices resolve, constrained questions shrink to their residual judgment, and moot choices close. A non-final verdict can narrow questions but cannot resolve or moot them; its downstream consequences stay open until the premise becomes final. If an earlier premise is superseded, the agent traces its named dependents transitively, reopens closed ones, and rechecks them before propagating the replacement. Human-owned consequences that already follow receive one exception review; builder-owned consequences resolve inside the agreed guardrails. The next individual question contains only the product or domain judgment the existing answers could not settle.
 
-## One seed, one session
+## One round or ticket, one session
 
-Each session spends one seed: a determined round, one individual decision when
-nothing is determined, one research or prototype ticket, or one task ticket when
-execution is in scope. Propagation triggered by that seed belongs to the same unit.
-Once the map is reconciled and re-charted, the agent reports the frontier and stops;
-a fresh session reloads the durable state before taking the next seed. Automatic
+Each session starts with exactly one determined round, individual decision ticket,
+research or prototype ticket, or task ticket when execution is in scope. Propagation
+triggered by that starting work belongs to the same session. Once the map is
+reconciled and re-charted, the agent reports the frontier and stops; a fresh session
+reloads the durable state before taking the next round or ticket. Automatic
 continuation, compaction, and resumed turns do not widen that boundary.
 
 Delegation parallelizes legwork, not the through-line itself. Each delegate stays
-within one selected seed, and the coordinating session carries its result back into
+within one selected ticket, and the coordinating session carries its result back into
 durable shared state. This prevents parallel work from multiplying judgment loops or
 making conversation history part of the map.
+
+## Advance unattended
+
+To keep moving without approving each non-human ticket, invoke `/through-line` with
+an existing map and say **advance unattended**. A lightweight supervisor starts a
+fresh Work session for each round or ticket and reloads the tracker between them. It
+continues through builder-owned decisions, factual or prototype legwork, and task
+tickets when execution is in scope, then returns when the frontier genuinely needs
+human judgment, doctrine, scope, external input, or a conflict resolved. This
+preserves the context boundary without making the human act as the session scheduler.
 
 ## Standing principles, local policies
 
@@ -73,7 +83,7 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - A round contains one ownership class and only decisions fully determined by an adopted principle, local policy, or recorded final premise.
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
-- Each session ends after one seed and its propagation cascade, with the next frontier recorded for a fresh session.
+- Each session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh session.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.
 

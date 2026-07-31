@@ -18,6 +18,8 @@ scope.
 ## Invocation
 
 - Invoked with a loose idea: read [CHART.md](./CHART.md) and follow it.
+- Invoked with an existing map and a request to **advance unattended**: read
+  [SUPERVISE.md](./SUPERVISE.md) and follow it.
 - Invoked with an existing map: read [WORK.md](./WORK.md) and follow it.
 
 ## Decision rights
@@ -115,9 +117,10 @@ Sharp enough to state means **ticket**, even when blocked. Otherwise it remains 
 do not pre-slice fog. Work beyond the destination goes to **Out of scope**. Close a
 mis-scoped ticket with its gist and reason there, never in the route indexes.
 
-Claim a ticket by assigning it before any work. Use the tracker's native dependencies
-so the **frontier** is the open, unblocked, unclaimed set. Link assets from tickets
-rather than pasting them into the body.
+Claim a ticket by assigning it before any work; a ticket already assigned to another
+session is claimed—surface the conflict rather than reassign it. Use the tracker's
+native dependencies so the **frontier** is the open, unblocked, unclaimed set. Link
+assets from tickets rather than pasting them into the body.
 
 ## Record
 
@@ -162,7 +165,7 @@ several decisions. Cross-cite them.
 Expect concurrent sessions and delegates. The tracker, map, and principles—not the
 conversation—are the shared state. Delegate a bounded research, prototype, or task
 ticket when it can proceed without further judgment. A delegate works only that
-selected seed; the coordinating session retains seed selection, human-owned
-questions, propagation, and tracker reconciliation. Give each delegate its ticket,
-the premises that reach it, required references, and verification commands. Include
-conversation excerpts only when the assigned work depends on a prior exchange.
+selected ticket; the coordinating session retains human-owned questions, propagation,
+and tracker reconciliation. Give each delegate its ticket, the premises that reach
+it, required references, and verification commands. Include conversation excerpts
+only when the assigned work depends on a prior exchange.
