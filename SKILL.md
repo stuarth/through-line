@@ -160,9 +160,9 @@ An ADR records one hard-to-reverse decision and its trade-off; a principle disti
 several decisions. Cross-cite them.
 
 Expect concurrent sessions and delegates. The tracker, map, and principles—not the
-conversation—are the shared state. During Work, delegate a bounded research,
-prototype, or task ticket when it can proceed without further judgment. Keep seed
-selection, human-owned questions, propagation, and tracker reconciliation in the
-owning session. Give each delegate its ticket, the premises that reach it, required
-references, and verification commands. Include conversation excerpts only when the
-assigned work depends on a prior exchange.
+conversation—are the shared state. Delegate a bounded research, prototype, or task
+ticket when it can proceed without further judgment. A delegate works only that
+selected seed; the coordinating session retains seed selection, human-owned
+questions, propagation, and tracker reconciliation. Give each delegate its ticket,
+the premises that reach it, required references, and verification commands. Include
+conversation excerpts only when the assigned work depends on a prior exchange.

@@ -54,10 +54,10 @@ continuation, compaction, and resumed turns do not widen that boundary.
 
 Delegation does not move the through-line control loop. A bounded research,
 prototype, or task ticket can go to a delegate when it needs no further judgment;
-the owning session still selects the seed, asks human-owned questions, propagates
-the result, and reconciles the tracker. Each delegate receives its ticket, the
-premises that reach it, required references, and verification commands rather than
-the whole conversation.
+that delegate works only the selected seed. The coordinating session still selects
+the seed, asks human-owned questions, propagates the result, and reconciles the
+tracker. Each delegate receives its ticket, the premises that reach it, required
+references, and verification commands rather than the whole conversation.
 
 ## Standing principles, local policies
 
