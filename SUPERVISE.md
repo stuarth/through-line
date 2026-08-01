@@ -29,20 +29,24 @@ conversation.
    - one builder-owned individual decision;
    - one research or prototype ticket; or
    - one task ticket when execution is in scope.
-5. Start a fresh, minimal-context worker session for that selection. Give it the map,
-   the exact ticket or round, the premises that reach it, required references, and
-   verification commands. Tell it to follow `WORK.md`: claim the ticket or every
-   ticket in the round, advance it as far as the workflow permits, propagate and
-   record every result, re-chart, report the frontier, and stop. Tell it the session
-   is unattended: nothing it receives carries a human verdict or adoption, so
-   determined human-owned decisions, residual questions, and admission candidates
-   stay open on the frontier.
-6. Remain inert while the worker runs: dispatch once, then repeat the longest wait the
-   host supports within its communication limits until the worker reaches a final,
-   blocked, or checkpointed state. Between waits, do not list agents or narrate
-   unchanged state; report only a transition. Treat the tracker—not the worker's
-   conversation—as the result. Reload durable state and repeat from step 1 without
-   asking the human to continue.
+5. Start a fresh Work session for that selection. Give it the map reference, exact
+   ticket or round, premises that reach it, required references, verification
+   commands, and any execution-receipt link—not the supervisor's conversation or a
+   dump of map contents.
+   Tell it to follow `WORK.md`: claim the selection, advance it as far as the
+   workflow permits, propagate and record every result, re-chart, report the
+   frontier, and stop. Tell it the session is unattended: nothing it receives
+   carries a human verdict or adoption, so determined human-owned decisions,
+   residual questions, and admission candidates stay open on the frontier.
+6. Remain inert while the worker runs. Dispatch once and use a completion-triggered
+   wait that can remain blocked for the worker's expected duration. A timeout is not
+   a transition: do not wake the model to list agents, send a status request, or
+   narrate unchanged state. If the host cannot wait without repeated model wakeups,
+   dispatch the worker, report why supervision ended, and stop rather than emulate
+   unattended progress with polling. Treat the tracker—not the worker's
+   conversation—as the result.
+   After a final, blocked, or checkpointed transition, reload durable state and
+   repeat from step 1 without asking the human to continue.
 
 Run worker sessions serially because each propagation can change the next frontier.
 A generic continuation, goal wake-up, or worker report is coordination, never a

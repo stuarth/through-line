@@ -172,11 +172,13 @@ An ADR records one hard-to-reverse decision and its trade-off; a principle disti
 several decisions. Cross-cite them.
 
 Expect concurrent sessions and delegates. The tracker, map, and principles—not the
-conversation—are the shared state. Delegate a bounded research, prototype, or task
-ticket when it can proceed without further judgment. A delegate works only that
-selected ticket; the coordinating session retains human-owned questions, propagation,
-and tracker reconciliation. A delegate may spawn only leaf work explicitly required
-by its selected ticket's workflow; it does not create another coordinating layer.
-Give each delegate its ticket, the premises that reach it, required references, and
-verification commands. Include conversation excerpts only when the assigned work
-depends on a prior exchange.
+conversation—are the shared state. The coordinating Work session retains claims,
+human-owned questions, propagation, and tracker reconciliation. Research and
+prototype delegates receive only their selected ticket, the premises that reach it,
+required references, and verification commands.
+
+Repository work follows the receipt-driven branch in
+[EXECUTION.md](./EXECUTION.md). The coordinator persists packet, candidate, review,
+and verification receipts; fresh execution and review leaves load only their branch
+instructions and receipts. Conversation excerpts are exceptional and include only an
+exchange a receipt cannot represent faithfully.
