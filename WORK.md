@@ -10,9 +10,12 @@ continuation, compaction, or a resumed turn never resets it. When context loss
 leaves this session unable to finish that cascade safely, set or replace one
 `## Resumption checkpoint` section on every unresolved
 ticket claimed for this session with durable work and its commits, work remaining,
-and current verification state, sufficient for a fresh session to resume from the
-tracker alone. Unclaim those tickets, reconcile through
+unresolved review findings, and current verification state, sufficient for a fresh
+session to resume from the tracker alone. Unclaim those tickets, reconcile through
 [Record](./SKILL.md#record), report the frontier, and stop.
+Treat imminent automatic compaction as context loss when material implementation,
+review, or propagation remains: checkpoint, unclaim, and stop before compacting
+rather than continuing the cascade in summarized context.
 
 ## Orient
 
@@ -179,16 +182,44 @@ judgment funds derivation; do not stretch a principle to avoid it.
 
 ## Task
 
-A task ticket that lands work in a repository resolves through a
-**review candidate**: intended edits complete, focused checks green, and the diff
-fixed between two named commits. Review that candidate rather than a moving worktree.
-Dispatch one integrated review as a fresh delegate briefed with the ticket, the
-candidate diff, the premises that reach it, and available verification evidence;
-add a specialist reviewer only for a named risk the integrated review cannot judge.
-Aggregate every finding, fix them as one batch, cut the next review candidate, and
-re-review only the findings and risks the fixes touched. Keep shared-database and
-full-suite checks in this Work session. Run the full suite after the candidate
-passes review; the ticket resolves when it is green.
+A task ticket that lands work in a repository passes these gates:
+
+1. **Atomicity.** Before implementation, re-check the ticket against
+   [Map and tickets](./SKILL.md#map-and-tickets). Split any independently landable
+   and reviewable vertical slice, then work only the selected ticket.
+2. **Candidate.** Intended edits are complete and focused checks are green. Before
+   cutting the **review candidate**, map every acceptance criterion and reachable
+   premise to where the diff satisfies it and one named verification path: a focused
+   automated or manual check before Review, a Review-mapped check, or a manual,
+   shared-database, or full-suite check deferred to Verification. An unmapped item
+   is not a candidate. Fix the candidate between two named commits so review never
+   follows a moving worktree.
+3. **Review.** Dispatch one integrated review to a fresh, minimal-context leaf
+   session briefed with the ticket, candidate diff, reachable premises, check
+   mapping, and verification evidence. It runs Review-mapped checks and the
+   integrated review itself; it does not coordinate, sub-delegate, or split the
+   review into axes. Add at most one specialist leaf, and only for one named risk the
+   integrated reviewer cannot judge.
+4. **Correction.** Aggregate every finding and fix them as one batch. Give each new
+   candidate a fresh reviewer briefed as in Review, plus the prior findings list—
+   never a prior review conversation. Re-run Review-mapped checks affected by the
+   fixes—those whose mapped implementation or premises changed—and otherwise
+   re-review only findings and risks the fixes touched. When two successive
+   re-reviews return findings, or findings trace to one underlying cause, stop
+   patching and diagnose that cause before the next candidate. If this session
+   cannot safely hold the diagnosis and remaining work together, checkpoint,
+   unclaim, and stop.
+5. **Verification.** Keep shared-database and full-suite checks in this Work session.
+   Do not start the full suite while any review finding remains unresolved. After a
+   clean review, run the full suite and every outstanding deferred check. The ticket
+   resolves only when the suite and every mapped check have green evidence valid for
+   the final candidate. Review-mapped or deferred evidence stays valid until an edit
+   touches its mapped implementation or premises. If a failure requires edits, cut
+   a new candidate, send it through Review, then rerun the full suite and invalidated
+   deferred checks. Capture complete full-suite output outside conversation before
+   execution so it cannot stream into context. After exit, record only command,
+   status, duration, and a one-line success summary; quote bounded excerpts from the
+   capture only on failure.
 
 ## Falsify
 
