@@ -50,12 +50,7 @@ ticket, research or prototype ticket, or task ticket when execution is in scope.
 Propagation triggered by that starting work belongs to the same Work session. Once
 the map is reconciled and re-charted, the agent reports the frontier and stops; a
 fresh Work session reloads the durable state before taking the next round or ticket.
-Automatic continuation, compaction, and resumed turns do not widen that boundary.
-
-When a Work session reaches a context compaction before its ticket resolves, it
-writes a **resumption checkpoint** to the tracker: durable work, work remaining, and
-verification state. A fresh session can then resume the same ticket without carrying
-the spent conversation forward.
+Automatic continuations and resumed turns do not widen that boundary.
 
 Delegation parallelizes legwork, not the through-line itself. Each delegate stays
 within one selected ticket, and the coordinating session carries its result back into
@@ -91,7 +86,6 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
-- An unresolved Work session that compacts leaves the tracker sufficient for a fresh session to resume without its conversation history.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - Work that lands in a repository is discoverable from the tracker alone: the claim names the repository and branch, and the resolution records the durable commits or pull request.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.

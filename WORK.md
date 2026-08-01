@@ -6,12 +6,12 @@ execution is in scope, one task ticket. Then propagate its verdicts and resoluti
 to convergence. Exception reviews and builder resolutions raised by propagation
 belong to that session's cascade; completed legwork may be harvested first.
 Finishing one listed round or ticket and its cascade is a stop condition: an
-automatic continuation, compaction, or resumed turn is still the same session.
-When a compaction lands before that round or ticket resolves, set one `## Resumption
-checkpoint` section on every claimed ticket with the claim's recorded repository and
-working branch, durable work and its commits, work remaining, and current verification
-state, sufficient for a fresh session to resume from the tracker alone. Unclaim,
-reconcile through [Record](./SKILL.md#record), report the frontier, and stop.
+automatic continuation or resumed turn is still the same session. When earlier
+conversation history has been summarized or lost before that round or ticket
+resolves, set one `## Resumption checkpoint` section on every claimed ticket with
+durable work and its commits, work remaining, and current verification state,
+sufficient for a fresh session to resume from the tracker alone. Unclaim, reconcile
+through [Record](./SKILL.md#record), report the frontier, and stop.
 
 ## Orient
 
