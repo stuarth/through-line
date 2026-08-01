@@ -174,6 +174,19 @@ determined and collect it for the cascade's next Round. Use `/grilling` and
 credible alternatives and resolve only while every guardrail holds. Individual
 judgment funds derivation; do not stretch a principle to avoid it.
 
+## Task
+
+A task ticket that lands work in a repository resolves through a
+**review candidate**: intended edits complete, focused checks green, and the diff
+fixed between two named commits. Review that candidate rather than a moving worktree.
+Dispatch one integrated review as a fresh delegate briefed with the ticket, the
+candidate diff, the premises that reach it, and available verification evidence;
+add a specialist reviewer only for a named risk the integrated review cannot judge.
+Aggregate every finding, fix them as one batch, cut the next review candidate, and
+re-review only the findings and risks the fixes touched. Keep shared-database and
+full-suite checks in this Work session. Run the full suite after the candidate
+passes review; the ticket resolves when it is green.
+
 ## Falsify
 
 A principle is a strong prior, not a law: the deference it earns from its evidence

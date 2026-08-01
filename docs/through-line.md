@@ -57,6 +57,10 @@ within one selected ticket, and the coordinating session carries its result back
 durable shared state. This prevents parallel work from multiplying judgment loops or
 making conversation history part of the map.
 
+When execution is in scope, an atomic task ticket produces one fixed, independently
+reviewable **review candidate**. This keeps review from becoming a live audit of a
+moving worktree and lets each Work session converge on one tested result.
+
 ## Advance unattended
 
 To keep moving without approving each non-human ticket, invoke `/through-line` with
