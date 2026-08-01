@@ -28,6 +28,26 @@ class Ticket:
     legacy_actives: int
 
 
+FENCE = re.compile(r"^ {0,3}(```+|~~~+)")
+
+
+def strip_fences(text: str) -> str:
+    lines: list[str] = []
+    open_fence: str | None = None
+    for line in text.splitlines():
+        match = FENCE.match(line)
+        if match:
+            marker = match.group(1)[0]
+            if open_fence is None:
+                open_fence = marker
+            elif marker == open_fence:
+                open_fence = None
+            continue
+        if open_fence is None:
+            lines.append(line)
+    return "\n".join(lines)
+
+
 def field(text: str, name: str) -> str | None:
     match = re.search(rf"(?m)^{re.escape(name)}:\s*(.+?)\s*$", text)
     return match.group(1).strip() if match else None
@@ -99,7 +119,7 @@ def validate(map_path: Path) -> list[str]:
 
     tickets: list[Ticket] = []
     for path in sorted(issues_dir.glob("*.md")):
-        text = path.read_text()
+        text = strip_fences(path.read_text())
         tickets.append(
             Ticket(
                 path=path.resolve(),
@@ -169,7 +189,7 @@ def validate(map_path: Path) -> list[str]:
         if not unresolved and ticket.status == "blocked":
             errors.append(f"{ticket.path}: blocked without an unresolved blocker")
 
-    map_text = map_path.read_text()
+    map_text = strip_fences(map_path.read_text())
     indexes = {
         name: index_paths(map_path, section(map_text, name, errors), name, errors)
         for name in INDEX_SECTIONS
