@@ -1,35 +1,19 @@
 # Implement
 
-Act as a leaf for one packet from a through-line coordinator. The packet is the route;
-return a candidate receipt or a gap receipt.
+Implement one packet as a leaf. The packet is the route; do not load the through-line
+map or coordinate more work.
 
-## Packet gate
+If a missing boundary prevents an aligned implementation, return the smallest useful
+gap before editing. Otherwise inspect the named entry points, make the change, run the
+focused checks, and commit only the packet's files.
 
-Confirm the packet names its outcome, acceptance mapping, premises, owned entry
-points, constraints, focused checks, exclusions, and stop condition. For persistent
-data work it also names the governing schema boundary and isolated verification
-command.
-
-When a material boundary is missing, return the smallest gap and its required entry
-point before editing. The gate is complete when the work can proceed from named local
-entry points without a map, closed-ticket history, or a new product or architecture
-decision.
-
-## Implement
-
-1. Inspect the named entry points and the local code needed to change them. Search
-   before bounded reads and keep verbose command output outside conversation.
-2. Implement the packet and run its focused checks. A separable slice or new judgment
-   produces a gap receipt at the packet boundary.
-3. Commit only the packet's files at a fixed candidate commit.
-
-Return this candidate receipt:
+Return a compact receipt:
 
 - base and candidate commits;
 - changed-file summary;
 - acceptance mapping;
-- check command and status; and
-- unresolved gap, if any.
+- check command and result; and
+- any unresolved gap.
 
-Work locally as one leaf. The coordinator owns further packets, review, full-suite
-verification, propagation, and tracker state.
+The coordinator owns further packets, review, full-suite verification, propagation,
+and tracker state.

@@ -5,51 +5,39 @@ disable-model-invocation: true
 ---
 
 A huge effort hides a **through-line**: recurring commitments beneath its many
-decisions. Name the **destination**, distill those commitments into human-adopted,
-falsifiable principles, then let **derivation** resolve the decisions they determine
-under agreed **decision rights**. Individual judgment handles the genuinely novel
-questions and funds the next distillation. After every human verdict and decision
-round, propagate their consequences through the remaining map before asking another
-question.
+decisions. Name the destination, distill those commitments into human-adopted
+principles, and use them to resolve what no longer needs fresh judgment. After each
+new fact or verdict, propagate its consequences through the map before asking the
+human another question.
 
 Produce decisions, not deliverables, unless the map's **Notes** puts execution in
 scope.
 
 ## Invocation
 
-- Invoked with a loose idea: read [CHART.md](./CHART.md) and follow it.
-- Invoked with an existing map and a request to **advance unattended**: read
-  [SUPERVISE.md](./SUPERVISE.md) and follow it.
-- Invoked with an existing map: read [WORK.md](./WORK.md) and follow it.
+- Loose idea: follow [CHART.md](./CHART.md).
+- Existing map: follow [WORK.md](./WORK.md).
+- Existing map with **advance unattended**: follow [SUPERVISE.md](./SUPERVISE.md).
 
 ## Decision rights
 
-Each map records one working agreement classifying decisions as:
+Each map records a simple working agreement. The human owns destination, scope,
+doctrine, domain meaning, priorities, external promises, and irreversible effects.
+The builder owns reversible route and implementation choices that clearly follow
+adopted principles and settled premises within the agreed reversal budget. The map
+may reserve more choices for the human.
 
-- **Human-owned** — put every decision to the human; use legwork to establish facts.
-- **Builder-owned within guardrails** — resolve without stopping only while the
-  choice is clearly preferable under established facts and at least one adopted
-  principle, local policy, or recorded final premise; is reversible within the map's
-  concrete budget; is contained to its scope; and creates no new external interface,
-  domain commitment, or irreversible data effect.
-
-The human always owns the decision rights themselves; destination and scope;
-adoption, revision, boundary, priority, or refutation of a principle or local policy;
-and a new principle's validation pass.
-
-Re-check every builder-owned resolution against every guardrail at the moment of
-resolution. A failed guardrail makes it human-owned.
+When alignment is unclear or a choice changes protected meaning, surface it rather
+than stretching the agreement.
 
 ## Map and tickets
 
 The map is one issue labelled `through-line:map`; its tickets are child issues. Read
-the repo's issue-tracker doc and follow its **Wayfinding operations**. If none was
-provided, read [trackers/local-markdown.md](./trackers/local-markdown.md) before
-creating or claiming anything.
+the repo's issue-tracker guidance. If none exists, use
+[local Markdown](./trackers/local-markdown.md).
 
-Refer to maps, tickets, and principles by name in prose. The map is the effort's
-low-resolution view, loaded once per session; query open child tickets rather than
-listing them on the map.
+Load the map once per session as the low-resolution view. Query open child tickets
+for detail instead of copying them into it.
 
 ```markdown
 ## Destination
@@ -58,9 +46,7 @@ listing them on the map.
 
 ## Notes
 
-<!-- Description only: domain, skills, execution scope, and the adopted
-decision-rights agreement. A rule that determines ticket answers is a local policy
-and enters through Admission. -->
+<!-- Domain, useful skills, execution scope, and decision-rights agreement. -->
 
 ## Local policies
 
@@ -68,11 +54,11 @@ and enters through Admission. -->
 
 ## Decisions so far
 
-<!-- Exactly one gist + link per closed in-scope decision ticket. -->
+<!-- One gist + link per closed in-scope decision ticket. -->
 
 ## Findings
 
-<!-- Exactly one gist + link per closed in-scope research, prototype, or task ticket. -->
+<!-- One gist + link per closed research, prototype, or task ticket. -->
 
 ## Not yet specified
 
@@ -80,105 +66,73 @@ and enters through Admission. -->
 
 ## Out of scope
 
-<!-- Closed tickets and work consciously ruled beyond the destination. -->
+<!-- Work consciously ruled beyond the destination. -->
 ```
 
-Each ticket contains one question and carries `through-line:<type>`:
+Ticket types:
 
-- **decision** — a choice, human- or builder-owned;
-- **research** — a material fact to establish, resolved through `/research`;
-- **prototype** — a cheap artifact to react to; build AFK, react HITL;
-- **task** — manual legwork such as provisioning or a data move.
+- **decision** — one human- or builder-owned choice;
+- **research** — one material fact, resolved through `/research`;
+- **prototype** — one cheap artifact to react to;
+- **task** — one reviewable unit of execution or manual legwork.
 
-A human-owned decision ticket is atomic when its **Question** asks for one verdict
-the human must confirm or reject as a whole. A builder-owned decision ticket is
-atomic when it names one choice the builder can resolve as a whole inside the
-guardrails. Split either ticket when a partial resolution is possible.
+A ticket is atomic when its answer or result can be accepted as a whole. Split an
+independently decidable, landable, or verifiable part. When work exposes a separate
+human judgment, create that decision ticket and block the original work on it.
 
-A task ticket is atomic when its result can be reviewed as a whole. Split it when
-one part can land or be verified independently.
+For a human-owned decision, keep only the residual judgment in **Question**. Put
+settled consequences in **Derived implications** and small aligned choices in
+**Builder discretion**.
 
-When work inside any ticket exposes a separable human-owned judgment, create its
-atomic decision ticket, wire it as a blocker, and unclaim the exposing ticket until
-that decision resolves.
+An unresolved ticket may carry one **Provisional verdict**. **Resolution** is its
+final premise; replaced premises move to **Verdict history**, which is context rather
+than authority.
 
-For a human-owned ticket, put only its residual judgment in **Question**. Put
-principle-derived consequences in **Derived implications** and below-threshold
-choices in **Builder discretion**; the human verdict covers only the Question.
+Ticket every sharp human question. Ticket builder choices only when they block the
+map, test a principle, or deserve a durable record. Leave unshaped uncertainty in
+**Not yet specified** and work beyond the destination in **Out of scope**.
 
-A ticket carries at most one **Provisional verdict**, and only while unresolved; it
-is the ticket's only non-final premise. **Resolution** holds the sole final premise.
-**Verdict history** is archival and inert: nothing in it may constrain another
-decision.
-
-Ticket every sharp human-owned question. Ticket a builder-owned choice only when it
-blocks another mapped decision, tests a principle, or needs a durable record;
-ordinary below-threshold choices remain builder discretion.
-
-Sharp enough to state means **ticket**, even when blocked. Otherwise it remains fog;
-do not pre-slice fog. Work beyond the destination goes to **Out of scope**. Close a
-mis-scoped ticket with its gist and reason there, never in the route indexes.
-
-Claim an unresolved ticket by assigning it before any work; an unresolved ticket
-already assigned to another session is claimed—surface the conflict rather than
-reassign it. A claim on work that lands in a repository also records where: the
-repository when the map spans more than one, and the working branch once it exists.
-An assignee retained on a resolved ticket is attribution, not an active
-claim; clear it before reopening the ticket, then claim the reopened ticket normally.
-Use the tracker's native dependencies so the **frontier** is the open, unblocked,
-unclaimed set. Link assets from tickets rather than pasting them into the body.
+Claim a ticket before work. Respect another session's claim. Repository work also
+records its repository and branch. Use native dependencies so the **frontier** is
+the open, unblocked, unclaimed work. Link large artifacts instead of pasting them
+into tickets.
 
 ## Record
 
 Recording is done when the tracker agrees with reality:
 
-- every claimed or resolved ticket has an assignee, and open or blocked tickets do
-  not;
-- every resolved ticket is closed with its resolution and has no
-  `## Resumption checkpoint`;
-- every resolved ticket that landed work in a repository records the durable
-  commits or pull request in **Resolution**—linked when a remote exists, by hash
-  otherwise;
-- every resolved decision records provenance in **Resolution**: a human verdict is
-  quoted or linked from its durable artifact; otherwise name the adopted principle,
-  local policy, or recorded final premise that justified, determined, or mooted the
-  closure;
-- **Decisions so far** indexes exactly the closed in-scope decision tickets;
-- **Findings** indexes exactly the closed in-scope research, prototype, and task
-  tickets;
-- **Out of scope** holds every scoped-out closure, and blocker/status state renders
-  the real frontier.
+- status, assignee, dependencies, and claims are current;
+- each resolution records its outcome, provenance, and repository commit or PR when
+  applicable;
+- checkpoints exist only on unfinished work;
+- **Decisions so far**, **Findings**, and **Out of scope** index the right closures;
+- principle evidence links to the decisions that set or tested it; and
+- the available tracker validator passes.
 
-Record principle boundaries and revisions inline in `PRINCIPLES.md`; add tickets that
-set or tested a boundary to the evidence trail. For local Markdown, run the bundled
-[state validator](./scripts/validate_local_map.py) to compare blockers, indexes, and
-child status; otherwise run the tracker validator when provided. The checklist always
-applies, and recording is not done until every available validator passes.
+For local Markdown, run the bundled
+[state validator](./scripts/validate_local_map.py).
 
 ## Principles
 
-`PRINCIPLES.md` is standing doctrine, not effort state. Entry format and file
-placement follow [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md).
+`PRINCIPLES.md` is standing doctrine, not effort state. Follow
+[PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md).
 
-- **Adopted only.** Nothing enters or changes `PRINCIPLES.md` or **Local policies**
-  except through [ADMISSION.md](./ADMISSION.md) and the human's explicit adoption.
-- **Falsifiable only.** A principle must forbid a plausible decision; otherwise
-  sharpen it or leave it out.
-- **Priors, not laws.** An adopted principle is a strong prior earned by its
-  evidence, not an inviolable rule: derive under it by default, and take evidence
-  strong enough to contradict it through [Falsify](./WORK.md#falsify).
+- Nothing enters or changes doctrine without [Admission](./ADMISSION.md) and human
+  adoption.
+- A useful principle forbids a plausible choice.
+- A principle is an earned prior, not a law; contradictory evidence goes through
+  [Falsify](./WORK.md#falsify).
 
-An ADR records one hard-to-reverse decision and its trade-off; a principle distills
+An ADR records one hard-to-reverse decision and its trade-off. A principle distills
 several decisions. Cross-cite them.
 
-Expect concurrent sessions and delegates. The tracker, map, and principles—not the
-conversation—are the shared state. The coordinating Work session retains claims,
-human-owned questions, propagation, and tracker reconciliation. Research and
-prototype delegates receive only their selected ticket, the premises that reach it,
-required references, and verification commands.
+## Coordination
 
-Repository work follows the receipt-driven branch in
-[EXECUTION.md](./EXECUTION.md). The coordinator persists packet, candidate, review,
-and verification receipts; fresh execution and review leaves load only their branch
-instructions and receipts. Conversation excerpts are exceptional and include only an
-exchange a receipt cannot represent faithfully.
+The tracker, map, principles, and linked artifacts—not conversation—carry state
+between sessions. The Work session owns claims, human questions, propagation, and
+tracker reconciliation. Give research and prototype agents only their selected
+ticket, reaching premises, references, and checks.
+
+Repository work follows [EXECUTION.md](./EXECUTION.md). Its packet, candidate,
+review, and verification receipts let fresh leaves continue without loading map
+history or coordinator conversation.
