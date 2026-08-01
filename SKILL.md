@@ -77,8 +77,10 @@ Ticket types:
 - **task** — one reviewable unit of execution or manual legwork.
 
 A ticket is atomic when its answer or result can be accepted as a whole. Split an
-independently decidable, landable, or verifiable part. When work exposes a separate
-human judgment, create that decision ticket and block the original work on it.
+independently decidable, landable, or verifiable part: a task whose acceptance
+criteria contain several independently landable or verifiable results is several
+tickets wired by dependencies. When work exposes a separate human judgment, create
+that decision ticket and block the original work on it.
 
 For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in
