@@ -57,25 +57,27 @@ within one selected ticket, and the coordinating session carries its result back
 durable shared state. This prevents parallel work from multiplying judgment loops or
 making conversation history part of the map.
 
-When execution is in scope, an atomic task ticket produces one fixed, independently
-reviewable **review candidate**. Every acceptance criterion and reachable premise
-must point to its implementation and verification path before the candidate can enter
-review. One fresh integrated reviewer, plus at most one specialist for a named risk,
-judges each candidate without inherited review conversation or a nested review
-hierarchy. Corrections repeat only checks affected by their edits; unchanged evidence
-may carry forward, while the full suite must pass for the final candidate. Repeated
-findings trigger root-cause diagnosis or a durable checkpoint instead of an
-indefinitely growing repair loop.
+When execution is in scope, the Work session stays a lean coordinator and records
+durable **receipts** for the packet, candidate, review, and verification. A resumed
+session starts at the first invalid receipt instead of rediscovering the route,
+reimplementing finished work, or repeating a completed whole-candidate review.
+
+Executors receive compact packets with exact entry points rather than the map and its
+history. One integrated review establishes coverage; corrections receive targeted
+passes that preserve unaffected findings and evidence. This deliberately spends less
+work on adjacent hardening and repeated assurance so the mapped outcome can finish
+with far less context.
 
 ## Advance unattended
 
 To keep moving without approving each non-human ticket, invoke `/through-line` with
 an existing map and say **advance unattended**. A lightweight supervisor starts a
 fresh Work session for each round or ticket, remains inert while it runs, and reloads
-the tracker only after it reaches a final, blocked, or checkpointed state. Unchanged
-waits produce no status narration. It continues through builder-owned decisions,
-factual or prototype legwork, and task tickets when execution is in scope, then
-returns when the map closes or the frontier genuinely needs human judgment,
+the tracker only after it reaches a final, blocked, or checkpointed state. Waiting is
+completion-triggered: a host that can only wake the model to poll stops supervision
+rather than spending work on unchanged status. It continues through builder-owned
+decisions, factual or prototype legwork, and task tickets when execution is in scope,
+then returns when the map closes or the frontier genuinely needs human judgment,
 doctrine, scope, external input, closeout, or a conflict resolved. This preserves the
 context boundary without making the human act as the session scheduler.
 
@@ -96,8 +98,10 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
-- Each repository review candidate accounts for every acceptance criterion and
-  reachable premise, and each candidate gets a fresh integrated review.
+- A resumed repository task begins at its first invalid receipt; completed
+  implementation, review coverage, and verification are not replayed.
+- Repository executors receive bounded packets rather than map history, and one
+  integrated review is followed only by targeted correction passes.
 - Corrections rerun checks affected by their edits; every mapped check has green
   evidence valid for the final reviewed candidate, and the full suite passes before
   the ticket resolves.

@@ -1,48 +1,34 @@
 # Admission
 
-Adoption is slow because derivation multiplies whatever enters. Candidates may be
-previewed together, but present and dispose of each one separately: standing
-principle, local policy, amendment, or rejection.
+Derivation multiplies whatever becomes doctrine, so admit principles deliberately.
+Preview related candidates together if useful, but ask the human to adopt them one at
+a time.
 
 ## Gate
 
-A candidate passes only when it is:
+A principle is worth proposing when it:
 
-- **Recurrent** — grounded in two independent decisions, or an explicit human
-  commitment tested against two materially different scenarios.
-- **Atomic** — violating one part cannot leave the rest intact.
-- **Interpretable** — from the statement alone, an uninvolved domain reader can name
-  one required and one forbidden choice. Put any explanation needed to connect them
-  into the statement.
-- **Counterexample-tested** — a plausible case where following it would be wrong has
-  pressed the statement or a boundary and they survived.
-- **Leveraged** — it shapes more than one decision and holds beyond this destination.
+- expresses a commitment recurring across independent decisions or scenarios;
+- is clear enough to guide a required and a forbidden choice;
+- survives a plausible counterexample or states the boundary it revealed; and
+- will shape more than the answer already in front of us.
 
-Ground every passing candidate:
-
-- **Statement** — exact proposed standing text.
-- **Example** — one current decision using only meaning present in the statement.
-- **Evidence** — named, linked decisions it distills.
-- **Predictions** — frontier tickets it determines or constrains; one named
-  alternative it forbids; and one plausible future scenario.
-
-The human adopts the exact statement and boundaries presented. A disliked prediction
-finds a boundary before adoption.
+Present the candidate statement, the evidence it distills, one concrete application,
+and what it predicts elsewhere on the map. The human adopts, amends, keeps local, or
+rejects it.
 
 ## Altitude
 
-Ask what violation means:
+Put the lesson where it belongs:
 
-- wrong about the domain → candidate standing principle;
-- inconsistent only on this route → candidate local policy;
-- one hard-to-reverse choice → ADR, not doctrine;
-- one route-specific answer without reuse → ordinary decision.
+- durable domain commitment → standing principle;
+- consistency needed only on this route → local policy;
+- one hard-to-reverse choice → ADR;
+- one answer without reuse → ordinary decision.
 
-When in doubt, keep it local. A local policy graduates only through this gate on
-independent evidence: another effort reaches for it, evidence predates its effort, or
-materially different scenario classes support it. Trial count within one destination
-is not independence. A replicated convention moves to the repo's conventions home,
-not `PRINCIPLES.md`.
+When unsure, keep it local. Graduate a local policy only when another effort or
+materially different scenarios supply independent evidence. Put replicated coding
+conventions in the repository's conventions home rather than `PRINCIPLES.md`.
 
-Revision proposals—boundaries, splits, refutations, and standing priorities—are
-candidates too. Adoption attaches to their exact grounded text.
+Boundaries, splits, priorities, and refutations change doctrine too, so bring them
+through this same human adoption step.
