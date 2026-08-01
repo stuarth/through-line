@@ -59,9 +59,9 @@ making conversation history part of the map.
 
 When execution is in scope, an atomic task ticket produces one fixed, independently
 reviewable **review candidate**. Every acceptance criterion and reachable premise
-must point to its implementation and focused verification before the candidate can
-enter review. One fresh integrated reviewer, plus at most one specialist for a named
-risk, judges each candidate without inherited review conversation or a nested review
+must point to its implementation and verification path before the candidate can enter
+review. One fresh integrated reviewer, plus at most one specialist for a named risk,
+judges each candidate without inherited review conversation or a nested review
 hierarchy. Repeated findings trigger root-cause diagnosis or a durable checkpoint
 instead of an indefinitely growing repair loop.
 

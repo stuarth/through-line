@@ -189,17 +189,19 @@ A task ticket that lands work in a repository passes these gates:
    and reviewable vertical slice, then work only the selected ticket.
 2. **Candidate.** Intended edits are complete and focused checks are green. Before
    cutting the **review candidate**, enumerate every acceptance criterion and
-   reachable premise with where the diff satisfies it and the focused check that
-   verifies it. A diff that cannot account for every item is not a candidate. Fix
-   the candidate between two named commits so review never follows a moving
-   worktree.
+   reachable premise with where the diff satisfies it and either the focused check
+   that verifies it or the exact post-review shared-database or full-suite check that
+   must do so. A diff that cannot account for every item and its verification path is
+   not a candidate. Fix the candidate between two named commits so review never
+   follows a moving worktree.
 3. **Review.** Dispatch one integrated review to a fresh, minimal-context leaf
    session briefed with the ticket, candidate diff, premises that reach it, and
    verification evidence. It performs the review itself: it does not coordinate,
    sub-delegate, or split the review into axes. Add at most one separate specialist
    leaf, and only for one named risk the integrated reviewer says it cannot judge.
 4. **Correction.** Aggregate every finding and fix them as one batch. Give each new
-   candidate a fresh reviewer briefed with the ticket, new diff, and prior findings
+   candidate a fresh reviewer briefed with the ticket, new diff, current premises,
+   acceptance-check mapping, available verification evidence, and prior findings
    list—never a prior review conversation—and re-review only the findings and risks
    the fixes touched. When two successive re-reviews return findings, or findings
    trace to one underlying cause, stop patching and diagnose that cause before the
