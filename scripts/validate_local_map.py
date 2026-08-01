@@ -229,7 +229,10 @@ def validate(map_path: Path) -> list[str]:
         elif ticket.path not in expected:
             errors.append(f"map: resolved ticket missing from {name}: {ticket.path.name}")
 
-    if field(map_text, "Status") == "resolved":
+    map_status = field(map_text, "Status")
+    if map_status not in {"open", "resolved"}:
+        errors.append(f"map: unknown Status {map_status!r}")
+    if map_status == "resolved":
         unresolved = [ticket.path.name for ticket in tickets if ticket.status != "resolved"]
         if unresolved:
             errors.append(f"map: resolved with unresolved tickets: {', '.join(unresolved)}")
