@@ -28,22 +28,22 @@ class Ticket:
     legacy_actives: int
 
 
-FENCE = re.compile(r"^ {0,3}(```+|~~~+)")
+FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 
 def strip_fences(text: str) -> str:
     lines: list[str] = []
-    open_fence: str | None = None
+    fence: tuple[str, int] | None = None
     for line in text.splitlines():
         match = FENCE.match(line)
         if match:
-            marker = match.group(1)[0]
-            if open_fence is None:
-                open_fence = marker
-            elif marker == open_fence:
-                open_fence = None
+            marker, info = match.group(1), match.group(2)
+            if fence is None:
+                fence = (marker[0], len(marker))
+            elif marker[0] == fence[0] and len(marker) >= fence[1] and not info.strip():
+                fence = None
             continue
-        if open_fence is None:
+        if fence is None:
             lines.append(line)
     return "\n".join(lines)
 

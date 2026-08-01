@@ -113,9 +113,10 @@ presenting another human question:
      move that **Resolution** under **Verdict history**, removing the original
      section, clear the stale map entry, then reopen the deciding ticket through the
      claim protocol below.
-   - A final premise goes in **Resolution** and its **Decisions so far** gist. Moving
-     the provisional verdict it carries forward unchanged under **Verdict history**
-     is finalization, not replacement.
+   - A final premise goes in **Resolution** and its **Decisions so far** gist, first
+     moving any provisional verdict or superseded **Resolution** it replaces under
+     **Verdict history** and removing the original section. Carrying the provisional
+     verdict forward unchanged is finalization; a material change is a replacement.
    When the verdict changes doctrine, its adopted principle or local-policy entry is
    the durable premise. A decision may become a downstream premise without becoming
    doctrine; take recurring rhyme through [Admission](./ADMISSION.md) before
