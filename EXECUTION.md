@@ -99,7 +99,9 @@ A behavioral failure returns to Correction. When the only proposed fix changes a
 expected output or fixture for already-reviewed behavior, make a narrow test-only
 correction. Give its fixed range and failed check to targeted Review; inspect only
 whether the expectation matches mapped behavior without weakening the oracle. Record
-a clean pass as a targeted extension, then rerun the full suite.
+a clean pass as a targeted extension. Carry forward deferred evidence only when the
+correction leaves its mapped behavior and check inputs untouched; rerun affected
+deferred checks and the full suite.
 
 ## 6. Record
 
