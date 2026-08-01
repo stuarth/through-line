@@ -95,6 +95,9 @@ the human must confirm or reject as a whole. A builder-owned decision ticket is
 atomic when it names one choice the builder can resolve as a whole inside the
 guardrails. Split either ticket when a partial resolution is possible.
 
+A task ticket is atomic when its result can be reviewed as a whole. Split it when
+one part can land or be verified independently.
+
 When work inside any ticket exposes a separable human-owned judgment, create its
 atomic decision ticket, wire it as a blocker, and unclaim the exposing ticket until
 that decision resolves.
