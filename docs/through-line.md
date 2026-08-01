@@ -58,20 +58,24 @@ durable shared state. This prevents parallel work from multiplying judgment loop
 making conversation history part of the map.
 
 When execution is in scope, an atomic task ticket produces one fixed, independently
-reviewable **review candidate**. This keeps review from becoming a live audit of a
-moving worktree and lets each Work session converge on one tested result.
+reviewable **review candidate**. Every acceptance criterion and reachable premise
+must point to its implementation and focused verification before the candidate can
+enter review. One fresh integrated reviewer, plus at most one specialist for a named
+risk, judges each candidate without inherited review conversation or a nested review
+hierarchy. Repeated findings trigger root-cause diagnosis or a durable checkpoint
+instead of an indefinitely growing repair loop.
 
 ## Advance unattended
 
 To keep moving without approving each non-human ticket, invoke `/through-line` with
 an existing map and say **advance unattended**. A lightweight supervisor starts a
 fresh Work session for each round or ticket, remains inert while it runs, and reloads
-the tracker only after it reaches a final or blocked state. It continues through
-builder-owned decisions, factual or prototype legwork, and task tickets when
-execution is in scope, then returns when the map closes or the frontier genuinely
-needs human judgment, doctrine, scope, external input, closeout, or a conflict
-resolved. This preserves the context boundary without making the human act as the
-session scheduler.
+the tracker only after it reaches a final, blocked, or checkpointed state. Unchanged
+waits produce no status narration. It continues through builder-owned decisions,
+factual or prototype legwork, and task tickets when execution is in scope, then
+returns when the map closes or the frontier genuinely needs human judgment,
+doctrine, scope, external input, closeout, or a conflict resolved. This preserves the
+context boundary without making the human act as the session scheduler.
 
 ## Standing principles, local policies
 
@@ -90,6 +94,11 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
+- Each repository review candidate accounts for every acceptance criterion and
+  reachable premise, and each candidate gets a fresh integrated review.
+- Repeated review findings produce a root-cause diagnosis or checkpoint before
+  another correction candidate; a Work session with unresolved findings records a
+  checkpoint rather than continuing with degraded context.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - Work that lands in a repository is discoverable from the tracker alone: the claim names the repository and branch, and the resolution records the durable commits or pull request.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.

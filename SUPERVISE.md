@@ -37,10 +37,12 @@ conversation.
    is unattended: nothing it receives carries a human verdict or adoption, so
    determined human-owned decisions, residual questions, and admission candidates
    stay open on the frontier.
-6. Remain inert while the worker runs: dispatch once, then repeat the same wait until
-   it reaches a final or blocked state. Treat the tracker—not its conversation—as the
-   result. Reload durable state and repeat from step 1 without asking the human to
-   continue.
+6. Remain inert while the worker runs: dispatch once, then repeat the longest wait the
+   host supports within its communication limits until the worker reaches a final,
+   blocked, or checkpointed state. Between waits, do not list agents or narrate
+   unchanged state; report only a transition. Treat the tracker—not the worker's
+   conversation—as the result. Reload durable state and repeat from step 1 without
+   asking the human to continue.
 
 Run worker sessions serially because each propagation can change the next frontier.
 A generic continuation, goal wake-up, or worker report is coordination, never a

@@ -10,9 +10,12 @@ continuation, compaction, or a resumed turn never resets it. When context loss
 leaves this session unable to finish that cascade safely, set or replace one
 `## Resumption checkpoint` section on every unresolved
 ticket claimed for this session with durable work and its commits, work remaining,
-and current verification state, sufficient for a fresh session to resume from the
-tracker alone. Unclaim those tickets, reconcile through
+unresolved review findings, and current verification state, sufficient for a fresh
+session to resume from the tracker alone. Unclaim those tickets, reconcile through
 [Record](./SKILL.md#record), report the frontier, and stop.
+Treat imminent automatic compaction as context loss when material implementation,
+review, or propagation remains: checkpoint, unclaim, and stop before compacting
+rather than continuing the cascade in summarized context.
 
 ## Orient
 
@@ -179,16 +182,36 @@ judgment funds derivation; do not stretch a principle to avoid it.
 
 ## Task
 
-A task ticket that lands work in a repository resolves through a
-**review candidate**: intended edits complete, focused checks green, and the diff
-fixed between two named commits. Review that candidate rather than a moving worktree.
-Dispatch one integrated review as a fresh delegate briefed with the ticket, the
-candidate diff, the premises that reach it, and available verification evidence;
-add a specialist reviewer only for a named risk the integrated review cannot judge.
-Aggregate every finding, fix them as one batch, cut the next review candidate, and
-re-review only the findings and risks the fixes touched. Keep shared-database and
-full-suite checks in this Work session. Run the full suite after the candidate
-passes review; the ticket resolves when it is green.
+A task ticket that lands work in a repository passes these gates:
+
+1. **Atomicity.** Before implementation, re-check the ticket against
+   [Map and tickets](./SKILL.md#map-and-tickets). Split any independently landable
+   and reviewable vertical slice, then work only the selected ticket.
+2. **Candidate.** Intended edits are complete and focused checks are green. Before
+   cutting the **review candidate**, enumerate every acceptance criterion and
+   reachable premise with where the diff satisfies it and the focused check that
+   verifies it. A diff that cannot account for every item is not a candidate. Fix
+   the candidate between two named commits so review never follows a moving
+   worktree.
+3. **Review.** Dispatch one integrated review to a fresh, minimal-context leaf
+   session briefed with the ticket, candidate diff, premises that reach it, and
+   verification evidence. It performs the review itself: it does not coordinate,
+   sub-delegate, or split the review into axes. Add at most one separate specialist
+   leaf, and only for one named risk the integrated reviewer says it cannot judge.
+4. **Correction.** Aggregate every finding and fix them as one batch. Give each new
+   candidate a fresh reviewer briefed with the ticket, new diff, and prior findings
+   list—never a prior review conversation—and re-review only the findings and risks
+   the fixes touched. When two successive re-reviews return findings, or findings
+   trace to one underlying cause, stop patching and diagnose that cause before the
+   next candidate. If this session cannot safely hold the diagnosis and remaining
+   work together, checkpoint, unclaim, and stop.
+5. **Verification.** Keep shared-database and full-suite checks in this Work session.
+   Do not start the full suite while any review finding remains unresolved. After a
+   clean review, the ticket resolves when the full suite is green. When a suite
+   failure requires edits, cut a new candidate and return it through Review before
+   rerunning the suite. Keep successful command output out of conversation: record
+   only command, status, duration, and a one-line summary; quote bounded excerpts
+   only on failure.
 
 ## Falsify
 
