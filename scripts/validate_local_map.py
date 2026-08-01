@@ -31,7 +31,7 @@ class Ticket:
 FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 
-def strip_fences(text: str) -> str:
+def scannable_text(text: str) -> str:
     lines: list[str] = []
     fence: tuple[str, int] | None = None
     for line in text.splitlines():
@@ -49,7 +49,7 @@ def strip_fences(text: str) -> str:
             fence = (match.group(1)[0], len(match.group(1)))
             continue
         lines.append(line)
-    return "\n".join(lines)
+    return re.sub(r"(?s)<!--.*?(-->|\Z)", "", "\n".join(lines))
 
 
 def section_body(text: str, name: str) -> str:
@@ -133,7 +133,7 @@ def validate(map_path: Path) -> list[str]:
 
     tickets: list[Ticket] = []
     for path in sorted(issues_dir.glob("*.md")):
-        text = strip_fences(path.read_text())
+        text = scannable_text(path.read_text())
         tickets.append(
             Ticket(
                 path=path.resolve(),
@@ -207,7 +207,7 @@ def validate(map_path: Path) -> list[str]:
         if not unresolved and ticket.status == "blocked":
             errors.append(f"{ticket.path}: blocked without an unresolved blocker")
 
-    map_text = strip_fences(map_path.read_text())
+    map_text = scannable_text(map_path.read_text())
     indexes = {
         name: index_paths(map_path, section(map_text, name, errors), name, errors)
         for name in INDEX_SECTIONS
