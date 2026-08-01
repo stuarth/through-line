@@ -29,12 +29,18 @@ class Ticket:
 
 
 FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+COMMENT_OPEN = re.compile(r"^ {0,3}<!--")
 
 
 def scannable_text(text: str) -> str:
     lines: list[str] = []
     fence: tuple[str, int] | None = None
+    in_comment = False
     for line in text.splitlines():
+        if in_comment:
+            if "-->" in line:
+                in_comment = False
+            continue
         match = FENCE.match(line)
         if fence is not None:
             if (
@@ -48,18 +54,22 @@ def scannable_text(text: str) -> str:
         if match and (match.group(1)[0] == "~" or "`" not in match.group(2)):
             fence = (match.group(1)[0], len(match.group(1)))
             continue
+        if COMMENT_OPEN.match(line):
+            if "-->" not in line.split("<!--", 1)[1]:
+                in_comment = True
+            continue
         lines.append(line)
-    return re.sub(r"(?s)<!--.*?(-->|\Z)", "", "\n".join(lines))
+    return "\n".join(lines)
 
 
-def section_body(text: str, name: str) -> str:
-    match = re.search(rf"(?m)^## {re.escape(name)}\s*$", text)
-    if not match:
-        return ""
-    start = match.end()
-    next_heading = re.search(r"(?m)^## ", text[start:])
-    end = start + next_heading.start() if next_heading else len(text)
-    return text[start:end]
+def section_bodies(text: str, name: str) -> str:
+    bodies: list[str] = []
+    for match in re.finditer(rf"(?m)^## {re.escape(name)}\s*$", text):
+        start = match.end()
+        next_heading = re.search(r"(?m)^## ", text[start:])
+        end = start + next_heading.start() if next_heading else len(text)
+        bodies.append(text[start:end])
+    return "\n".join(bodies)
 
 
 def field(text: str, name: str) -> str | None:
@@ -147,7 +157,8 @@ def validate(map_path: Path) -> list[str]:
                 provisionals=len(re.findall(r"(?m)^## Provisional verdict\s*$", text)),
                 legacy_actives=len(
                     re.findall(
-                        r"(?m)^State: active\s*$", section_body(text, "Verdict history")
+                        r"(?m)^State: active\s*$",
+                        section_bodies(text, "Verdict history"),
                     )
                 ),
             )
