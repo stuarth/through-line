@@ -9,8 +9,8 @@ sessions. Store receipts on the task ticket or in one artifact linked from it.
 Load the exact ticket and linked receipts. Start at the first missing or invalid
 receipt and retain earlier valid receipts. Commits must remain reachable and mapped
 premises must still hold; each gate below defines what else invalidates its receipt.
-A review receipt is valid only for its named candidate range and recorded targeted or
-test-only extensions; a candidate produced by another path has no review receipt.
+A review receipt is valid only for its named candidate range and recorded targeted
+extensions; a candidate produced by another path has no review receipt.
 
 A checkpoint records the receipts, the first invalid gate, and the next exact packet.
 Resuming a checkpoint continues that gate. It does not replay orientation, prior
@@ -61,7 +61,8 @@ specialist only when the receipt names a risk the integrated reviewer cannot jud
 Persist its review receipt:
 
 - candidate range and decision;
-- material findings tied to acceptance or named premises;
+- material findings tied to acceptance, a named premise, or an evidenced correctness,
+  security, or data-integrity invariant;
 - risks actually covered and checks run; and
 - direct testing gaps that remain.
 
@@ -79,7 +80,8 @@ Return the correction range to the same reviewer for a targeted pass. When that
 session cannot resume, dispatch a fresh reviewer with the prior review receipt and
 correction range. The pass adjudicates the recorded findings and direct regressions
 in touched code. Adjacent hardening becomes a later ticket unless it falsifies a
-mapped acceptance criterion or premise.
+mapped acceptance criterion or premise, or violates a material correctness, security,
+or data-integrity invariant.
 
 A correction that materially changes architecture, authorization, persistence,
 destructive behavior, or the candidate's overall shape invalidates the whole review
@@ -93,11 +95,11 @@ complete output outside conversation and record command, commit, status, duratio
 and one-line result. The verification receipt is valid only for the mapped final
 candidate.
 
-A behavioral failure returns to Correction. A test-only update to expected output or
-fixtures for already-reviewed behavior updates the candidate and affected evidence
-without another code review; record the new commit as a test-only extension on the
-clean review receipt. Rerun the full suite only after an edit or failed run invalidates
-it.
+A behavioral failure returns to Correction. When the only proposed fix changes an
+expected output or fixture for already-reviewed behavior, make a narrow test-only
+correction. Give its fixed range and failed check to targeted Review; inspect only
+whether the expectation matches mapped behavior without weakening the oracle. Record
+a clean pass as a targeted extension, then rerun the full suite.
 
 ## 6. Record
 

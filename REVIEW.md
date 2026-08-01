@@ -17,6 +17,8 @@ acceptance and risks under review.
 
 Trace the fixed candidate against every mapped acceptance criterion and named premise.
 Report only material correctness, security, data-integrity, or acceptance failures.
+Map a finding to a criterion or premise when possible; otherwise name and evidence
+the correctness, security, or data-integrity invariant it violates.
 Optional hardening, adjacent cleanup, and broader completeness ideas do not enter the
 receipt.
 
@@ -31,14 +33,17 @@ code for direct regressions. Preserve the prior receipt's unaffected coverage. A
 issue enters the receipt only when the correction causes it or it falsifies a mapped
 criterion or premise.
 
+For a test-only correction, inspect only the failed check, changed expectation or
+fixture, and mapped behavior. Confirm the update preserves the strength of the oracle.
+
 ## Receipt
 
 Return:
 
 - reviewed candidate and correction ranges;
 - clean or correction-required decision;
-- each material finding with file, evidence, mapped criterion or premise, and
-  recommendation;
+- each material finding with file, evidence, mapped criterion, premise, or violated
+  invariant, and recommendation;
 - prior findings resolved or still open;
 - risks covered and checks run; and
 - direct testing gaps.
