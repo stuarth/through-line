@@ -10,6 +10,8 @@ from pathlib import Path
 
 INDEX_SECTIONS = ("Decisions so far", "Findings", "Out of scope")
 LEGWORK_TYPES = {"research", "prototype", "task"}
+TICKET_TYPES = {"decision"} | LEGWORK_TYPES
+TICKET_STATUSES = {"open", "claimed", "blocked", "resolved"}
 
 
 @dataclass(frozen=True)
@@ -19,6 +21,11 @@ class Ticket:
     kind: str | None
     status: str | None
     blockers: tuple[str, ...]
+    assignee: str | None
+    resolutions: int
+    checkpoints: int
+    provisionals: int
+    legacy_actives: int
 
 
 def field(text: str, name: str) -> str | None:
@@ -100,8 +107,41 @@ def validate(map_path: Path) -> list[str]:
                 kind=field(text, "Type"),
                 status=field(text, "Status"),
                 blockers=blockers(text, path, errors),
+                assignee=field(text, "Assignee"),
+                resolutions=len(re.findall(r"(?m)^## Resolution\s*$", text)),
+                checkpoints=len(re.findall(r"(?m)^## Resumption checkpoint\s*$", text)),
+                provisionals=len(re.findall(r"(?m)^## Provisional verdict\s*$", text)),
+                legacy_actives=len(re.findall(r"(?m)^State: active\s*$", text)),
             )
         )
+
+    for ticket in tickets:
+        if ticket.kind not in TICKET_TYPES:
+            errors.append(f"{ticket.path}: unknown Type {ticket.kind!r}")
+        if ticket.status not in TICKET_STATUSES:
+            errors.append(f"{ticket.path}: unknown Status {ticket.status!r}")
+        if ticket.status in {"claimed", "resolved"} and not ticket.assignee:
+            errors.append(f"{ticket.path}: Status {ticket.status} requires an Assignee")
+        if ticket.status in {"open", "blocked"} and ticket.assignee:
+            errors.append(f"{ticket.path}: Status {ticket.status} must not carry an Assignee")
+        if ticket.provisionals > 1:
+            errors.append(f"{ticket.path}: more than one ## Provisional verdict")
+        if ticket.checkpoints > 1:
+            errors.append(f"{ticket.path}: more than one ## Resumption checkpoint")
+        if ticket.status != "resolved" and ticket.resolutions:
+            errors.append(f"{ticket.path}: unresolved with a ## Resolution")
+        if ticket.legacy_actives:
+            errors.append(
+                f"{ticket.path}: legacy `State: active` marker requires migration "
+                "to ## Provisional verdict"
+            )
+        if ticket.status == "resolved":
+            if ticket.resolutions != 1:
+                errors.append(f"{ticket.path}: resolved without exactly one ## Resolution")
+            if ticket.checkpoints:
+                errors.append(f"{ticket.path}: resolved with a ## Resumption checkpoint")
+            if ticket.provisionals:
+                errors.append(f"{ticket.path}: resolved with a ## Provisional verdict")
 
     by_path = {ticket.path: ticket for ticket in tickets}
     by_number: dict[str, Ticket] = {}

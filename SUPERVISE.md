@@ -43,9 +43,8 @@ conversation.
    continue.
 
 Run worker sessions serially because each propagation can change the next frontier.
-A worker may still delegate bounded legwork under `SKILL.md`; every delegate works
-only its selected ticket. A generic continuation, goal wake-up, or worker report is
-coordination, never a human verdict.
+A generic continuation, goal wake-up, or worker report is coordination, never a
+human verdict.
 
 A worker that stops at a resumption checkpoint returns its ticket to the frontier;
 select and dispatch it like any other.

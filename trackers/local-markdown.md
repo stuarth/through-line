@@ -6,18 +6,13 @@ Use this fallback only when the repo has no issue-tracker doc.
   `Status: open|resolved`.
 - **Child:** `.scratch/<effort>/issues/NN-<slug>.md`, with `Type:
   decision|research|prototype|task`, `Status: open|claimed|blocked|resolved`, and the
-  question under `## Question`. A human-owned decision also separates
-  `## Derived implications` and `## Builder discretion` from that one residual
-  judgment and records any non-final answer under `## Verdict history`. Any
-  superseded resolution also moves under `## Verdict history`. Mark each history
-  entry `State: active|finalized|superseded`; only `active` entries are premises.
-- **Claim:** when no assignee exists on an unresolved ticket, add `Assignee: <dev>`
-  and set `Status: claimed` before work. Work that lands in a repository also adds
-  `Repository: <repo>` when the map spans more than one, and `Branch: <branch>` once
-  it exists. An existing assignee on an unresolved
-  ticket is a claim; surface the conflict rather than replacing it. An assignee
-  retained on a resolved ticket is attribution, not a claim; remove it before
-  reopening the ticket, then claim normally.
+  question under `## Question`. Further sections—`## Derived implications`,
+  `## Builder discretion`, `## Provisional verdict`, `## Verdict history`,
+  `## Resolution`, `## Resumption checkpoint`—carry the meanings
+  [Map and tickets](../SKILL.md#map-and-tickets) defines.
+- **Claim:** add `Assignee: <dev>` and set `Status: claimed` before work. Work that
+  lands in a repository also adds `Repository: <repo>` when the map spans more than
+  one, and `Branch: <branch>` once it exists.
 - **Unclaim:** remove `Assignee` and set `Status: blocked` when an unresolved blocker
   exists, otherwise `Status: open`.
 - **Blocking:** add `Blocked by: NN, NN`. Use `blocked` only while at least one named
