@@ -132,7 +132,8 @@ Recording is done when the tracker agrees with reality:
 
 - every claimed or resolved ticket has an assignee, and open or blocked tickets do
   not;
-- every resolved ticket is closed with its resolution;
+- every resolved ticket is closed with its resolution and has no
+  `## Resumption checkpoint`;
 - every resolved ticket that landed work in a repository records the durable
   commits or pull request in **Resolution**—linked when a remote exists, by hash
   otherwise;

@@ -37,7 +37,8 @@ conversation.
    is unattended: nothing it receives carries a human verdict or adoption, so
    determined human-owned decisions, residual questions, and admission candidates
    stay open on the frontier.
-6. Wait for the worker to finish, then treat the tracker—not its conversation—as the
+6. Remain inert while the worker runs: dispatch once, then repeat the same wait until
+   it reaches a final or blocked state. Treat the tracker—not its conversation—as the
    result. Reload durable state and repeat from step 1 without asking the human to
    continue.
 
@@ -45,3 +46,6 @@ Run worker sessions serially because each propagation can change the next fronti
 A worker may still delegate bounded legwork under `SKILL.md`; every delegate works
 only its selected ticket. A generic continuation, goal wake-up, or worker report is
 coordination, never a human verdict.
+
+A worker that stops at a resumption checkpoint returns its ticket to the frontier;
+select and dispatch it like any other.

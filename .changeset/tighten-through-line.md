@@ -14,4 +14,6 @@ interview.
   superseded.
 - Separate resolved findings from decisions on the map and make recording complete
   only when tracker state agrees with reality.
+- Keep unattended supervision inert while a worker runs, and checkpoint unfinished
+  work before a fresh session resumes it.
 - Add a validated local-Markdown fallback and map-state checker.

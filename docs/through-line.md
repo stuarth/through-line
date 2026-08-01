@@ -50,7 +50,7 @@ ticket, research or prototype ticket, or task ticket when execution is in scope.
 Propagation triggered by that starting work belongs to the same Work session. Once
 the map is reconciled and re-charted, the agent reports the frontier and stops; a
 fresh Work session reloads the durable state before taking the next round or ticket.
-Automatic continuation, compaction, and resumed turns do not widen that boundary.
+Automatic continuations and resumed turns do not widen that boundary.
 
 Delegation parallelizes legwork, not the through-line itself. Each delegate stays
 within one selected ticket, and the coordinating session carries its result back into
@@ -61,12 +61,13 @@ making conversation history part of the map.
 
 To keep moving without approving each non-human ticket, invoke `/through-line` with
 an existing map and say **advance unattended**. A lightweight supervisor starts a
-fresh Work session for each round or ticket and reloads the tracker between them. It
-continues through builder-owned decisions, factual or prototype legwork, and task
-tickets when execution is in scope, then returns when the map closes or the frontier
-genuinely needs human judgment, doctrine, scope, external input, closeout, or a
-conflict resolved. This preserves the context boundary without making the human act
-as the session scheduler.
+fresh Work session for each round or ticket, remains inert while it runs, and reloads
+the tracker only after it reaches a final or blocked state. It continues through
+builder-owned decisions, factual or prototype legwork, and task tickets when
+execution is in scope, then returns when the map closes or the frontier genuinely
+needs human judgment, doctrine, scope, external input, closeout, or a conflict
+resolved. This preserves the context boundary without making the human act as the
+session scheduler.
 
 ## Standing principles, local policies
 
