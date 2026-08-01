@@ -52,6 +52,16 @@ def strip_fences(text: str) -> str:
     return "\n".join(lines)
 
 
+def section_body(text: str, name: str) -> str:
+    match = re.search(rf"(?m)^## {re.escape(name)}\s*$", text)
+    if not match:
+        return ""
+    start = match.end()
+    next_heading = re.search(r"(?m)^## ", text[start:])
+    end = start + next_heading.start() if next_heading else len(text)
+    return text[start:end]
+
+
 def field(text: str, name: str) -> str | None:
     match = re.search(rf"(?m)^{re.escape(name)}:\s*(.+?)\s*$", text)
     return match.group(1).strip() if match else None
@@ -135,7 +145,11 @@ def validate(map_path: Path) -> list[str]:
                 resolutions=len(re.findall(r"(?m)^## Resolution\s*$", text)),
                 checkpoints=len(re.findall(r"(?m)^## Resumption checkpoint\s*$", text)),
                 provisionals=len(re.findall(r"(?m)^## Provisional verdict\s*$", text)),
-                legacy_actives=len(re.findall(r"(?m)^State: active\s*$", text)),
+                legacy_actives=len(
+                    re.findall(
+                        r"(?m)^State: active\s*$", section_body(text, "Verdict history")
+                    )
+                ),
             )
         )
 
