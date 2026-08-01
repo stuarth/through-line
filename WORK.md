@@ -211,9 +211,10 @@ A task ticket that lands work in a repository passes these gates:
    Do not start the full suite while any review finding remains unresolved. After a
    clean review, the ticket resolves when the full suite is green. When a suite
    failure requires edits, cut a new candidate and return it through Review before
-   rerunning the suite. Keep successful command output out of conversation: record
-   only command, status, duration, and a one-line summary; quote bounded excerpts
-   only on failure.
+   rerunning the suite. Before execution, capture the full-suite command's complete
+   output outside conversation so it cannot stream into context. After it exits,
+   record only command, status, duration, and a one-line summary on success; quote
+   bounded excerpts from the captured output only on failure.
 
 ## Falsify
 
