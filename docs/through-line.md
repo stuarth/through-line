@@ -58,10 +58,8 @@ durable shared state. This prevents parallel work from multiplying judgment loop
 making conversation history part of the map.
 
 When execution is in scope, an atomic task ticket produces one fixed, independently
-reviewable **review candidate**. Reviewers judge that candidate in fresh context
-instead of following a moving worktree; integrated review is the default and
-specialist review is reserved for a named risk. The Work session batches findings
-and owns shared verification so review effort converges on one tested result.
+reviewable **review candidate**. This keeps review from becoming a live audit of a
+moving worktree and lets each Work session converge on one tested result.
 
 ## Advance unattended
 
