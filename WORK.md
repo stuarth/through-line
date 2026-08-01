@@ -209,9 +209,10 @@ A task ticket that lands work in a repository passes these gates:
    work together, checkpoint, unclaim, and stop.
 5. **Verification.** Keep shared-database and full-suite checks in this Work session.
    Do not start the full suite while any review finding remains unresolved. After a
-   clean review, the ticket resolves when the full suite is green. When a suite
-   failure requires edits, cut a new candidate and return it through Review before
-   rerunning the suite. Before execution, capture the full-suite command's complete
+   clean review, run every mapped deferred shared-database check and the full suite;
+   the ticket resolves only when all of them are green. When any check failure
+   requires edits, cut a new candidate and return it through Review before rerunning
+   the affected checks. Before execution, capture the full-suite command's complete
    output outside conversation so it cannot stream into context. After it exits,
    record only command, status, duration, and a one-line summary on success; quote
    bounded excerpts from the captured output only on failure.

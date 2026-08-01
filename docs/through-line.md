@@ -95,7 +95,8 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
 - Each repository review candidate accounts for every acceptance criterion and
-  reachable premise, and each candidate gets a fresh integrated review.
+  reachable premise, each candidate gets a fresh integrated review, and every
+  mapped deferred verification check passes before the ticket resolves.
 - Repeated review findings produce a root-cause diagnosis or checkpoint before
   another correction candidate; a Work session with unresolved findings records a
   checkpoint rather than continuing with degraded context.
