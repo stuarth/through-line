@@ -10,6 +10,8 @@ from pathlib import Path
 
 INDEX_SECTIONS = ("Decisions so far", "Findings", "Out of scope")
 LEGWORK_TYPES = {"research", "prototype", "task"}
+TICKET_TYPES = {"decision"} | LEGWORK_TYPES
+TICKET_STATUSES = {"open", "claimed", "blocked", "resolved"}
 
 
 @dataclass(frozen=True)
@@ -19,6 +21,55 @@ class Ticket:
     kind: str | None
     status: str | None
     blockers: tuple[str, ...]
+    assignee: str | None
+    resolutions: int
+    checkpoints: int
+    provisionals: int
+    legacy_actives: int
+
+
+FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+COMMENT_OPEN = re.compile(r"^ {0,3}<!--")
+
+
+def scannable_text(text: str) -> str:
+    lines: list[str] = []
+    fence: tuple[str, int] | None = None
+    in_comment = False
+    for line in text.splitlines():
+        if in_comment:
+            if "-->" in line:
+                in_comment = False
+            continue
+        match = FENCE.match(line)
+        if fence is not None:
+            if (
+                match
+                and match.group(1)[0] == fence[0]
+                and len(match.group(1)) >= fence[1]
+                and not match.group(2).strip()
+            ):
+                fence = None
+            continue
+        if match and (match.group(1)[0] == "~" or "`" not in match.group(2)):
+            fence = (match.group(1)[0], len(match.group(1)))
+            continue
+        if COMMENT_OPEN.match(line):
+            if "-->" not in line.split("<!--", 1)[1]:
+                in_comment = True
+            continue
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def section_bodies(text: str, name: str) -> str:
+    bodies: list[str] = []
+    for match in re.finditer(rf"(?m)^## {re.escape(name)}\s*$", text):
+        start = match.end()
+        next_heading = re.search(r"(?m)^## ", text[start:])
+        end = start + next_heading.start() if next_heading else len(text)
+        bodies.append(text[start:end])
+    return "\n".join(bodies)
 
 
 def field(text: str, name: str) -> str | None:
@@ -92,7 +143,7 @@ def validate(map_path: Path) -> list[str]:
 
     tickets: list[Ticket] = []
     for path in sorted(issues_dir.glob("*.md")):
-        text = path.read_text()
+        text = scannable_text(path.read_text())
         tickets.append(
             Ticket(
                 path=path.resolve(),
@@ -100,8 +151,46 @@ def validate(map_path: Path) -> list[str]:
                 kind=field(text, "Type"),
                 status=field(text, "Status"),
                 blockers=blockers(text, path, errors),
+                assignee=field(text, "Assignee"),
+                resolutions=len(re.findall(r"(?m)^## Resolution\s*$", text)),
+                checkpoints=len(re.findall(r"(?m)^## Resumption checkpoint\s*$", text)),
+                provisionals=len(re.findall(r"(?m)^## Provisional verdict\s*$", text)),
+                legacy_actives=len(
+                    re.findall(
+                        r"(?m)^State: active\s*$",
+                        section_bodies(text, "Verdict history"),
+                    )
+                ),
             )
         )
+
+    for ticket in tickets:
+        if ticket.kind not in TICKET_TYPES:
+            errors.append(f"{ticket.path}: unknown Type {ticket.kind!r}")
+        if ticket.status not in TICKET_STATUSES:
+            errors.append(f"{ticket.path}: unknown Status {ticket.status!r}")
+        if ticket.status in {"claimed", "resolved"} and not ticket.assignee:
+            errors.append(f"{ticket.path}: Status {ticket.status} requires an Assignee")
+        if ticket.status in {"open", "blocked"} and ticket.assignee:
+            errors.append(f"{ticket.path}: Status {ticket.status} must not carry an Assignee")
+        if ticket.provisionals > 1:
+            errors.append(f"{ticket.path}: more than one ## Provisional verdict")
+        if ticket.checkpoints > 1:
+            errors.append(f"{ticket.path}: more than one ## Resumption checkpoint")
+        if ticket.status != "resolved" and ticket.resolutions:
+            errors.append(f"{ticket.path}: unresolved with a ## Resolution")
+        if ticket.legacy_actives:
+            errors.append(
+                f"{ticket.path}: legacy `State: active` marker requires migration "
+                "to ## Provisional verdict"
+            )
+        if ticket.status == "resolved":
+            if ticket.resolutions != 1:
+                errors.append(f"{ticket.path}: resolved without exactly one ## Resolution")
+            if ticket.checkpoints:
+                errors.append(f"{ticket.path}: resolved with a ## Resumption checkpoint")
+            if ticket.provisionals:
+                errors.append(f"{ticket.path}: resolved with a ## Provisional verdict")
 
     by_path = {ticket.path: ticket for ticket in tickets}
     by_number: dict[str, Ticket] = {}
@@ -129,7 +218,7 @@ def validate(map_path: Path) -> list[str]:
         if not unresolved and ticket.status == "blocked":
             errors.append(f"{ticket.path}: blocked without an unresolved blocker")
 
-    map_text = map_path.read_text()
+    map_text = scannable_text(map_path.read_text())
     indexes = {
         name: index_paths(map_path, section(map_text, name, errors), name, errors)
         for name in INDEX_SECTIONS
@@ -169,7 +258,10 @@ def validate(map_path: Path) -> list[str]:
         elif ticket.path not in expected:
             errors.append(f"map: resolved ticket missing from {name}: {ticket.path.name}")
 
-    if field(map_text, "Status") == "resolved":
+    map_status = field(map_text, "Status")
+    if map_status not in {"open", "resolved"}:
+        errors.append(f"map: unknown Status {map_status!r}")
+    if map_status == "resolved":
         unresolved = [ticket.path.name for ticket in tickets if ticket.status != "resolved"]
         if unresolved:
             errors.append(f"map: resolved with unresolved tickets: {', '.join(unresolved)}")

@@ -5,10 +5,10 @@ ticket when nothing is determined; one research or prototype ticket; or, when
 execution is in scope, one task ticket. Then propagate its verdicts and resolutions
 to convergence. Exception reviews and builder resolutions raised by propagation
 belong to that session's cascade; completed legwork may be harvested first.
-Finishing one listed round or ticket and its cascade is a stop condition: an
-automatic continuation or resumed turn is still the same session. When earlier
-conversation history has been summarized or lost before that stop condition is
-reached, set or replace one `## Resumption checkpoint` section on every unresolved
+Finishing one listed round or ticket and its cascade is a stop condition: automatic
+continuation, compaction, or a resumed turn never resets it. When context loss
+leaves this session unable to finish that cascade safely, set or replace one
+`## Resumption checkpoint` section on every unresolved
 ticket claimed for this session with durable work and its commits, work remaining,
 and current verification state, sufficient for a fresh session to resume from the
 tracker alone. Unclaim those tickets, reconcile through
@@ -17,8 +17,11 @@ tracker alone. Unclaim those tickets, reconcile through
 ## Orient
 
 1. Load `PRINCIPLES.md`, the map, its **Findings**, decision rights, the tracker
-   frontier, and only `State: active` entries from **Verdict history** in every
-   unresolved decision.
+   frontier, and each unresolved decision's **Provisional verdict**. Migrate any
+   legacy `State: active` entry under **Verdict history** into **Provisional
+   verdict**, dropping its `State` line; when it conflicts with an existing
+   **Provisional verdict** or **Resolution**, stop for human reconciliation rather
+   than choosing a premise.
 2. Reconcile completed legwork and tracker state through [Record](./SKILL.md#record).
 3. Classify every frontier decision by the reach of adopted principles, local
    policies, and recorded premises, and by ownership.
@@ -30,7 +33,7 @@ Reach:
   judgment.
 - **Does not reach** — it has no real bearing.
 
-Treat a non-final premise as constraining only; never use it to determine or moot a
+A provisional verdict constrains only; never use it to determine or moot a
 decision.
 
 Ownership:
@@ -90,7 +93,8 @@ before proceeding:
 - constrained, not determined → unclaim it, then use individual judgment;
 - principle itself wrong → falsify it.
 
-A wording clarification that preserves the recommendation is confirmation. A later
+A wording clarification is not yet a verdict: re-present the clarified
+recommendation and resolve only on an explicit verdict. A later
 material amendment to a final premise follows Propagate's replacement-premise sweep.
 When the amended answer was builder-owned, its replacement becomes human-owned.
 
@@ -104,30 +108,31 @@ presenting another human question:
 1. Record the session's smallest durable result:
    - A research, prototype, or task ticket goes in **Resolution** and its **Findings**
      gist.
-   - When replacing a final premise, first move the old **Resolution** under
-     **Verdict history** as `State: superseded`.
-   - A non-final premise goes under **Verdict history** as `State: active`; first
-     mark any earlier active entry `State: superseded`. When it replaces a final
-     premise, clear the stale map entry, then reopen the deciding ticket through the
+   - A non-final premise goes in **Provisional verdict**, moving any provisional
+     verdict it replaces under **Verdict history**. When it replaces a final premise,
+     move that **Resolution** under **Verdict history**, removing the original
+     section, clear the stale map entry, then reopen the deciding ticket through the
      claim protocol below.
-   - A final premise goes in **Resolution** and its **Decisions so far** gist.
+   - A final premise goes in **Resolution** and its **Decisions so far** gist, first
+     moving any provisional verdict or superseded **Resolution** it replaces under
+     **Verdict history** and removing the original section. Carrying the provisional
+     verdict forward unchanged is finalization; a material change is a replacement.
    When the verdict changes doctrine, its adopted principle or local-policy entry is
    the durable premise. A decision may become a downstream premise without becoming
    doctrine; take recurring rhyme through [Admission](./ADMISSION.md) before
    proposing a principle or local policy.
-2. Whenever an earlier recorded premise becomes `State: superseded`, run the
-   **replacement-premise sweep**. Trace every decision that names the old premise in
-   its derivation,
-   **Derived implications**, **Resolution**, or map gist, including transitively
-   through decisions that became downstream premises. Through the claim protocol
-   below, re-check whether an adopted principle, local policy, surviving active
-   premise, or surviving recorded final premise still supports each implication or
+2. Whenever a provisional verdict or final **Resolution** is materially replaced,
+   run the **replacement-premise sweep**. Trace every
+   decision that names the old premise in its derivation, **Derived implications**,
+   **Resolution**, or map gist, including transitively through decisions that became
+   downstream premises. Through the claim protocol below, re-check whether a
+   surviving principle, local policy, or premise still supports each implication or
    ruled-out choice. Restore to each dependent's **Question** every choice ruled out
    only by the old premise, and clear each implication derived from it,
    re-attributing any that still holds. Include every dependent in reclassification.
-   For each closed dependent, also move its **Resolution** under **Verdict history**
-   as `State: superseded`, clear that **Resolution**, remove its stale map entry, and
-   clear its retained assignee before reopening it.
+   For each closed dependent: move its superseded **Resolution** under
+   **Verdict history**, removing the original section; remove its stale map entry;
+   clear its retained assignee; then reopen it through the claim protocol.
 3. Reclassify reach and ownership using the new premise:
    - resolve determined builder-owned decisions inside their guardrails, naming the
      determining principle, local policy, or recorded final premise in
@@ -142,11 +147,9 @@ presenting another human question:
 4. Apply ticket mutations through the [claim protocol](./SKILL.md#map-and-tickets).
    When a ticket claimed by another session would change, leave it read-only, surface
    the ownership conflict, and coordinate with its assignee before either session
-   resolves it. Unclaim every unresolved ticket initially claimed for this session
-   unless the cascade is explicitly continuing it. Unclaim every still-open ticket
-   claimed for propagation unless this session is retaining it for the cascade's next
-   Round. Keep a ticket blocked whenever a missing fact could change the
-   recommendation.
+   resolves it. Unclaim every unresolved ticket this session claimed—for its work or
+   for propagation—unless the cascade is continuing it in this session. Keep a
+   ticket blocked whenever a missing fact could change the recommendation.
 5. Record every changed ticket, dependency, map index, and principle evidence trail,
    then report the propagation delta:
    - **Reopened**
@@ -204,11 +207,10 @@ ticket and present a review round; the human chooses what to revisit.
 
 ## Finish the session
 
-1. Record resolved tickets and principle changes through
+1. Re-chart: create then wire newly sharp tickets, graduate fog, and close mis-scoped
+   tickets into **Out of scope**.
+2. Take the re-charted tracker, resolved tickets, and principle changes through
    [Record](./SKILL.md#record).
-2. Re-chart: create then wire newly sharp tickets, graduate fog, and close mis-scoped
-   tickets into **Out of scope**; then take the re-charted tracker through
-   [Record](./SKILL.md#record) again.
 3. Report the frontier and stop. A fresh session resumes from the tracker and takes
    the next round or ticket.
 

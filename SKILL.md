@@ -106,11 +106,10 @@ For a human-owned ticket, put only its residual judgment in **Question**. Put
 principle-derived consequences in **Derived implications** and below-threshold
 choices in **Builder discretion**; the human verdict covers only the Question.
 
-Record a non-final verdict or superseded resolution under **Verdict history**. Mark
-each entry `State: active|finalized|superseded`. Before any ticket resolves or
-closes, mark each active entry `State: finalized` when its **Resolution** carries it
-forward and `State: superseded` otherwise. Only an active entry may constrain
-another decision.
+A ticket carries at most one **Provisional verdict**, and only while unresolved; it
+is the ticket's only non-final premise. **Resolution** holds the sole final premise.
+**Verdict history** is archival and inert: nothing in it may constrain another
+decision.
 
 Ticket every sharp human-owned question. Ticket a builder-owned choice only when it
 blocks another mapped decision, tests a principle, or needs a durable record;
@@ -147,8 +146,7 @@ Recording is done when the tracker agrees with reality:
 - **Decisions so far** indexes exactly the closed in-scope decision tickets;
 - **Findings** indexes exactly the closed in-scope research, prototype, and task
   tickets;
-- **Out of scope** holds every scoped-out closure and none of the route indexes do;
-- no open ticket appears in a closed-ticket index, and blocker/status state renders
+- **Out of scope** holds every scoped-out closure, and blocker/status state renders
   the real frontier.
 
 Record principle boundaries and revisions inline in `PRINCIPLES.md`; add tickets that
