@@ -20,6 +20,8 @@ Use this fallback only when the repo has no issue-tracker doc.
 - **Frontier:** open, unblocked, unclaimed child files, ordered by number.
 - **Resolve:** append `## Resolution`, set `Status: resolved`, retain the assignee,
   then update the map through [Record](../SKILL.md#record).
+- **Commit:** when the map lives in a repository, commit tracker changes with the
+  work they record.
 
 Create child files first, then wire blockers once their numbers exist. Bare numbers
 are tracker metadata only.

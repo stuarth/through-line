@@ -13,7 +13,8 @@ the effort between them.
    research or prototype ticket, or an in-scope task.
 4. Start a fresh Work session with the map reference, exact selection, reaching
    premises, useful references, checks, and any execution receipts. Do not pass the
-   supervisor's conversation.
+   supervisor's conversation. Dispatch at the host's default reasoning effort;
+   reserve elevated effort for a named risk.
 5. Wait for completion without polling. When the worker resolves, blocks, or
    checkpoints, reload durable state and repeat.
 

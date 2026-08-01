@@ -133,6 +133,6 @@ between sessions. The Work session owns claims, human questions, propagation, an
 tracker reconciliation. Give research and prototype agents only their selected
 ticket, reaching premises, references, and checks.
 
-Repository work follows [EXECUTION.md](./EXECUTION.md). Its packet, candidate,
-review, and verification receipts let fresh leaves continue without loading map
-history or coordinator conversation.
+Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, candidate,
+review, and verification receipts let a fresh session resume without reloading map
+history or conversation.

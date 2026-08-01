@@ -1,36 +1,42 @@
 # Execution
 
-Use this branch for repository work. The Work session coordinates; compact receipts
-carry progress. Store them on the task ticket or in one linked artifact.
+Use this branch for repository work. The Work session implements its task directly,
+so discovery is paid once, in the session that edits. Compact receipts carry
+progress; store them on the task ticket or in one linked artifact.
 
 ## Resume
 
 Load the ticket and its receipts, then continue from the first unfinished or invalid
 stage. Keep earlier work when its commits still exist and later edits have not changed
-what it established. A checkpoint names that stage and the next packet so resumption
+what it established. A checkpoint names that stage and the next plan so resumption
 does not repeat orientation, implementation, or review.
 
-## Packet
+## Plan
 
 Keep the task atomic: an independently landable result deserves its own ticket.
 
-Write a compact packet with the outcome, acceptance criteria, reaching premises,
-exact entry points and constraints, focused checks, exclusions, and stop condition.
-Use the host's default reasoning effort unless one named uncertainty warrants more.
-For persistent data work, include the governing schema and an isolated database check.
+Before editing, record a compact plan on the ticket: the outcome, acceptance
+criteria, reaching premises, exact entry points and constraints, focused checks,
+exclusions, and stop condition. For persistent data work, include the governing
+schema and an isolated database check. The plan is ready when implementation can
+proceed from those entry points without a new product or architecture decision.
 
-The packet is ready when an implementer can act from those entry points without
-rediscovering the route or making a new product or architecture decision.
+Delegate only work disjoint enough to run in parallel: give each fresh leaf its own
+plan as a packet with [IMPLEMENT.md](./IMPLEMENT.md), at the host's default
+reasoning effort unless one named uncertainty warrants more. A returned gap sharpens
+the packet; it does not widen the leaf's assignment. When a delegated check fails,
+send the leaf the failing evidence — diagnosis belongs to the leaf, and the
+coordinator's context stays lean.
 
 ## Candidate
 
-Dispatch a fresh leaf with the packet and [IMPLEMENT.md](./IMPLEMENT.md). A returned
-gap sharpens the next packet; it does not widen the leaf's assignment.
-
-Record the base and candidate commits, changed files, acceptance mapping, focused
-checks, and any remaining gap. The candidate is ready for review when every criterion
-and reaching premise maps to implementation and a verification path: green focused
-evidence, a review check, or a named deferred check.
+Implement the plan — directly, or by landing the delegated packets' receipts — and
+run the focused checks, committing only the plan's files. Record the base and
+candidate commits, changed files, acceptance mapping, focused checks, and any
+remaining gap.
+The candidate is ready for review when every criterion and reaching premise maps to
+implementation and a verification path: green focused evidence, a review check, or a
+named deferred check.
 
 ## Review and correction
 
@@ -38,11 +44,11 @@ Give one fresh integrated reviewer the ticket, premises, candidate receipt, and
 [REVIEW.md](./REVIEW.md). Add a specialist only for a named risk the reviewer cannot
 judge. Record the candidate range, decision, material findings, checks, and gaps.
 
-Fix related findings together with the smallest complete packet. Return the correction
-range and prior receipt to the same reviewer, or a fresh reviewer when resumption is
-unavailable, for a targeted pass. Preserve unaffected review coverage. Start over
-only when the correction materially changes the candidate's architecture, authority,
-persistence, destructive behavior, or overall shape.
+Fix related findings together as the smallest complete correction. Return the
+correction range and prior receipt to the same reviewer, or a fresh reviewer when
+resumption is unavailable, for a targeted pass. Preserve unaffected review coverage.
+Start over only when the correction materially changes the candidate's architecture,
+authority, persistence, destructive behavior, or overall shape.
 
 Keep adjacent hardening out of the correction loop. If the loop stops converging,
 checkpoint it for a fresh Work session rather than accumulating more context.
