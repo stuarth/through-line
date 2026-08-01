@@ -204,11 +204,12 @@ A task ticket that lands work in a repository passes these gates:
 4. **Correction.** Aggregate every finding and fix them as one batch. Give each new
    candidate a fresh reviewer briefed with the ticket, new diff, current premises,
    acceptance-check mapping, available verification evidence, and prior findings
-   list—never a prior review conversation—and re-review only the findings and risks
-   the fixes touched. When two successive re-reviews return findings, or findings
-   trace to one underlying cause, stop patching and diagnose that cause before the
-   next candidate. If this session cannot safely hold the diagnosis and remaining
-   work together, checkpoint, unclaim, and stop.
+   list—never a prior review conversation—and re-run every mapped reviewer-based
+   acceptance check while otherwise re-reviewing only the findings and risks the
+   fixes touched. When two successive re-reviews return findings, or findings trace
+   to one underlying cause, stop patching and diagnose that cause before the next
+   candidate. If this session cannot safely hold the diagnosis and remaining work
+   together, checkpoint, unclaim, and stop.
 5. **Verification.** Keep shared-database and full-suite checks in this Work session.
    Do not start the full suite while any review finding remains unresolved. After a
    clean review, run every mapped deferred acceptance check and the full suite; the
