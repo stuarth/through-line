@@ -36,15 +36,19 @@ def strip_fences(text: str) -> str:
     fence: tuple[str, int] | None = None
     for line in text.splitlines():
         match = FENCE.match(line)
-        if match:
-            marker, info = match.group(1), match.group(2)
-            if fence is None:
-                fence = (marker[0], len(marker))
-            elif marker[0] == fence[0] and len(marker) >= fence[1] and not info.strip():
+        if fence is not None:
+            if (
+                match
+                and match.group(1)[0] == fence[0]
+                and len(match.group(1)) >= fence[1]
+                and not match.group(2).strip()
+            ):
                 fence = None
             continue
-        if fence is None:
-            lines.append(line)
+        if match and (match.group(1)[0] == "~" or "`" not in match.group(2)):
+            fence = (match.group(1)[0], len(match.group(1)))
+            continue
+        lines.append(line)
     return "\n".join(lines)
 
 
