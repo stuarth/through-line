@@ -189,16 +189,18 @@ A task ticket that lands work in a repository passes these gates:
    and reviewable vertical slice, then work only the selected ticket.
 2. **Candidate.** Intended edits are complete and focused checks are green. Before
    cutting the **review candidate**, enumerate every acceptance criterion and
-   reachable premise with where the diff satisfies it and either the focused check
-   that verifies it or the exact post-review shared-database or full-suite check that
-   must do so. A diff that cannot account for every item and its verification path is
-   not a candidate. Fix the candidate between two named commits so review never
-   follows a moving worktree.
+   reachable premise with where the diff satisfies it and either the focused
+   automated or manual check that verifies it, the named reviewer-based check that
+   Review must verify, or the exact deferred post-review manual, shared-database, or
+   full-suite check that must do so. A diff that cannot account for every item and
+   its verification path is not a candidate. Fix the candidate between two named
+   commits so review never follows a moving worktree.
 3. **Review.** Dispatch one integrated review to a fresh, minimal-context leaf
    session briefed with the ticket, candidate diff, premises that reach it, and
-   verification evidence. It performs the review itself: it does not coordinate,
-   sub-delegate, or split the review into axes. Add at most one separate specialist
-   leaf, and only for one named risk the integrated reviewer says it cannot judge.
+   verification evidence. It performs any mapped reviewer-based acceptance checks
+   and the integrated review itself: it does not coordinate, sub-delegate, or split
+   the review into axes. Add at most one separate specialist leaf, and only for one
+   named risk the integrated reviewer says it cannot judge.
 4. **Correction.** Aggregate every finding and fix them as one batch. Give each new
    candidate a fresh reviewer briefed with the ticket, new diff, current premises,
    acceptance-check mapping, available verification evidence, and prior findings
@@ -209,8 +211,8 @@ A task ticket that lands work in a repository passes these gates:
    work together, checkpoint, unclaim, and stop.
 5. **Verification.** Keep shared-database and full-suite checks in this Work session.
    Do not start the full suite while any review finding remains unresolved. After a
-   clean review, run every mapped deferred shared-database check and the full suite;
-   the ticket resolves only when all of them are green. When any check failure
+   clean review, run every mapped deferred acceptance check and the full suite; the
+   ticket resolves only when all of them are green. When any check failure
    requires edits, cut a new candidate and return it through Review before rerunning
    the affected checks. Before execution, capture the full-suite command's complete
    output outside conversation so it cannot stream into context. After it exits,
