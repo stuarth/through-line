@@ -52,6 +52,11 @@ the map is reconciled and re-charted, the agent reports the frontier and stops; 
 fresh Work session reloads the durable state before taking the next round or ticket.
 Automatic continuation, compaction, and resumed turns do not widen that boundary.
 
+When a Work session reaches a context compaction before its ticket resolves, it
+writes a **resumption checkpoint** to the tracker: durable work, work remaining, and
+verification state. A fresh session can then resume the same ticket without carrying
+the spent conversation forward.
+
 Delegation parallelizes legwork, not the through-line itself. Each delegate stays
 within one selected ticket, and the coordinating session carries its result back into
 durable shared state. This prevents parallel work from multiplying judgment loops or
@@ -61,12 +66,13 @@ making conversation history part of the map.
 
 To keep moving without approving each non-human ticket, invoke `/through-line` with
 an existing map and say **advance unattended**. A lightweight supervisor starts a
-fresh Work session for each round or ticket and reloads the tracker between them. It
-continues through builder-owned decisions, factual or prototype legwork, and task
-tickets when execution is in scope, then returns when the map closes or the frontier
-genuinely needs human judgment, doctrine, scope, external input, closeout, or a
-conflict resolved. This preserves the context boundary without making the human act
-as the session scheduler.
+fresh Work session for each round or ticket, remains inert while it runs, and reloads
+the tracker only after it reaches a final or blocked state. It continues through
+builder-owned decisions, factual or prototype legwork, and task tickets when
+execution is in scope, then returns when the map closes or the frontier genuinely
+needs human judgment, doctrine, scope, external input, closeout, or a conflict
+resolved. This preserves the context boundary without making the human act as the
+session scheduler.
 
 ## Standing principles, local policies
 
@@ -85,6 +91,7 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Every human verdict produces a propagation delta: what resolved, what narrowed, and what still needs human judgment.
 - Every closed decision preserves why it closed: the human's quoted verdict or linked artifact, or the principle, local policy, or final premise that justified, determined, or mooted it.
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
+- An unresolved Work session that compacts leaves the tracker sufficient for a fresh session to resume without its conversation history.
 - Decisions no principle determines receive individual judgment under their decision right instead of forcing a vague principle to reach them.
 - Work that lands in a repository is discoverable from the tracker alone: the claim names the repository and branch, and the resolution records the durable commits or pull request.
 - The map's closed-ticket indexes and tracker frontier agree with the tickets' real state.
