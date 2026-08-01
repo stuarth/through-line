@@ -31,7 +31,8 @@ delegating.
 Adjudicate each recorded finding against the correction range, then inspect touched
 code for direct regressions. Preserve the prior receipt's unaffected coverage. A new
 issue enters the receipt only when the correction causes it or it falsifies a mapped
-criterion or premise.
+criterion or premise, or when touched code evidences a material correctness, security,
+or data-integrity invariant violation.
 
 For a test-only correction, inspect only the failed check, changed expectation or
 fixture, and mapped behavior. Confirm the update preserves the strength of the oracle.

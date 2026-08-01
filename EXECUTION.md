@@ -50,7 +50,8 @@ Persist the returned candidate receipt:
 
 A gap produces a revised packet, not a widened executor. The candidate gate is
 complete when every acceptance criterion and reachable premise maps to implementation
-and to focused, review-mapped, or deferred verification evidence at fixed commits.
+and a verification path: green focused evidence tied to the candidate, a
+review-mapped check, or a named deferred check.
 
 ## 3. Review receipt
 
