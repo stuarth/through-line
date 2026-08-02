@@ -105,8 +105,8 @@ into tickets.
 Recording is done when the tracker agrees with reality:
 
 - status, assignee, dependencies, and claims are current;
-- each resolution records its outcome, provenance, and repository commit or PR when
-  applicable;
+- each decision, research, or prototype resolution records its outcome and
+  provenance; each task resolution records its outcome and repository commit or PR;
 - checkpoints exist only on unfinished work;
 - **Decisions so far**, **Findings**, and **Out of scope** index the right closures,
   each gist at most two lines;
@@ -139,6 +139,6 @@ ticket, reaching premises, references, and checks. Delegate bulk reading to
 disposable read-only scouts, each with a brief of named questions and the named
 places to look; carry back conclusions and exact references, never file dumps.
 
-Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, candidate,
-review, and verification receipts let a fresh session resume without reloading map
-history or conversation.
+Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, the receipts
+recorded at handoffs and checkpoints, and each resolution's evidence let a fresh
+session resume without reloading map history or conversation.

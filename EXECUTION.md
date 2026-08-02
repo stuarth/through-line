@@ -28,25 +28,32 @@ Route material to the one context that must hold it: bulk reading to read-only
 scouts per [Coordination](./SKILL.md#coordination) when conclusions suffice,
 discovery to the leaf that will edit the same files, failing evidence to the leaf
 that owns the fix. Delegate implementation only when work is disjoint enough to run
-in parallel: give each fresh leaf its own plan as a packet with
+in parallel: give each fresh leaf the ticket and its plan as a packet with
 [IMPLEMENT.md](./IMPLEMENT.md). A returned gap sharpens the packet; it does not
 widen the leaf's assignment.
 
 ## Candidate
 
 Implement the plan — directly, or by landing the delegated packets' receipts — and
-run the focused checks, committing only the plan's files. Record the base and
-candidate commits, changed files, acceptance mapping, focused checks, and any
-remaining gap.
-The candidate is ready for review when every criterion and reaching premise maps to
-implementation and a verification path: green focused evidence, a review check, or a
-named deferred check.
+run the focused checks, committing only the plan's files. The candidate is ready
+when every criterion and reaching premise maps to implementation and a verification
+path: green focused evidence, a review check, or a named deferred check. Record the
+base and candidate commits, changed files, acceptance mapping, focused checks, and
+any remaining gap when the candidate hands off to a reviewer or a checkpoint; a
+ticket closing in this session records that evidence once, in its Resolution.
 
 ## Review and correction
 
-Give one fresh integrated reviewer the ticket, premises, candidate receipt, and
-[REVIEW.md](./REVIEW.md). Add a specialist only for a named risk the reviewer cannot
-judge. Record the candidate range, decision, material findings, checks, and gaps.
+Review is required when the candidate reaches persisted contracts, migrations,
+concurrency, security-sensitive surfaces (authorization, untrusted input, secrets,
+crypto), destructive behavior, or a human-owned class. Otherwise proceed to Verify
+on green focused checks with every criterion's verification path intact — none
+resting on a review check — and record the waiver and its reason in the resolution.
+
+When review runs, give one fresh integrated reviewer the ticket, premises, candidate
+receipt, and [REVIEW.md](./REVIEW.md). Add a specialist only for a named risk the
+reviewer cannot judge. Record the candidate range, decision, material findings,
+checks, and gaps.
 
 Fix related findings together as the smallest complete correction. Return the
 correction range and prior receipt to the same reviewer, or a fresh reviewer when
@@ -59,11 +66,12 @@ checkpoint it for a fresh Work session rather than accumulating more context.
 
 ## Verify and record
 
-After review is clean, run deferred checks and the full suite once. Keep full output
+After review is clean or waived, run deferred checks and the full suite once. Keep full output
 outside conversation and record only the command, candidate commit, status, duration,
 and useful failure excerpt. An edit returns to correction; afterward rerun the checks
 that edit invalidated and the full suite.
 
-Resolve the ticket when candidate, review, and verification receipts describe the
-same final work. Record the commits and evidence, propagate through the map, reconcile
-the tracker, validate it, and stop after this ticket's cascade.
+Resolve the ticket when its recorded evidence — candidate, review where required,
+and verification — describes the same final work. Record the commits and evidence,
+propagate through the map, reconcile the tracker, validate it, and stop after this
+ticket's cascade.
