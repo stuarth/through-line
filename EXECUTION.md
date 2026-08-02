@@ -13,7 +13,7 @@ does not repeat orientation, implementation, or review.
 
 ## Plan
 
-Keep the task atomic: an independently landable result deserves its own ticket.
+Keep the task atomic per [Map and tickets](./SKILL.md#map-and-tickets).
 
 Before editing, record a compact plan on the ticket: the outcome, acceptance
 criteria, reaching premises, exact entry points and constraints, focused checks,
@@ -21,7 +21,9 @@ exclusions, and stop condition. For persistent data work, include the governing
 schema and an isolated database check. The plan is ready when implementation can
 proceed from those entry points without a new product or architecture decision.
 
-Delegate only work disjoint enough to run in parallel: give each fresh leaf its own
+Delegate bulk reading to read-only scouts per
+[Coordination](./SKILL.md#coordination). Delegate implementation only when work is
+disjoint enough to run in parallel: give each fresh leaf its own
 plan as a packet with [IMPLEMENT.md](./IMPLEMENT.md), at the host's default
 reasoning effort unless one named uncertainty warrants more. A returned gap sharpens
 the packet; it does not widen the leaf's assignment. When a delegated check fails,
