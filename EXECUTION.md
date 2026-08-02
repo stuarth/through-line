@@ -15,7 +15,10 @@ does not repeat orientation, implementation, or review.
 
 ## Plan
 
-Keep the task atomic per [Map and tickets](./SKILL.md#map-and-tickets).
+Keep the task atomic per [Map and tickets](./SKILL.md#map-and-tickets). Planning is
+where size becomes measurable: a plan that reveals several independently landable
+results returns to the tracker as a split — new tickets, wired dependencies, this
+claim narrowed to one of them — before any implementation.
 
 Before editing, record a compact plan on the ticket — only what the ticket does not
 already settle: exact entry points and constraints, route choices the implementation
