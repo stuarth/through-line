@@ -2,7 +2,9 @@
 
 Use this branch for repository work. The Work session implements its task directly,
 so discovery is paid once, in the session that edits. Compact receipts carry
-progress; store them on the task ticket or in one linked artifact.
+progress; store them on the task ticket or in one linked artifact. A stage ends in
+a recorded receipt or a resumption checkpoint; a session with a stage still in
+flight — a dispatched leaf or review not yet recorded — has not finished.
 
 ## Resume
 
@@ -22,7 +24,9 @@ schema and an isolated database check. The plan is ready when implementation can
 proceed from those entry points without a new product or architecture decision.
 
 Delegate bulk reading to read-only scouts per
-[Coordination](./SKILL.md#coordination). Delegate implementation only when work is
+[Coordination](./SKILL.md#coordination); when an edit needs the same material the
+discovery reads, give one leaf both, so the material is ingested once. Delegate
+implementation only when work is
 disjoint enough to run in parallel: give each fresh leaf its own
 plan as a packet with [IMPLEMENT.md](./IMPLEMENT.md), at the host's default
 reasoning effort unless one named uncertainty warrants more. A returned gap sharpens
