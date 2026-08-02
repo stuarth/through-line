@@ -11,8 +11,11 @@ state.
 
 ## Orient
 
-1. Load `PRINCIPLES.md`, the map, its Findings, decision rights, frontier, and any
-   provisional verdicts that reach the selected work.
+1. Load the effort's `PRINCIPLES.md` (placed per
+   [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md)), the
+   map's Destination, Notes, Local policies, and decision rights, the frontier, and
+   the Findings, premises, and provisional verdicts that reach the selected work.
+   The map's closure indexes serve Propagate.
 2. Reconcile completed work through [Record](./SKILL.md#record).
 3. Classify frontier decisions by reach and ownership.
 

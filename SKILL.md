@@ -74,11 +74,14 @@ Ticket types:
 - **decision** — one human- or builder-owned choice;
 - **research** — one material fact, resolved through `/research`;
 - **prototype** — one cheap artifact to react to;
-- **task** — one reviewable unit of execution or manual legwork.
+- **task** — one reviewable unit of execution or manual legwork, authored with its
+  acceptance criteria.
 
 A ticket is atomic when its answer or result can be accepted as a whole. Split an
-independently decidable, landable, or verifiable part. When work exposes a separate
-human judgment, create that decision ticket and block the original work on it.
+independently decidable, landable, or verifiable part: a task whose acceptance
+criteria name several results, each acceptable as a whole on its own, is several
+tickets wired by dependencies. When work exposes a separate human judgment, create
+that decision ticket and block the original work on it.
 
 For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in
@@ -102,10 +105,11 @@ into tickets.
 Recording is done when the tracker agrees with reality:
 
 - status, assignee, dependencies, and claims are current;
-- each resolution records its outcome, provenance, and repository commit or PR when
-  applicable;
+- each decision, research, or prototype resolution records its outcome and
+  provenance; each task resolution records its outcome and repository commit or PR;
 - checkpoints exist only on unfinished work;
-- **Decisions so far**, **Findings**, and **Out of scope** index the right closures;
+- **Decisions so far**, **Findings**, and **Out of scope** index the right closures,
+  each gist at most two lines;
 - principle evidence links to the decisions that set or tested it; and
 - the available tracker validator passes.
 
@@ -131,8 +135,10 @@ several decisions. Cross-cite them.
 The tracker, map, principles, and linked artifacts—not conversation—carry state
 between sessions. The Work session owns claims, human questions, propagation, and
 tracker reconciliation. Give research and prototype agents only their selected
-ticket, reaching premises, references, and checks.
+ticket, reaching premises, references, and checks. Delegate bulk reading to
+disposable read-only scouts, each with a brief of named questions and the named
+places to look; carry back conclusions and exact references, never file dumps.
 
-Repository work follows [EXECUTION.md](./EXECUTION.md). Its packet, candidate,
-review, and verification receipts let fresh leaves continue without loading map
-history or coordinator conversation.
+Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, the receipts
+recorded at handoffs and checkpoints, and each resolution's evidence let a fresh
+session resume without reloading map history or conversation.

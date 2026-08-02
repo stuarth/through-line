@@ -57,16 +57,22 @@ within one selected ticket, and the coordinating session carries its result back
 durable shared state. This prevents parallel work from multiplying judgment loops or
 making conversation history part of the map.
 
-When execution is in scope, the Work session stays a lean coordinator and records
-durable **receipts** for the packet, candidate, review, and verification. A resumed
-session starts at the first invalid receipt instead of rediscovering the route,
-reimplementing finished work, or repeating a completed whole-candidate review.
+When execution is in scope, the Work session implements the task itself, so
+discovery is paid once, in the session that edits. Durable **receipts** are recorded
+at handoffs and checkpoints, and each closed ticket carries its evidence in the
+resolution. A resumed session starts at the first invalid or missing stage instead
+of rediscovering the route, reimplementing finished work, or repeating a completed
+whole-candidate review.
 
-Executors receive compact packets with exact entry points rather than the map and its
-history. One integrated review establishes coverage; corrections receive targeted
-passes that preserve unaffected findings and evidence. This deliberately spends less
-work on adjacent hardening and repeated assurance so the mapped outcome can finish
-with far less context.
+Delegation is reserved for work disjoint enough to run in parallel; each delegate
+receives a compact packet with exact entry points rather than the map and its
+history. Review is risk-tiered: a candidate reaching persisted contracts,
+migrations, concurrency, authorization, destructive behavior, or a human-owned
+class gets one fresh integrated review, with corrections receiving targeted passes
+that preserve unaffected findings; a candidate reaching none of those closes on
+green checks and its acceptance mapping, recording the waiver. This deliberately
+spends less work on adjacent hardening and repeated assurance so the mapped outcome
+can finish with far less context.
 
 ## Advance unattended
 
@@ -100,11 +106,12 @@ When a principle stops predicting good answers, the skill treats that as evidenc
 - Each Work session ends after one starting round or ticket and its propagation cascade, with the next frontier recorded for a fresh Work session.
 - A resumed repository task begins at its first invalid receipt; completed
   implementation, review coverage, and verification are not replayed.
-- Repository executors receive bounded packets rather than map history, and one
-  integrated review is followed only by targeted correction passes.
+- Repository work pays discovery once in the implementing session; delegation is
+  reserved for disjoint parallel packets, and review runs exactly where the named
+  risk classes reach, followed only by targeted correction passes.
 - Corrections rerun checks affected by their edits; every mapped check has green
-  evidence valid for the final reviewed candidate, and the full suite passes before
-  the ticket resolves.
+  evidence valid for the final candidate, and the full suite passes before the
+  ticket resolves.
 - Repeated review findings produce a root-cause diagnosis or checkpoint before
   another correction candidate; a Work session with unresolved findings records a
   checkpoint rather than continuing with degraded context.
