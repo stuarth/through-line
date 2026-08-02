@@ -54,11 +54,11 @@ for detail instead of copying them into it.
 
 ## Decisions so far
 
-<!-- One gist + link per closed in-scope decision ticket. -->
+<!-- One gist (two lines max) + link per closed in-scope decision ticket. -->
 
 ## Findings
 
-<!-- One gist + link per closed research, prototype, or task ticket. -->
+<!-- One gist (two lines max) + link per closed research, prototype, or task ticket. -->
 
 ## Not yet specified
 
@@ -133,7 +133,9 @@ several decisions. Cross-cite them.
 The tracker, map, principles, and linked artifacts—not conversation—carry state
 between sessions. The Work session owns claims, human questions, propagation, and
 tracker reconciliation. Give research and prototype agents only their selected
-ticket, reaching premises, references, and checks.
+ticket, reaching premises, references, and checks. Delegate bulk reading to
+disposable read-only scouts, each with a bounded brief of named questions; carry
+back conclusions and exact references, never file dumps.
 
 Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, candidate,
 review, and verification receipts let a fresh session resume without reloading map
