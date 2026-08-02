@@ -1,9 +1,83 @@
 # through-line
 
-A skill for driving huge efforts: distill the recurring commitments beneath an
-effort's many decisions into human-adopted principles, propagate each verdict
-through the remaining map, and surface only the residual judgment that genuinely
-needs a human.
+A skill for driving efforts too large for one agent session — where the
+bottleneck isn't code generation, it's **decisions**: the agent re-asks
+questions you already answered, forgets verdicts after compaction, or quietly
+decides things that were yours to decide.
+
+`through-line` makes decisions the unit of work. A huge effort hides recurring
+commitments beneath its many choices; the skill distills those into standing
+principles you adopt, then propagates every verdict through a map of atomic
+decision tickets, so each answer resolves or narrows as many later questions as
+it can. You only ever see the residual judgment your previous answers couldn't
+settle.
+
+## Install
+
+```bash
+npx skills@latest add stuarth/through-line
+```
+
+Later, `npx skills update through-line` picks up new versions. Or, to track the
+repo directly, clone and symlink — a `git pull` then keeps the installed skill
+current:
+
+```bash
+git clone https://github.com/stuarth/through-line ~/dev/through-line
+ln -s ~/dev/through-line ~/.claude/skills/through-line
+```
+
+Invoke with `/through-line` — the agent won't reach for it on its own. It works
+under Claude Code and Codex (see [agents/openai.yaml](./agents/openai.yaml)).
+
+Maps and tickets live on the repo's issue tracker when one is wired up;
+otherwise the skill falls back to the bundled local-markdown tracker and its
+validator (see [trackers/](./trackers/) and [scripts/](./scripts/)).
+
+## How it works
+
+**You adopt principles; the agent proposes them.** Recurring commitments are
+distilled into `PRINCIPLES.md`. Admission is deliberately slow — a candidate
+must recur across independent decisions, be atomic and falsifiable, and survive
+a counterexample — because one bad principle mis-decides many cases. Once
+adopted, a principle is a strong prior, not a law: evidence strong enough to
+contradict it triggers re-examination, and re-examination is still yours to
+confirm.
+
+**Every verdict propagates.** After each answer, the agent sweeps the remaining
+map: decisions the answer determines resolve, constrained questions shrink to
+their residual judgment, moot ones close. Replacing an earlier premise reopens
+and rechecks its dependents before the replacement propagates.
+
+**Decision rights are explicit.** Once per effort you agree on what the builder
+may decide (cheaply reversible route choices, within a stated reversal budget)
+and what always comes back to you: destination, scope, doctrine, domain
+meaning, external promises, irreversible effects. Direction is never delegated.
+
+**One round or ticket per Work session, hard stop.** The tracker, map, and
+principles — not the conversation — are the shared state. A session takes one
+round or ticket, records the outcome with provenance (the quoted human verdict,
+or the principle that determined it), reports the frontier, and stops. Automatic
+continuations and resumed turns do not widen that boundary.
+
+**Unattended when you want it.** Invoke with an existing map and say
+**advance unattended**: a supervisor runs a fresh minimal-context Work session
+per ticket, continuing through builder-owned decisions and legwork, and returns
+only when the map closes or the frontier genuinely needs human judgment.
+
+## It's working if
+
+- Every adopted principle lets a reader name, from the statement alone, one
+  choice it requires and one it forbids.
+- Every human-owned ticket asks exactly one residual judgment.
+- Every human verdict produces a propagation delta: what resolved, what
+  narrowed, what still needs you.
+- Every closed decision preserves why it closed — quoted verdict, linked
+  artifact, or the determining principle.
+- Each Work session ends after one round or ticket and its cascade, with the
+  next frontier recorded for a fresh session.
+
+## Repo layout
 
 This repo **is** the skill — [SKILL.md](./SKILL.md) at the root, with its phase
 runbooks alongside:
@@ -15,28 +89,17 @@ runbooks alongside:
   [IMPLEMENT.md](./IMPLEMENT.md), [EXECUTION.md](./EXECUTION.md) — supporting
   stages
 - [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md) — the shape of adopted doctrine
-- [trackers/](./trackers/) and [scripts/](./scripts/) — the bundled
-  local-markdown tracker and its map validator
 
-[docs/through-line.md](./docs/through-line.md) is the human-facing guide.
+## Where it fits
 
-## Install
-
-Symlink the repo into your harness's skill directory, then invoke with
-`/through-line`:
-
-```bash
-ln -s "$(pwd)" ~/.claude/skills/through-line
-```
-
-A `git pull` keeps the installed skill current.
-
-## Relationship to mattpocock/skills
-
-through-line began inside a fork of
+`through-line` began inside a fork of
 [mattpocock/skills](https://github.com/mattpocock/skills) and grew until it was
 the fork's entire purpose; this repo carries that full history. It builds on
-that ecosystem rather than forking it: install mattpocock/skills separately for
-the skills through-line hands off to (wayfinder, grilling, to-spec, and the
-tracker wiring from setup-matt-pocock-skills). Without that wiring,
-through-line falls back to its bundled local-markdown tracker.
+that ecosystem rather than forking it: it is the principle-driven sibling of
+[wayfinder](https://aihero.dev/skills-wayfinder) (multi-session maps without
+standing doctrine), draws on [grilling](https://aihero.dev/skills-grilling) and
+[domain-modeling](https://aihero.dev/skills-domain-modeling) for decisions no
+principle determines, and hands a completed map to
+[to-spec](https://aihero.dev/skills-to-spec) unless execution was put in scope.
+Install mattpocock/skills separately for those; without its tracker wiring,
+through-line uses the bundled local-markdown tracker.
