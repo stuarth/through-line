@@ -54,11 +54,11 @@ for detail instead of copying them into it.
 
 ## Decisions so far
 
-<!-- One gist (two lines max) + link per closed in-scope decision ticket. -->
+<!-- One gist + link per closed in-scope decision ticket. -->
 
 ## Findings
 
-<!-- One gist (two lines max) + link per closed research, prototype, or task ticket. -->
+<!-- One gist + link per closed research, prototype, or task ticket. -->
 
 ## Not yet specified
 

@@ -1,10 +1,10 @@
 # Execution
 
-Use this branch for repository work. The Work session implements its task directly,
-so discovery is paid once, in the session that edits. Compact receipts carry
-progress; store them on the task ticket or in one linked artifact. A stage ends in
-a recorded receipt or a resumption checkpoint; a session with a stage still in
-flight — a dispatched leaf or review not yet recorded — has not finished.
+Use this branch for repository work. The Work session implements its task directly.
+Compact receipts carry progress; store them on the task ticket or in one linked
+artifact. Finished means durable: a stranger could continue from the tracker,
+receipts, and commits alone. A leaf still in flight, a finding unrecorded, or a
+tracker unreconciled means the session has not finished.
 
 ## Resume
 
@@ -17,22 +17,20 @@ does not repeat orientation, implementation, or review.
 
 Keep the task atomic per [Map and tickets](./SKILL.md#map-and-tickets).
 
-Before editing, record a compact plan on the ticket: the outcome, acceptance
-criteria, reaching premises, exact entry points and constraints, focused checks,
-exclusions, and stop condition. For persistent data work, include the governing
-schema and an isolated database check. The plan is ready when implementation can
-proceed from those entry points without a new product or architecture decision.
+Before editing, record a compact plan on the ticket — only what the ticket does not
+already settle: exact entry points and constraints, route choices the implementation
+fixes, focused checks, and exclusions. For persistent data work, include the
+governing schema and an isolated database check. The plan is ready when
+implementation can proceed from those entry points without a new product or
+architecture decision.
 
-Delegate bulk reading to read-only scouts per
-[Coordination](./SKILL.md#coordination); when an edit needs the same material the
-discovery reads, give one leaf both, so the material is ingested once. Delegate
-implementation only when work is
-disjoint enough to run in parallel: give each fresh leaf its own
-plan as a packet with [IMPLEMENT.md](./IMPLEMENT.md), at the host's default
-reasoning effort unless one named uncertainty warrants more. A returned gap sharpens
-the packet; it does not widen the leaf's assignment. When a delegated check fails,
-send the leaf the failing evidence — diagnosis belongs to the leaf, and the
-coordinator's context stays lean.
+Route material to the one context that must hold it: bulk reading to read-only
+scouts per [Coordination](./SKILL.md#coordination) when conclusions suffice,
+discovery to the leaf that will edit the same files, failing evidence to the leaf
+that owns the fix. Delegate implementation only when work is disjoint enough to run
+in parallel: give each fresh leaf its own plan as a packet with
+[IMPLEMENT.md](./IMPLEMENT.md). A returned gap sharpens the packet; it does not
+widen the leaf's assignment.
 
 ## Candidate
 
