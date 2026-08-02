@@ -1,14 +1,11 @@
 Quickstart:
 
 ```bash
-npx skills add mattpocock/skills --skill=through-line
+git clone https://github.com/stuarth/through-line ~/dev/through-line
+ln -s ~/dev/through-line ~/.claude/skills/through-line
 ```
 
-```bash
-npx skills update through-line
-```
-
-[Source](https://github.com/mattpocock/skills/tree/main/skills/engineering/through-line)
+[Source](https://github.com/stuarth/through-line)
 
 ## What it does
 
