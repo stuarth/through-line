@@ -15,13 +15,20 @@ settle.
 ## Install
 
 ```bash
+npx skills@latest add stuarth/through-line
+```
+
+Later, `npx skills update through-line` picks up new versions. Or, to track the
+repo directly, clone and symlink — a `git pull` then keeps the installed skill
+current:
+
+```bash
 git clone https://github.com/stuarth/through-line ~/dev/through-line
 ln -s ~/dev/through-line ~/.claude/skills/through-line
 ```
 
-Invoke with `/through-line` — the agent won't reach for it on its own. A
-`git pull` keeps the installed skill current. It works under Claude Code and
-Codex (see [agents/openai.yaml](./agents/openai.yaml)).
+Invoke with `/through-line` — the agent won't reach for it on its own. It works
+under Claude Code and Codex (see [agents/openai.yaml](./agents/openai.yaml)).
 
 Maps and tickets live on the repo's issue tracker when one is wired up;
 otherwise the skill falls back to the bundled local-markdown tracker and its
