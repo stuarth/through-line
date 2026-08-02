@@ -108,7 +108,8 @@ Recording is done when the tracker agrees with reality:
 - each resolution records its outcome, provenance, and repository commit or PR when
   applicable;
 - checkpoints exist only on unfinished work;
-- **Decisions so far**, **Findings**, and **Out of scope** index the right closures;
+- **Decisions so far**, **Findings**, and **Out of scope** index the right closures,
+  each gist at most two lines;
 - principle evidence links to the decisions that set or tested it; and
 - the available tracker validator passes.
 

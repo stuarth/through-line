@@ -23,5 +23,6 @@ Use this fallback only when the repo has no issue-tracker doc.
 - **Commit:** when the map lives in a repository, commit tracker changes with the
   work they record.
 
-Create child files first, then wire blockers once their numbers exist. Bare numbers
-are tracker metadata only.
+Create child files first, then wire blockers once their numbers exist. Take the next
+number from a fresh listing of the issues directory — concurrent sessions also mint
+numbers — and never reuse one. Bare numbers are tracker metadata only.

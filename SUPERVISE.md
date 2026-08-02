@@ -16,7 +16,9 @@ the effort between them.
    supervisor's conversation. Dispatch at the host's default reasoning effort;
    reserve elevated effort for a named risk.
 5. Wait for completion without polling. When the worker resolves, blocks, or
-   checkpoints, reload durable state and repeat.
+   checkpoints, reload durable state and repeat. A worker that dies mid-unit
+   leaves a live claim: dispatch a fresh session naming that claim to resume
+   from its receipts.
 
 Run workers serially because propagation can change the next frontier. A worker
 report or generic continuation coordinates the effort; it never supplies a human
