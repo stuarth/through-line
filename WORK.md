@@ -1,8 +1,10 @@
 # Work
 
-Take one coherent unit per session: a determined round, one decision, one research
-or prototype ticket, or one task when execution is in scope. Carry its consequences
-through the map, then stop. A continuation or compaction does not start another unit.
+Take one coherent unit per session: a determined round, one decision, one prototype
+ticket, or one task when execution is in scope. Research is the exception: a
+dispatched `/research` subagent resolves it in parallel without consuming the unit.
+Carry the unit's consequences through the map, then stop. A continuation or
+compaction does not start another unit.
 
 If the unit no longer fits safely, leave a **Resumption checkpoint** with the durable
 result, commits, remaining work, review findings, and verification state. Unclaim the
@@ -29,7 +31,8 @@ A provisional verdict constrains but does not determine. Ownership follows the
 map's decision-rights agreement.
 
 A decision needs enough facts to support its recommendation. If a missing fact could
-change the answer, create or link research and block the decision on it.
+change the answer, create or link a research ticket, block the decision on it, and
+dispatch its `/research` subagent.
 
 ## Round
 

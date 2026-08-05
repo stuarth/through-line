@@ -58,7 +58,9 @@ meaning, external promises, irreversible effects. Direction is never delegated.
 principles — not the conversation — are the shared state. A session takes one
 round or ticket, records the outcome with provenance (the quoted human verdict,
 or the principle that determined it), reports the frontier, and stops. Automatic
-continuations and resumed turns do not widen that boundary.
+continuations and resumed turns do not widen that boundary. Research tickets are
+the exception: `/research` subagents burn them down in parallel, leaving findings
+on throwaway branches the tickets point to.
 
 **Unattended when you want it.** Invoke with an existing map and say
 **advance unattended**: a supervisor runs a fresh minimal-context Work session
@@ -101,5 +103,6 @@ standing doctrine), draws on [grilling](https://aihero.dev/skills-grilling) and
 [domain-modeling](https://aihero.dev/skills-domain-modeling) for decisions no
 principle determines, and hands a completed map to
 [to-spec](https://aihero.dev/skills-to-spec) unless execution was put in scope.
-Install mattpocock/skills separately for those; without its tracker wiring,
-through-line uses the bundled local-markdown tracker.
+Install mattpocock/skills separately for those — `claude plugins install
+mattpocock-skills` under Claude Code, or its `skills.sh` for other harnesses;
+without its tracker wiring, through-line uses the bundled local-markdown tracker.

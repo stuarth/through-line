@@ -9,8 +9,9 @@ the effort between them.
 1. Refresh the map, principles, decision rights, frontier, and claims.
 2. Stop when the map is complete or progress needs human judgment, a doctrine or
    scope change, an external unblock, or ownership resolution. Report that frontier.
-3. Otherwise choose one non-human unit: a builder-owned round or decision, a
-   research or prototype ticket, or an in-scope task.
+3. Otherwise dispatch a `/research` subagent for each open, unclaimed research
+   ticket — research does not consume a session's unit — and choose one non-human
+   unit: a builder-owned round or decision, a prototype ticket, or an in-scope task.
 4. Start a fresh Work session with the map reference, exact selection, reaching
    premises, useful references, checks, and any execution receipts. Do not pass the
    supervisor's conversation. Dispatch at the host's default reasoning effort;
