@@ -14,8 +14,11 @@ decisions.
    above-threshold builder choice. Keep settled implications outside the human
    Question and leave genuinely unshaped uncertainty as fog.
 5. **Create, then wire.** Create the map and tickets before adding dependency edges.
-   Record completed legwork as Findings; dispatch research only for a named ticket.
-6. **Validate and stop.** Reconcile through [Record](./SKILL.md#record). A Work
+   Record completed legwork as Findings.
+6. **Fire research.** Dispatch a `/research` subagent for each research ticket to
+   resolve it in parallel, capturing findings on a throwaway `research/<name>`
+   branch with a context pointer from the ticket. Dispatch only for a named ticket.
+7. **Validate and stop.** Reconcile through [Record](./SKILL.md#record). A Work
    session, not Chart, resolves the route.
 
 If the whole journey is already clear enough for one session, skip the map and ask

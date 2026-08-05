@@ -32,9 +32,10 @@ than stretching the agreement.
 
 ## Map and tickets
 
-The map is one issue labelled `through-line:map`; its tickets are child issues. Read
-the repo's issue-tracker guidance. If none exists, use
-[local Markdown](./trackers/local-markdown.md).
+The map is one issue labelled `through-line:map`; its tickets are child issues.
+Resolve the tracker through the `### Issue tracker` block in the repo's
+`CLAUDE.md`/`AGENTS.md` and follow its "Wayfinding operations" section. Without that
+pointer, use [local Markdown](./trackers/local-markdown.md).
 
 Load the map once per session as the low-resolution view. Query open child tickets
 for detail instead of copying them into it.
@@ -72,8 +73,12 @@ for detail instead of copying them into it.
 Ticket types:
 
 - **decision** — one human- or builder-owned choice;
-- **research** — one material fact, resolved through `/research`;
-- **prototype** — one cheap artifact to react to;
+- **research** — one material fact, resolved in parallel by a `/research` subagent
+  dispatched when the ticket is created; findings live on a throwaway
+  `research/<name>` branch the resolution points to;
+- **prototype** — one cheap artifact to react to, built with `/prototype` and kept
+  as runnable evidence on a throwaway `prototype/<name>` branch the resolution
+  points to;
 - **task** — one reviewable unit of execution or manual legwork, authored with its
   acceptance criteria.
 
