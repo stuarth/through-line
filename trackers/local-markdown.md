@@ -4,6 +4,8 @@ Use this fallback only when the repo has no issue-tracker doc.
 
 - **Map:** `.scratch/<effort>/map.md`, with `Label: through-line:map` and
   `Status: open|resolved`.
+- **Digest:** `.scratch/<effort>/digest.md`, per
+  [Coordination](../SKILL.md#coordination); absent until a session records one.
 - **Child:** `.scratch/<effort>/issues/NN-<slug>.md`, with `Type:
   decision|research|prototype|task`, `Status: open|claimed|blocked|resolved`, and the
   question under `## Question`. Further sections—`## Derived implications`,

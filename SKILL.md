@@ -115,6 +115,8 @@ Recording is done when the tracker agrees with reality:
 - checkpoints exist only on unfinished work;
 - **Decisions so far**, **Findings**, and **Out of scope** index the right closures,
   each gist at most two lines;
+- the digest carries what this session paid to discover and a sibling would
+  otherwise pay again;
 - principle evidence links to the decisions that set or tested it; and
 - the available tracker validator passes.
 
@@ -143,6 +145,11 @@ tracker reconciliation. Give research and prototype agents only their selected
 ticket, reaching premises, references, and checks. Delegate bulk reading to
 disposable read-only scouts, each with a brief of named questions and the named
 places to look; carry back conclusions and exact references, never file dumps.
+
+Sessions in one effort walk the same ground. An **orientation digest** beside the
+map caches expensive discovery for siblings: code entry points already located and
+environment facts. Orient loads it as earned priors to verify before relying on.
+Keep it a page — prune entries the map, code, or receipts now carry.
 
 Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, the receipts
 recorded at handoffs and checkpoints, and each resolution's evidence let a fresh
