@@ -59,8 +59,10 @@ reviewer cannot judge. Record the candidate range, decision, material findings,
 checks, and gaps.
 
 Fix related findings together as the smallest complete correction. Return the
-correction range and prior receipt to the same reviewer, or a fresh reviewer when
-resumption is unavailable, for a targeted pass. Preserve unaffected review coverage.
+correction range and prior receipt for a targeted pass — to the same reviewer when
+resumption answers at once, otherwise to a fresh reviewer: judge the correction
+range against the prior findings. Coverage of work the correction leaves untouched
+stands on the prior receipt.
 Start over only when the correction materially changes the candidate's architecture,
 authority, persistence, destructive behavior, or overall shape.
 
