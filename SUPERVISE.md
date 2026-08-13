@@ -2,11 +2,15 @@
 
 Use this path when the human asks an existing map to **advance unattended**. The
 supervisor schedules fresh [Work](./WORK.md) sessions; durable tracker state carries
-the effort between them.
+the effort between them. Keep advancing until the map resolves or the frontier
+reaches a stop condition in step 2. A worker completion advances the loop; it does
+not complete supervision.
 
 ## Loop
 
 1. Refresh the map, principles, decision rights, frontier, and claims.
+   If this supervision effort already owns a live Work claim, resume its wait at
+   step 5; do not dispatch another worker.
 2. When the map is open and no unresolved destination ticket remains, ensure one
    unresolved **Final map closure** task exists and select it. It uses ordinary claim,
    blocker, and checkpoint mechanics; review findings block it on correction tickets.
@@ -24,13 +28,16 @@ the effort between them.
    terminal receipt, blocker, or checkpoint as inter-agent communication; omit
    progress chatter. A terminal receipt retires that worker—the next unit always
    gets a new Work session.
-5. Classify the host's completion mechanism once. If worker completion wakes the
-   supervisor without a model timeout, wait for that event. On a timeout-only host,
-   state that continuous unattended advancement conflicts with token-safe waiting,
-   dispatch one unit, make one bounded wait, and end the turn if it expires. Resume
-   from the later receipt or a continuation; never loop on timed waits. A dead worker
-   leaves a live claim: recover it from its receipts, inspecting the agent tree only
-   when the claim does not identify its owner.
+5. Keep the supervisor turn active and wait for the selected worker's terminal
+   receipt. Use the host's completion-aware wait at its maximum allowed timeout. In
+   Codex, `wait_agent` wakes on mailbox updates; the selected worker's receipt is the
+   supervisor's next critical-path input, so waiting is required. Its timeout only
+   bounds one wait call. If the wait expires or another agent reports first, re-arm
+   it without reloading state, selecting work, inspecting the agent tree, or
+   reporting unchanged status. When the selected receipt arrives, reload durable
+   state and repeat from step 1. A failed worker leaves a live claim: recover it from
+   its receipts, inspecting the agent tree only when the claim does not identify its
+   owner.
 
 Run workers serially because propagation can change the next frontier. A worker
 report or generic continuation coordinates the effort; it never supplies a human
@@ -44,3 +51,8 @@ Supervision is event-driven. User-visible updates are limited to unit dispatch, 
 material finding or scope change, and completion, checkpoint, blocker, or human
 frontier. Host-required status updates stay terse and report the active stage, never
 unchanged worker, branch, test, or review state.
+
+The supervisor returns a final answer only at a step 2 stop condition. A live worker
+or expired wait is not a stop condition. A host without a completion-aware wait does
+not support **advance unattended**; report that before dispatch instead of silently
+degrading to one unit per user continuation.

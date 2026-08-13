@@ -66,13 +66,13 @@ same unresolved claim. Research tickets are the exception: `/research` subagents
 burn them down in parallel, leaving findings on throwaway branches the tickets point
 to.
 
-**Unattended when the host supports it.** Invoke with an existing map and say
-**advance unattended**: a supervisor runs a fresh no-history Work session per ticket,
-continuing through builder-owned decisions and legwork, and returns only durable
-transitions plus terse host-required status. A completion event advances the loop
-without polling. On a timeout-only host, the supervisor names the limitation,
-dispatches one unit, and resumes from its later receipt instead of paying for an
-unchanged polling loop.
+**Advance unattended to a real frontier.** Invoke with an existing map and say
+**advance unattended**: the supervisor remains active, runs a fresh no-history Work
+session per ticket, and continues through builder-owned decisions and legwork until
+the map closes or genuinely needs human judgment or an external unblock. It waits on
+worker completion instead of polling. An expired wait is re-armed without reloading
+or narrating unchanged state; it does not end supervision. A host without a
+completion-aware wait cannot offer this mode.
 
 ## It's working if
 
