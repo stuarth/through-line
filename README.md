@@ -65,7 +65,9 @@ on throwaway branches the tickets point to.
 **Unattended when you want it.** Invoke with an existing map and say
 **advance unattended**: a supervisor runs a fresh minimal-context Work session
 per ticket, continuing through builder-owned decisions and legwork, and returns
-only when the map closes or the frontier genuinely needs human judgment.
+only durable transitions plus terse host-required status. It waits event-by-event
+rather than polling; when the host cannot wait without waking the model, it dispatches
+once and resumes from the later receipt instead of narrating unchanged state.
 
 ## It's working if
 
@@ -78,6 +80,10 @@ only when the map closes or the frontier genuinely needs human judgment.
   artifact, or the determining principle.
 - Each Work session ends after one round or ticket and its cascade, with the
   next frontier recorded for a fresh session.
+- A repository-execution map closes only at the exact code head covered by a fresh
+  whole-effort review and records an immutable tracker-only closure boundary. Later
+  repository work does not rewrite that boundary; in-scope corrections reopen its
+  durable record.
 
 ## Repo layout
 

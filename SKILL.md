@@ -41,9 +41,20 @@ Load the map once per session as the low-resolution view. Query open child ticke
 for detail instead of copying them into it.
 
 ```markdown
+Label: through-line:map
+Status: open
+Repository execution: out-of-scope
+Tracker state: pending
+
 ## Destination
 
 <one or two lines fixing scope>
+
+<!-- With `Repository execution: in-scope`, add:
+## Execution heads
+
+- Repository: <path>; Code base: <full commit hash>; Reviewed code head: <full commit hash or pending>; Closure state: <full commit hash or pending>; PR: <URL, none, or pending>; Review receipt: <durable reference or pending>
+-->
 
 ## Notes
 
@@ -92,6 +103,11 @@ For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in
 **Builder discretion**.
 
+Keep tickets as state, not transcripts. A decision ticket carries its question,
+decisive evidence, alternatives, verdict, and implications; move a durable full
+contract to its ADR or domain documentation. A resolved task keeps one final receipt,
+not a chronological copy of candidate, review, and test chatter.
+
 An unresolved ticket may carry one **Provisional verdict**. **Resolution** is its
 final premise; replaced premises move to **Verdict history**, which is context rather
 than authority.
@@ -119,6 +135,22 @@ Recording is done when the tracker agrees with reality:
   otherwise pay again;
 - principle evidence links to the decisions that set or tested it; and
 - the available tracker validator passes.
+
+For repository execution, reality includes an exact code base and reviewed code head,
+plus the PR when one exists and a durable closure-review receipt. Close the map only
+after a fresh whole-effort review covers that range. Record a **Closure state** commit
+at or after that head whose intervening changes are confined to the map's tracker
+directory; a later tracker-only attestation may put that commit's hash into the map.
+Validation reads that immutable boundary rather than the repository's current
+checkout. Any later in-scope code correction reopens the affected ticket or creates a
+correction ticket and updates the map and digest before closure. Validator success
+establishes tracker structure only; it is not implementation or decision evidence.
+
+A resolved local tracker also records an immutable **Tracker state**. Its attestation
+commit may replace only `Tracker state: pending` with the preceding tracker commit's
+full hash. When tracker and execution share a repository, that commit's parent is the
+recorded closure state. Later tracker edits require reopening rather than rewriting
+closed history.
 
 For local Markdown, run the bundled
 [state validator](./scripts/validate_local_map.py).
@@ -149,7 +181,8 @@ places to look; carry back conclusions and exact references, never file dumps.
 Sessions in one effort walk the same ground. An **orientation digest** beside the
 map caches expensive discovery for siblings: code entry points already located and
 environment facts. Orient loads it as earned priors to verify before relying on.
-Keep it a page — prune entries the map, code, or receipts now carry.
+Keep it under 1,000 words and 120 lines. Retain only discoveries a sibling would
+otherwise repay; prune doctrine, closures, and receipts carried elsewhere.
 
 Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, the receipts
 recorded at handoffs and checkpoints, and each resolution's evidence let a fresh

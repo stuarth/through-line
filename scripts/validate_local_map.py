@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Check cross-file state in a through-line local-Markdown map."""
+"""Check structural cross-file state in a through-line local-Markdown map."""
 
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -12,6 +13,8 @@ INDEX_SECTIONS = ("Decisions so far", "Findings", "Out of scope")
 LEGWORK_TYPES = {"research", "prototype", "task"}
 TICKET_TYPES = {"decision"} | LEGWORK_TYPES
 TICKET_STATUSES = {"open", "claimed", "blocked", "resolved"}
+DIGEST_MAX_LINES = 120
+DIGEST_MAX_WORDS = 1_000
 
 
 @dataclass(frozen=True)
@@ -109,6 +112,243 @@ def section(text: str, name: str, errors: list[str]) -> str:
     return text[start:end]
 
 
+def git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["git", "-C", str(repo), *args],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=False,
+    )
+
+
+def git_root(path: Path) -> Path | None:
+    result = git(path, "rev-parse", "--show-toplevel")
+    return Path(result.stdout.strip()).resolve() if result.returncode == 0 else None
+
+
+def full_commit(repo: Path, value: str) -> bool:
+    object_format = git(repo, "rev-parse", "--show-object-format")
+    expected_length = 64 if object_format.stdout.strip() == "sha256" else 40
+    return (
+        bool(re.fullmatch(rf"[0-9a-fA-F]{{{expected_length}}}", value))
+        and not git(repo, "cat-file", "-e", f"{value}^{{commit}}").returncode
+    )
+
+
+def validate_execution_heads(
+    map_path: Path,
+    map_text: str,
+    map_status: str | None,
+    errors: list[str],
+) -> None:
+    matches = list(re.finditer(r"(?m)^## Execution heads\s*$", map_text))
+    if len(matches) != 1:
+        errors.append(
+            "map: in-scope repository execution requires exactly one ## Execution heads"
+        )
+        return
+
+    start = matches[0].end()
+    next_heading = re.search(r"(?m)^## ", map_text[start:])
+    end = start + next_heading.start() if next_heading else len(map_text)
+    head_lines = [
+        line
+        for line in map_text[start:end].splitlines()
+        if line.lstrip().startswith("-")
+    ]
+    if not head_lines:
+        errors.append("map: in-scope repository execution has no execution head")
+        return
+
+    pattern = re.compile(
+        r"^\s*-\s+Repository:\s*(?P<repo>.+?);\s*"
+        r"Code base:\s*(?P<base>[^;]+);\s*"
+        r"Reviewed code head:\s*(?P<head>[^;]+);\s*"
+        r"Closure state:\s*(?P<closure>[^;]+);\s*"
+        r"PR:\s*(?P<pr>[^;]+);\s*"
+        r"Review receipt:\s*(?P<receipt>.+?)\s*$"
+    )
+
+    def outside_tracker(repo: Path, changed: list[str]) -> list[str]:
+        try:
+            tracker_dir = map_path.parent.relative_to(repo)
+        except ValueError:
+            return changed
+        if tracker_dir == Path("."):
+            return changed
+        return [
+            changed_path
+            for changed_path in changed
+            if Path(changed_path) != tracker_dir
+            and tracker_dir not in Path(changed_path).parents
+        ]
+
+    seen_repositories: set[Path] = set()
+    for line in head_lines:
+        match = pattern.match(line)
+        if not match:
+            errors.append(f"map: malformed execution head: {line.strip()}")
+            continue
+
+        values = {name: value.strip() for name, value in match.groupdict().items()}
+        repo = Path(values["repo"]).expanduser()
+        if not repo.is_absolute():
+            repo = map_path.parent / repo
+        supplied_repo = repo.resolve()
+        repo = git_root(supplied_repo) if supplied_repo.is_dir() else None
+        if repo is None:
+            errors.append(
+                f"map: execution repository is not a Git repository: {supplied_repo}"
+            )
+            continue
+        if repo in seen_repositories:
+            errors.append(f"map: duplicate execution repository: {repo}")
+            continue
+        seen_repositories.add(repo)
+
+        base = values["base"]
+        base_is_exact = full_commit(repo, base)
+        if not base_is_exact:
+            errors.append(
+                f"map: Code base is not a commit named by its full hash in {repo}: "
+                f"{base}"
+            )
+
+        head = values["head"]
+        head_is_exact = False
+        if head == "pending":
+            if map_status == "resolved":
+                errors.append("map: resolved execution head is still pending")
+        else:
+            head_is_exact = full_commit(repo, head)
+            if not head_is_exact:
+                errors.append(
+                    "map: Reviewed code head is not a commit named by its full hash "
+                    f"in {repo}: {head}"
+                )
+        if (
+            base_is_exact
+            and head_is_exact
+            and git(repo, "merge-base", "--is-ancestor", base, head).returncode != 0
+        ):
+            errors.append(
+                f"map: Code base {base} is not an ancestor of reviewed head {head}"
+            )
+
+        closure = values["closure"]
+        closure_is_exact = False
+        if closure == "pending":
+            if map_status == "resolved":
+                errors.append("map: resolved execution closure state is still pending")
+        else:
+            closure_is_exact = full_commit(repo, closure)
+            if not closure_is_exact:
+                errors.append(
+                    "map: Closure state is not a commit named by its full hash "
+                    f"in {repo}: {closure}"
+                )
+        if head_is_exact and closure_is_exact:
+            if git(repo, "merge-base", "--is-ancestor", head, closure).returncode:
+                errors.append(
+                    f"map: reviewed head {head} is not an ancestor of closure state "
+                    f"{closure}"
+                )
+            else:
+                touched = git(
+                    repo,
+                    "log",
+                    "-m",
+                    "--format=",
+                    "--name-only",
+                    f"{head}..{closure}",
+                )
+                drift = outside_tracker(
+                    repo, [line for line in touched.stdout.splitlines() if line]
+                )
+                if drift:
+                    errors.append(
+                        "map: closure state changed files outside the tracker after "
+                        f"review: {', '.join(drift[:5])}"
+                    )
+        tracker_repo = git_root(map_path.parent)
+        tracker_state = field(map_text, "Tracker state")
+        if (
+            map_status == "resolved"
+            and tracker_repo == repo
+            and tracker_state
+            and full_commit(repo, tracker_state)
+        ):
+            parent = git(repo, "rev-parse", f"{tracker_state}^").stdout.strip()
+            if closure != parent:
+                errors.append(
+                    "map: Closure state for the tracker repository must be the "
+                    f"parent of Tracker state: expected {parent}"
+                )
+
+        pr = values["pr"]
+        if pr == "pending" and map_status == "resolved":
+            errors.append("map: resolved execution PR is still pending")
+        elif pr not in {"none", "pending"} and not re.match(r"^https?://", pr):
+            errors.append(f"map: PR must be a URL, `none`, or `pending`: {pr}")
+
+        receipt = values["receipt"]
+        if receipt == "pending":
+            if map_status == "resolved":
+                errors.append("map: resolved execution review receipt is still pending")
+        elif re.match(r"^https?://", receipt):
+            errors.append("map: local Markdown requires a local review receipt")
+        else:
+            receipt_path = Path(receipt.split("#", 1)[0]).expanduser()
+            if not receipt_path.is_absolute():
+                receipt_path = map_path.parent / receipt_path
+            receipt_path = receipt_path.resolve()
+            try:
+                receipt_path.relative_to(map_path.parent)
+                receipt_is_local = True
+            except ValueError:
+                receipt_is_local = False
+            if not receipt_is_local:
+                errors.append(
+                    f"map: review receipt must be inside the map tracker: {receipt_path}"
+                )
+            elif not receipt_path.is_file():
+                errors.append(f"map: review receipt does not exist: {receipt_path}")
+            else:
+                tracker_root = git_root(map_path.parent)
+                if map_status == "resolved" and (
+                    tracker_root is None
+                    or git(
+                        tracker_root,
+                        "ls-files",
+                        "--error-unmatch",
+                        "--",
+                        str(receipt_path.relative_to(tracker_root)),
+                    ).returncode
+                ):
+                    errors.append(
+                        f"map: resolved review receipt is not committed: {receipt_path}"
+                    )
+                receipt_text = scannable_text(receipt_path.read_text())
+                expected_range = f"{base}..{head}"
+                if field(receipt_text, "Review range") != expected_range:
+                    errors.append(
+                        f"map: review receipt range must be {expected_range}: "
+                        f"{receipt_path}"
+                    )
+                if field(receipt_text, "Decision") != "approved":
+                    errors.append(
+                        f"map: review receipt Decision must be `approved`: "
+                        f"{receipt_path}"
+                    )
+                if not field(receipt_text, "Checks"):
+                    errors.append(f"map: review receipt lacks Checks: {receipt_path}")
+                if not field(receipt_text, "Findings and gaps"):
+                    errors.append(
+                        f"map: review receipt lacks Findings and gaps: {receipt_path}"
+                    )
+
+
 def index_paths(
     map_path: Path,
     body: str,
@@ -153,7 +393,9 @@ def validate(map_path: Path) -> list[str]:
                 blockers=blockers(text, path, errors),
                 assignee=field(text, "Assignee"),
                 resolutions=len(re.findall(r"(?m)^## Resolution\s*$", text)),
-                checkpoints=len(re.findall(r"(?m)^## Resumption checkpoint\s*$", text)),
+                checkpoints=len(
+                    re.findall(r"(?m)^## Resumption checkpoint(?:\s+.*)?$", text)
+                ),
                 provisionals=len(re.findall(r"(?m)^## Provisional verdict\s*$", text)),
                 legacy_actives=len(
                     re.findall(
@@ -172,7 +414,9 @@ def validate(map_path: Path) -> list[str]:
         if ticket.status in {"claimed", "resolved"} and not ticket.assignee:
             errors.append(f"{ticket.path}: Status {ticket.status} requires an Assignee")
         if ticket.status in {"open", "blocked"} and ticket.assignee:
-            errors.append(f"{ticket.path}: Status {ticket.status} must not carry an Assignee")
+            errors.append(
+                f"{ticket.path}: Status {ticket.status} must not carry an Assignee"
+            )
         if ticket.provisionals > 1:
             errors.append(f"{ticket.path}: more than one ## Provisional verdict")
         if ticket.checkpoints > 1:
@@ -186,9 +430,13 @@ def validate(map_path: Path) -> list[str]:
             )
         if ticket.status == "resolved":
             if ticket.resolutions != 1:
-                errors.append(f"{ticket.path}: resolved without exactly one ## Resolution")
+                errors.append(
+                    f"{ticket.path}: resolved without exactly one ## Resolution"
+                )
             if ticket.checkpoints:
-                errors.append(f"{ticket.path}: resolved with a ## Resumption checkpoint")
+                errors.append(
+                    f"{ticket.path}: resolved with a ## Resumption checkpoint"
+                )
             if ticket.provisionals:
                 errors.append(f"{ticket.path}: resolved with a ## Provisional verdict")
 
@@ -217,6 +465,21 @@ def validate(map_path: Path) -> list[str]:
             )
         if not unresolved and ticket.status == "blocked":
             errors.append(f"{ticket.path}: blocked without an unresolved blocker")
+
+    def visit(number: str, active: tuple[str, ...], visited: set[str]) -> None:
+        if number in active:
+            cycle = active[active.index(number) :] + (number,)
+            errors.append(f"tickets: dependency cycle {' -> '.join(cycle)}")
+            return
+        if number in visited or number not in by_number:
+            return
+        for blocker in by_number[number].blockers:
+            visit(blocker, active + (number,), visited)
+        visited.add(number)
+
+    visited: set[str] = set()
+    for number in by_number:
+        visit(number, (), visited)
 
     map_text = scannable_text(map_path.read_text())
     indexes = {
@@ -256,15 +519,111 @@ def validate(map_path: Path) -> list[str]:
         if ticket.path in wrong:
             errors.append(f"map: {ticket.path.name} belongs in {name}")
         elif ticket.path not in expected:
-            errors.append(f"map: resolved ticket missing from {name}: {ticket.path.name}")
+            errors.append(
+                f"map: resolved ticket missing from {name}: {ticket.path.name}"
+            )
 
     map_status = field(map_text, "Status")
     if map_status not in {"open", "resolved"}:
         errors.append(f"map: unknown Status {map_status!r}")
+
+    repository_execution = field(map_text, "Repository execution")
+    if repository_execution not in {"in-scope", "out-of-scope"}:
+        errors.append("map: Repository execution must be `in-scope` or `out-of-scope`")
+    elif repository_execution == "in-scope":
+        validate_execution_heads(map_path, map_text, map_status, errors)
+
     if map_status == "resolved":
-        unresolved = [ticket.path.name for ticket in tickets if ticket.status != "resolved"]
+        unresolved = [
+            ticket.path.name for ticket in tickets if ticket.status != "resolved"
+        ]
         if unresolved:
-            errors.append(f"map: resolved with unresolved tickets: {', '.join(unresolved)}")
+            errors.append(
+                f"map: resolved with unresolved tickets: {', '.join(unresolved)}"
+            )
+
+        tracker_root = git_root(map_path.parent)
+        if tracker_root is None:
+            errors.append("map: resolved local tracker is not in a Git repository")
+        else:
+            tracker_dir = map_path.parent.relative_to(tracker_root)
+            tracker_arg = "." if tracker_dir == Path(".") else str(tracker_dir)
+            map_relative = map_path.relative_to(tracker_root)
+            tracker_state = field(map_text, "Tracker state")
+            if not tracker_state or not full_commit(tracker_root, tracker_state):
+                errors.append(
+                    "map: resolved Tracker state must be a full commit hash in the "
+                    "tracker repository"
+                )
+            else:
+                recorded_map = git(
+                    tracker_root, "show", f"{tracker_state}:{map_relative.as_posix()}"
+                )
+                expected_recorded_map = re.sub(
+                    rf"(?m)^Tracker state:[ \t]*{re.escape(tracker_state)}[ \t]*$",
+                    "Tracker state: pending",
+                    map_path.read_text(),
+                    count=1,
+                )
+                if (
+                    recorded_map.returncode
+                    or recorded_map.stdout != expected_recorded_map
+                ):
+                    errors.append(
+                        "map: current map differs from its immutable tracker state "
+                        "beyond the Tracker state attestation"
+                    )
+                changed_tracker = git(
+                    tracker_root,
+                    "diff",
+                    "--name-only",
+                    tracker_state,
+                    "HEAD",
+                    "--",
+                    tracker_arg,
+                ).stdout.splitlines()
+                unexpected_tracker = [
+                    changed
+                    for changed in changed_tracker
+                    if Path(changed) != map_relative
+                ]
+                if unexpected_tracker:
+                    errors.append(
+                        "map: tracker changed after its immutable state: "
+                        f"{', '.join(unexpected_tracker[:5])}"
+                    )
+            if git(
+                tracker_root, "ls-files", "--error-unmatch", "--", str(map_relative)
+            ).returncode:
+                errors.append("map: resolved map is not committed")
+            tracker_status = git(
+                tracker_root,
+                "status",
+                "--porcelain",
+                "--untracked-files=all",
+                "--",
+                tracker_arg,
+            ).stdout.splitlines()
+            if tracker_status:
+                errors.append(
+                    "map: resolved tracker has uncommitted state: "
+                    f"{', '.join(line.strip() for line in tracker_status[:5])}"
+                )
+    digest_path = map_path.parent / "digest.md"
+    if digest_path.is_file():
+        digest_text = digest_path.read_text()
+        digest_lines = len(digest_text.splitlines())
+        digest_words = len(digest_text.split())
+        if digest_lines > DIGEST_MAX_LINES:
+            errors.append(
+                f"{digest_path}: digest has {digest_lines} lines; "
+                f"maximum is {DIGEST_MAX_LINES}"
+            )
+        if digest_words > DIGEST_MAX_WORDS:
+            errors.append(
+                f"{digest_path}: digest has {digest_words} words; "
+                f"maximum is {DIGEST_MAX_WORDS}"
+            )
 
     return errors
 
@@ -280,7 +639,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    print(f"OK: {Path(sys.argv[1])}")
+    print(f"OK (tracker structure only): {Path(sys.argv[1])}")
     return 0
 
 

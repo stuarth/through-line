@@ -54,12 +54,33 @@ For a human-owned round, show the ticket names and recommendations together and 
 for one exception review. Only explicit approval of those recommendations is a
 verdict. Keep the full derivations in their tickets and expand them when useful.
 
+The ticket is the audit trail; the prompt is the decision interface. A human who has
+not opened the ticket must be able to decide from the prompt. For each residual
+judgment, use ordinary domain language to give the choice, recommendation, one
+separating example, the recommendation's main downside, and the fact or exception
+that would change it. Link the ticket as optional depth.
+
+Before asking, privately test the options against reaching premises and consider a
+narrower scope, staged adoption, a suggestion-versus-authority hybrid, and doing
+nothing. Classify each clause as determined or residual, then surface only residual
+clauses and the minimum rationale needed to decide. Present independently rejectable
+residual clauses as separate recommendations, even when they share one ticket.
+
+Batch adjacent human decisions that share one mental model when later alternatives
+can be stated contingently without new evidence. Keep them separate when an earlier
+verdict changes the later evidence or option set.
+
 For a builder-owned round, resolve recommendations that still fit the decision-rights
 agreement and report the overview. Escalate the rest.
 
 When principles pull incompatibly, residual judgment remains. Remove that ticket
 from the round, check the principle boundaries, and bring the surviving trade-off to
 the human.
+
+If the human asks for plain language or an example, repair the affected capsule before
+accepting its verdict and apply that correction to later prompts. Re-present the full
+capsule only when the clarification exposes material ambiguity; answer a narrow
+clarification narrowly.
 
 ## Rejection
 
@@ -118,5 +139,14 @@ it through every dependent ticket.
 Re-chart newly sharp questions, reconcile through [Record](./SKILL.md#record), report
 the frontier, and stop. A fresh session takes the next unit.
 
+A newly discovered “follow-up” that blocks the current destination is a scope
+amendment. Record its added units and risk and ask the human to amend the destination;
+otherwise keep it out of scope and close with a truthful bounded exception.
+
 When the destination is reached, close the map. Review local policies for lessons
 that deserve admission as standing principles; leave the rest with the closed map.
+For repository execution, closure first follows [Review](./REVIEW.md) over the
+recorded code base through the proposed code head. Record that reviewed range, PR,
+and review receipt before resolving the map. Then record an immutable closure-state
+commit whose post-review changes are tracker-only; later repository work does not
+rewrite that historical boundary.

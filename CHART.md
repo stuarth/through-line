@@ -23,3 +23,7 @@ decisions.
 
 If the whole journey is already clear enough for one session, skip the map and ask
 the human how to proceed.
+
+If mining finds no recurring commitment likely to determine several decisions, use
+an ordinary implementation plan instead. Through-line earns its ceremony by
+collapsing later judgment.
