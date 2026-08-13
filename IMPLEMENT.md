@@ -7,6 +7,10 @@ If a missing boundary prevents an aligned implementation, return the smallest us
 gap before editing. Otherwise inspect the named entry points, make the change, run the
 focused checks, and commit only the packet's files.
 
+Send the coordinator one final receipt, or earlier only a blocker or durable
+checkpoint that needs coordination. Keep host-required user updates terse; do not
+relay them as inter-agent progress chatter.
+
 Return a compact receipt:
 
 - base and candidate commits;

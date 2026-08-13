@@ -10,8 +10,8 @@ principles, and use them to resolve what no longer needs fresh judgment. After e
 new fact or verdict, propagate its consequences through the map before asking the
 human another question.
 
-Produce decisions, not deliverables, unless the map's **Notes** puts execution in
-scope.
+Produce decisions, not deliverables, unless the map sets `Repository execution:
+in-scope`.
 
 ## Invocation
 
@@ -41,13 +41,25 @@ Load the map once per session as the low-resolution view. Query open child ticke
 for detail instead of copying them into it.
 
 ```markdown
+Label: through-line:map
+Status: open
+Repository execution: out-of-scope
+
 ## Destination
 
 <one or two lines fixing scope>
 
+<!-- With `Repository execution: in-scope`, add:
+Tracker state: pending
+
+## Execution heads
+
+- Repository: <path>; Code base: <full commit hash>; Reviewed code head: <full commit hash or pending>; Closure state: <full commit hash or pending>; PR: <URL, none, or pending>; Review receipt: <durable reference or pending>
+-->
+
 ## Notes
 
-<!-- Domain, useful skills, execution scope, and decision-rights agreement. -->
+<!-- Domain, useful skills, and decision-rights agreement. -->
 
 ## Local policies
 
@@ -92,6 +104,11 @@ For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in
 **Builder discretion**.
 
+Keep tickets as state, not transcripts. A decision ticket carries its question,
+decisive evidence, alternatives, verdict, and implications; move a durable full
+contract to its ADR or domain documentation. A resolved task keeps one final receipt,
+not a chronological copy of candidate, review, and test chatter.
+
 An unresolved ticket may carry one **Provisional verdict**. **Resolution** is its
 final premise; replaced premises move to **Verdict history**, which is context rather
 than authority.
@@ -99,6 +116,10 @@ than authority.
 Ticket every sharp human question. Ticket builder choices only when they block the
 map, test a principle, or deserve a durable record. Leave unshaped uncertainty in
 **Not yet specified** and work beyond the destination in **Out of scope**.
+
+Work created to correct an accepted candidate or resolved task records `Correction
+of: <root ticket>; Concern: <stable invariant>`; every later correction for that
+invariant names the same root and concern.
 
 Claim a ticket before work. Respect another session's claim. Repository work also
 records its repository and branch. Use native dependencies so the **frontier** is
@@ -120,8 +141,14 @@ Recording is done when the tracker agrees with reality:
 - principle evidence links to the decisions that set or tested it; and
 - the available tracker validator passes.
 
-For local Markdown, run the bundled
-[state validator](./scripts/validate_local_map.py).
+For repository execution, close only after a fresh whole-effort review covers the
+exact code range and the tracker records its PR, review receipt, and immutable closure
+state. Later in-scope work reopens the same canonical map and adds a correction
+ticket; the recorded closure commit remains its immutable historical boundary. For
+local Markdown, follow its [closure
+protocol](./trackers/local-markdown.md#local-markdown-wayfinding-operations), then run
+the bundled [state validator](./scripts/validate_local_map.py). Validator success
+establishes tracker structure only; it is not implementation or decision evidence.
 
 ## Principles
 
@@ -147,9 +174,13 @@ disposable read-only scouts, each with a brief of named questions and the named
 places to look; carry back conclusions and exact references, never file dumps.
 
 Sessions in one effort walk the same ground. An **orientation digest** beside the
-map caches expensive discovery for siblings: code entry points already located and
-environment facts. Orient loads it as earned priors to verify before relying on.
-Keep it a page — prune entries the map, code, or receipts now carry.
+map is the bounded index of expensive discovery: code entry points already located,
+environment facts, and links to topic reference notes when an entry needs depth.
+Orient loads the index as earned priors to verify before relying on, then loads only
+references that reach the selected work. Keep the index under 1,000 words and 120
+lines. Retain only discoveries a sibling would otherwise repay; prune doctrine,
+closures, and receipts carried elsewhere. Keep one reference note per topic rather
+than multiplying context-specific digests.
 
 Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, the receipts
 recorded at handoffs and checkpoints, and each resolution's evidence let a fresh

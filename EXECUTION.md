@@ -13,6 +13,11 @@ stage. Keep earlier work when its commits still exist and later edits have not c
 what it established. A checkpoint names that stage and the next plan so resumption
 does not repeat orientation, implementation, or review.
 
+A repository checkpoint is durable only when edits are committed on the task branch,
+or stored as a durable patch artifact against a verified base. Record **Base**,
+**Checkpoint head** or patch, **Dirty state**, completed stage, checks, and next stage.
+Keep an uncommitted worktree claimed; never expose it as resumable frontier work.
+
 ## Plan
 
 Keep the task atomic per [Map and tickets](./SKILL.md#map-and-tickets). Planning is
@@ -26,6 +31,12 @@ fixes, focused checks, and exclusions. For persistent data work, include the
 governing schema and an isolated database check. The plan is ready when
 implementation can proceed from those entry points without a new product or
 architecture decision.
+
+Split by independently falsifiable authority or consumer boundary. When several
+parts must land together to avoid two live authorities, keep them as dependent
+candidate commits and give their composition a separate integration check. A unit
+that cannot reach a committed candidate before a human gate is evidence to split its
+remaining work.
 
 Route material to the one context that must hold it: bulk reading to read-only
 scouts per [Coordination](./SKILL.md#coordination) when conclusions suffice,
@@ -45,6 +56,11 @@ base and candidate commits, changed files, acceptance mapping, focused checks, a
 any remaining gap when the candidate hands off to a reviewer or a checkpoint; a
 ticket closing in this session records that evidence once, in its Resolution.
 
+For each protected invariant touched, the acceptance mapping names its verdict,
+implementing authority, persistence fence when applicable, positive test, adversarial
+test, and affected transition consumers. A missing or contradictory human-owned
+verdict stops before candidate freeze.
+
 ## Review and correction
 
 Review is required when the candidate reaches persisted contracts, migrations,
@@ -60,14 +76,18 @@ checks, and gaps.
 
 Fix related findings together as the smallest complete correction. Return the
 correction range and prior receipt for a targeted pass — to the same reviewer when
-resumption answers at once, otherwise to a fresh reviewer: judge the correction
-range against the prior findings. Coverage of work the correction leaves untouched
-stands on the prior receipt.
+resumption answers at once, otherwise to a fresh reviewer. Judge the correction range
+against the prior findings. Coverage of work the correction leaves untouched stands
+on the prior receipt.
 Start over only when the correction materially changes the candidate's architecture,
 authority, persistence, destructive behavior, or overall shape.
 
-Keep adjacent hardening out of the correction loop. If the loop stops converging,
-checkpoint it for a fresh Work session rather than accumulating more context.
+Keep adjacent hardening out of the correction loop. After two material correction
+cycles, revisit the unit's shape and checkpoint it for a fresh Work session unless
+one bounded correction clearly closes the review.
+Related fixes split across tickets share `Correction of` and `Concern`; return to
+[Falsify](./WORK.md#falsify) before charting a third material correction of the same
+invariant.
 
 ## Verify and record
 
