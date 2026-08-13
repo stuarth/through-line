@@ -2,9 +2,10 @@
 
 Use this fallback only when the repo has no issue-tracker doc.
 
-- **Map:** `.scratch/<effort>/map.md`, with `Label: through-line:map` and
-  `Status: open|resolved`. Set `Repository execution: in-scope|out-of-scope` and
-  `Tracker state: pending` explicitly. An in-scope map adds `## Execution heads` with a single
+- **Map:** `.scratch/<effort>/map.md`, with `Label: through-line:map`,
+  `Status: open|resolved`, and `Repository execution: in-scope|out-of-scope`. Set
+  execution in scope when the destination includes repository deliverables. An
+  in-scope map also adds `Tracker state: pending` and `## Execution heads` with a single
   `- Repository: <path>; Code base: <full commit hash>; Reviewed code head: <full
   commit hash or pending>; Closure state: <full commit hash or pending>; PR: <URL,
   none, or pending>; Review receipt: <local Markdown path or pending>` line per
@@ -34,13 +35,14 @@ Use this fallback only when the repo has no issue-tracker doc.
   In one tracker-only attestation commit, replace `Tracker state: pending` with that
   preceding resolved-tracker commit's full hash, then rerun the validator. When the
   tracker shares an execution repository, its closure state must be the parent of
-  the recorded tracker state. No other tracker content may change in the attestation
-  or afterward.
+  the recorded tracker state. Both commits change tracker files only, and the
+  attestation changes only the map. Closed tracker content remains unchanged
+  afterward.
   A resolved local map must be tracked in Git with a clean tracker directory; keep
   its receipt committed inside that directory.
 - **Checkpoint:** use the exact `## Resumption checkpoint` heading. Repository edits
-  name `Base`, `Checkpoint head` or a durable patch, `Dirty state`, checks, and next
-  stage. Remove the checkpoint when the ticket resolves.
+  follow [Execution](../EXECUTION.md)'s durable checkpoint schema. Remove the
+  checkpoint when the ticket resolves.
 - **Commit:** when the map lives in a repository, commit tracker changes with the
   work they record.
 

@@ -136,6 +136,20 @@ def full_commit(repo: Path, value: str) -> bool:
     )
 
 
+def commit_paths(repo: Path, commit: str) -> list[str]:
+    result = git(
+        repo,
+        "diff-tree",
+        "--root",
+        "-m",
+        "--no-commit-id",
+        "--name-only",
+        "-r",
+        commit,
+    )
+    return [line for line in result.stdout.splitlines() if line]
+
+
 def validate_execution_heads(
     map_path: Path,
     map_text: str,
@@ -284,6 +298,12 @@ def validate_execution_heads(
                 errors.append(
                     "map: Closure state for the tracker repository must be the "
                     f"parent of Tracker state: expected {parent}"
+                )
+            drift = outside_tracker(repo, commit_paths(repo, tracker_state))
+            if drift:
+                errors.append(
+                    "map: Tracker state commit changed files outside the tracker: "
+                    f"{', '.join(drift[:5])}"
                 )
 
         pr = values["pr"]
@@ -542,6 +562,7 @@ def validate(map_path: Path) -> list[str]:
                 f"map: resolved with unresolved tickets: {', '.join(unresolved)}"
             )
 
+    if map_status == "resolved" and repository_execution == "in-scope":
         tracker_root = git_root(map_path.parent)
         if tracker_root is None:
             errors.append("map: resolved local tracker is not in a Git repository")
@@ -556,6 +577,17 @@ def validate(map_path: Path) -> list[str]:
                     "tracker repository"
                 )
             else:
+                if git(
+                    tracker_root,
+                    "merge-base",
+                    "--is-ancestor",
+                    tracker_state,
+                    "HEAD",
+                ).returncode:
+                    errors.append(
+                        "map: Tracker state is not an ancestor of the current tracker "
+                        "HEAD"
+                    )
                 recorded_map = git(
                     tracker_root, "show", f"{tracker_state}:{map_relative.as_posix()}"
                 )
@@ -573,19 +605,50 @@ def validate(map_path: Path) -> list[str]:
                         "map: current map differs from its immutable tracker state "
                         "beyond the Tracker state attestation"
                     )
+                attestation_commits = git(
+                    tracker_root,
+                    "log",
+                    "--format=%H",
+                    "--reverse",
+                    f"{tracker_state}..HEAD",
+                    "--",
+                    str(map_relative),
+                ).stdout.splitlines()
+                if len(attestation_commits) != 1:
+                    errors.append(
+                        "map: resolved tracker requires exactly one map attestation "
+                        "commit after Tracker state"
+                    )
+                else:
+                    attestation = attestation_commits[0]
+                    parent = git(
+                        tracker_root, "rev-parse", f"{attestation}^"
+                    ).stdout.strip()
+                    if parent != tracker_state:
+                        errors.append(
+                            "map: tracker attestation must immediately follow "
+                            "Tracker state"
+                        )
+                    if set(commit_paths(tracker_root, attestation)) != {
+                        str(map_relative)
+                    }:
+                        errors.append(
+                            "map: tracker attestation commit must change only the map"
+                        )
                 changed_tracker = git(
                     tracker_root,
-                    "diff",
+                    "log",
+                    "-m",
+                    "--format=",
                     "--name-only",
-                    tracker_state,
-                    "HEAD",
+                    f"{tracker_state}..HEAD",
                     "--",
                     tracker_arg,
                 ).stdout.splitlines()
                 unexpected_tracker = [
                     changed
                     for changed in changed_tracker
-                    if Path(changed) != map_relative
+                    if changed and Path(changed) != map_relative
                 ]
                 if unexpected_tracker:
                     errors.append(

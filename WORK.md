@@ -145,8 +145,5 @@ otherwise keep it out of scope and close with a truthful bounded exception.
 
 When the destination is reached, close the map. Review local policies for lessons
 that deserve admission as standing principles; leave the rest with the closed map.
-For repository execution, closure first follows [Review](./REVIEW.md) over the
-recorded code base through the proposed code head. Record that reviewed range, PR,
-and review receipt before resolving the map. Then record an immutable closure-state
-commit whose post-review changes are tracker-only; later repository work does not
-rewrite that historical boundary.
+For repository execution, complete [Review](./REVIEW.md), then follow
+[Record](./SKILL.md#record)'s closure gate.

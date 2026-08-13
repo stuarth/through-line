@@ -28,5 +28,5 @@ instead of delegating the review.
 Return a compact receipt with the reviewed ranges, decision, material findings and
 evidence, resolved prior findings, risks covered, checks run, and direct testing gaps.
 For local-Markdown closure, write a dedicated receipt with the machine-readable
-fields `Review range: <base>..<head>`, `Decision: approved`, `Checks`, and `Findings
-and gaps`; the latter two may link to detail but must not be empty.
+fields `Review range: <base>..<head>`, `Decision: <approved or rejected>`, `Checks`,
+and `Findings and gaps`; the latter two may link to detail but must not be empty.

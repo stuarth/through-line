@@ -10,8 +10,8 @@ principles, and use them to resolve what no longer needs fresh judgment. After e
 new fact or verdict, propagate its consequences through the map before asking the
 human another question.
 
-Produce decisions, not deliverables, unless the map's **Notes** puts execution in
-scope.
+Produce decisions, not deliverables, unless the map sets `Repository execution:
+in-scope`.
 
 ## Invocation
 
@@ -44,13 +44,14 @@ for detail instead of copying them into it.
 Label: through-line:map
 Status: open
 Repository execution: out-of-scope
-Tracker state: pending
 
 ## Destination
 
 <one or two lines fixing scope>
 
 <!-- With `Repository execution: in-scope`, add:
+Tracker state: pending
+
 ## Execution heads
 
 - Repository: <path>; Code base: <full commit hash>; Reviewed code head: <full commit hash or pending>; Closure state: <full commit hash or pending>; PR: <URL, none, or pending>; Review receipt: <durable reference or pending>
@@ -58,7 +59,7 @@ Tracker state: pending
 
 ## Notes
 
-<!-- Domain, useful skills, execution scope, and decision-rights agreement. -->
+<!-- Domain, useful skills, and decision-rights agreement. -->
 
 ## Local policies
 
@@ -136,24 +137,13 @@ Recording is done when the tracker agrees with reality:
 - principle evidence links to the decisions that set or tested it; and
 - the available tracker validator passes.
 
-For repository execution, reality includes an exact code base and reviewed code head,
-plus the PR when one exists and a durable closure-review receipt. Close the map only
-after a fresh whole-effort review covers that range. Record a **Closure state** commit
-at or after that head whose intervening changes are confined to the map's tracker
-directory; a later tracker-only attestation may put that commit's hash into the map.
-Validation reads that immutable boundary rather than the repository's current
-checkout. Any later in-scope code correction reopens the affected ticket or creates a
-correction ticket and updates the map and digest before closure. Validator success
+For repository execution, close only after a fresh whole-effort review covers the
+exact code range and the tracker records its PR, review receipt, and immutable closure
+state. A later in-scope correction reopens the affected ticket or creates a correction
+ticket. For local Markdown, follow its [closure
+protocol](./trackers/local-markdown.md#local-markdown-wayfinding-operations), then run
+the bundled [state validator](./scripts/validate_local_map.py). Validator success
 establishes tracker structure only; it is not implementation or decision evidence.
-
-A resolved local tracker also records an immutable **Tracker state**. Its attestation
-commit may replace only `Tracker state: pending` with the preceding tracker commit's
-full hash. When tracker and execution share a repository, that commit's parent is the
-recorded closure state. Later tracker edits require reopening rather than rewriting
-closed history.
-
-For local Markdown, run the bundled
-[state validator](./scripts/validate_local_map.py).
 
 ## Principles
 

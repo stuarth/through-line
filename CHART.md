@@ -4,7 +4,9 @@ Chart one effort from a loose idea. Establish the route; do not start resolving 
 decisions.
 
 1. **Name the destination.** Use `/grilling` and `/domain-modeling` to state what the
-   effort is trying to decide or change. The human confirms its scope.
+   effort is trying to decide or change. The human confirms its scope. Set
+   `Repository execution: in-scope` when the destination includes repository
+   deliverables; otherwise set `out-of-scope`.
 2. **Set decision rights.** Propose which choices remain human-owned and which
    reversible choices the builder may make under adopted principles. Protect domain
    meaning, external behavior, irreversible effects, and expensive reversals.
