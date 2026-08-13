@@ -3,8 +3,10 @@
 Take one coherent unit per session: a determined round, one decision, one prototype
 ticket, or one task when execution is in scope. Research is the exception: a
 dispatched `/research` subagent resolves it in parallel without consuming the unit.
-Carry the unit's consequences through the map, then stop. A continuation or
-compaction does not start another unit.
+Carry the unit's consequences through the map, then stop. Its resolution or
+checkpoint is a **terminal receipt**: later messages may clarify it or resume the same
+unfinished claim, but the next frontier always gets a fresh Work session. A
+continuation or compaction does not widen the unit.
 
 If the unit no longer fits safely, leave a **Resumption checkpoint** with the durable
 result, commits, remaining work, review findings, and verification state. Unclaim the
@@ -16,8 +18,9 @@ state.
 1. Load the effort's `PRINCIPLES.md` (placed per
    [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md)), the
    map's Destination, Notes, Local policies, and decision rights, the orientation
-   digest, the frontier, and the Findings, premises, and provisional verdicts that
-   reach the selected work.
+   digest when present, only its reference notes that reach the selected work, the
+   frontier, and the Findings, premises, and provisional verdicts that reach the
+   selected work.
    The map's closure indexes serve Propagate.
 2. Reconcile completed work through [Record](./SKILL.md#record).
 3. Classify frontier decisions by reach and ownership.
@@ -130,6 +133,13 @@ Principles are strong priors, not laws. When code, decisions, or new evidence
 contradicts one—or recurring exceptions show it has stopped predicting useful
 answers—pause derivation and audit it.
 
+Each correction ticket records `Correction of: <root ticket>; Concern: <stable
+invariant>`; later corrections for that invariant keep the same root and concern.
+Before charting its third material correction, pause execution and audit the chain as
+one builder-owned architecture or principle-candidate ticket: test whether the rule,
+representation, authority boundary, or review frame is wrong. Resume only after the
+audit propagates. Any doctrine change still requires human Admission.
+
 Take a real counterexample through [Admission](./ADMISSION.md) as a proposed boundary,
 split, priority, or refutation. The human decides the doctrine change; then propagate
 it through every dependent ticket.
@@ -139,11 +149,16 @@ it through every dependent ticket.
 Re-chart newly sharp questions, reconcile through [Record](./SKILL.md#record), report
 the frontier, and stop. A fresh session takes the next unit.
 
-A newly discovered “follow-up” that blocks the current destination is a scope
-amendment. Record its added units and risk and ask the human to amend the destination;
-otherwise keep it out of scope and close with a truthful bounded exception.
+New work required by the unchanged destination is discovery, not a scope amendment:
+record its added units and risk, then chart it under the existing decision rights.
+Ask the human to amend scope only when the proposed work changes the destination,
+protected meaning, external promise, or reversal budget. Otherwise keep a genuine
+follow-up out of scope and close with a truthful bounded exception.
 
 When the destination is reached, close the map. Review local policies for lessons
 that deserve admission as standing principles; leave the rest with the closed map.
-For repository execution, complete [Review](./REVIEW.md), then follow
-[Record](./SKILL.md#record)'s closure gate.
+For repository execution, the claimable **Final map closure** task completes
+[Review](./REVIEW.md), verifies every recorded execution repository is still at its
+reviewed clean head, then follows [Record](./SKILL.md#record)'s closure gate. A
+rejected review blocks that task on its correction tickets instead of closing the
+map.

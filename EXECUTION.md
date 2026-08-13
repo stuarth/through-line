@@ -85,6 +85,9 @@ authority, persistence, destructive behavior, or overall shape.
 Keep adjacent hardening out of the correction loop. After two material correction
 cycles, revisit the unit's shape and checkpoint it for a fresh Work session unless
 one bounded correction clearly closes the review.
+Related fixes split across tickets share `Correction of` and `Concern`; return to
+[Falsify](./WORK.md#falsify) before charting a third material correction of the same
+invariant.
 
 ## Verify and record
 

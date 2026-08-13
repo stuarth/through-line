@@ -117,6 +117,10 @@ Ticket every sharp human question. Ticket builder choices only when they block t
 map, test a principle, or deserve a durable record. Leave unshaped uncertainty in
 **Not yet specified** and work beyond the destination in **Out of scope**.
 
+Work created to correct an accepted candidate or resolved task records `Correction
+of: <root ticket>; Concern: <stable invariant>`; every later correction for that
+invariant names the same root and concern.
+
 Claim a ticket before work. Respect another session's claim. Repository work also
 records its repository and branch. Use native dependencies so the **frontier** is
 the open, unblocked, unclaimed work. Link large artifacts instead of pasting them
@@ -139,8 +143,9 @@ Recording is done when the tracker agrees with reality:
 
 For repository execution, close only after a fresh whole-effort review covers the
 exact code range and the tracker records its PR, review receipt, and immutable closure
-state. A later in-scope correction reopens the affected ticket or creates a correction
-ticket. For local Markdown, follow its [closure
+state. Later in-scope work reopens the same canonical map and adds a correction
+ticket; the recorded closure commit remains its immutable historical boundary. For
+local Markdown, follow its [closure
 protocol](./trackers/local-markdown.md#local-markdown-wayfinding-operations), then run
 the bundled [state validator](./scripts/validate_local_map.py). Validator success
 establishes tracker structure only; it is not implementation or decision evidence.
@@ -169,10 +174,13 @@ disposable read-only scouts, each with a brief of named questions and the named
 places to look; carry back conclusions and exact references, never file dumps.
 
 Sessions in one effort walk the same ground. An **orientation digest** beside the
-map caches expensive discovery for siblings: code entry points already located and
-environment facts. Orient loads it as earned priors to verify before relying on.
-Keep it under 1,000 words and 120 lines. Retain only discoveries a sibling would
-otherwise repay; prune doctrine, closures, and receipts carried elsewhere.
+map is the bounded index of expensive discovery: code entry points already located,
+environment facts, and links to topic reference notes when an entry needs depth.
+Orient loads the index as earned priors to verify before relying on, then loads only
+references that reach the selected work. Keep the index under 1,000 words and 120
+lines. Retain only discoveries a sibling would otherwise repay; prune doctrine,
+closures, and receipts carried elsewhere. Keep one reference note per topic rather
+than multiplying context-specific digests.
 
 Repository work follows [EXECUTION.md](./EXECUTION.md). Its plan, the receipts
 recorded at handoffs and checkpoints, and each resolution's evidence let a fresh

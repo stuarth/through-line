@@ -76,7 +76,7 @@ def section_bodies(text: str, name: str) -> str:
 
 
 def field(text: str, name: str) -> str | None:
-    match = re.search(rf"(?m)^{re.escape(name)}:\s*(.+?)\s*$", text)
+    match = re.search(rf"(?m)^{re.escape(name)}:[ \t]*(.+?)[ \t]*$", text)
     return match.group(1).strip() if match else None
 
 
@@ -125,6 +125,16 @@ def git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
 def git_root(path: Path) -> Path | None:
     result = git(path, "rev-parse", "--show-toplevel")
     return Path(result.stdout.strip()).resolve() if result.returncode == 0 else None
+
+
+def git_common_dir(repo: Path) -> Path | None:
+    result = git(repo, "rev-parse", "--git-common-dir")
+    if result.returncode:
+        return None
+    common_dir = Path(result.stdout.strip())
+    if not common_dir.is_absolute():
+        common_dir = repo / common_dir
+    return common_dir.resolve()
 
 
 def full_commit(repo: Path, value: str) -> bool:
@@ -184,9 +194,14 @@ def validate_execution_heads(
         r"Review receipt:\s*(?P<receipt>.+?)\s*$"
     )
 
+    tracker_repo = git_root(map_path.parent)
+    tracker_identity = git_common_dir(tracker_repo) if tracker_repo else None
+
     def outside_tracker(repo: Path, changed: list[str]) -> list[str]:
+        if tracker_repo is None or git_common_dir(repo) != tracker_identity:
+            return changed
         try:
-            tracker_dir = map_path.parent.relative_to(repo)
+            tracker_dir = map_path.parent.relative_to(tracker_repo)
         except ValueError:
             return changed
         if tracker_dir == Path("."):
@@ -216,10 +231,11 @@ def validate_execution_heads(
                 f"map: execution repository is not a Git repository: {supplied_repo}"
             )
             continue
-        if repo in seen_repositories:
+        repository_identity = git_common_dir(repo) or repo
+        if repository_identity in seen_repositories:
             errors.append(f"map: duplicate execution repository: {repo}")
             continue
-        seen_repositories.add(repo)
+        seen_repositories.add(repository_identity)
 
         base = values["base"]
         base_is_exact = full_commit(repo, base)
@@ -285,11 +301,11 @@ def validate_execution_heads(
                         "map: closure state changed files outside the tracker after "
                         f"review: {', '.join(drift[:5])}"
                     )
-        tracker_repo = git_root(map_path.parent)
         tracker_state = field(map_text, "Tracker state")
         if (
             map_status == "resolved"
-            and tracker_repo == repo
+            and tracker_identity is not None
+            and git_common_dir(repo) == tracker_identity
             and tracker_state
             and full_commit(repo, tracker_state)
         ):
@@ -356,10 +372,19 @@ def validate_execution_heads(
                         f"map: review receipt range must be {expected_range}: "
                         f"{receipt_path}"
                     )
-                if field(receipt_text, "Decision") != "approved":
+                decision = field(receipt_text, "Decision")
+                if map_status == "resolved" and decision != "approved":
                     errors.append(
                         f"map: review receipt Decision must be `approved`: "
                         f"{receipt_path}"
+                    )
+                elif map_status != "resolved" and decision not in {
+                    "approved",
+                    "rejected",
+                }:
+                    errors.append(
+                        "map: open review receipt Decision must be `approved` or "
+                        f"`rejected`: {receipt_path}"
                     )
                 if not field(receipt_text, "Checks"):
                     errors.append(f"map: review receipt lacks Checks: {receipt_path}")

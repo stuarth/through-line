@@ -206,6 +206,25 @@ class ValidatorTest(unittest.TestCase):
         )
         self.assertEqual(errors, [])
 
+    def test_open_execution_head_preserves_rejected_review(self) -> None:
+        repo, base, head = self.make_repo()
+        self.write_review(base, head, decision="rejected")
+        (self.root / "issues/01-ticket.md").write_text(ticket(status="open"))
+        errors = validate(
+            self.write_map(
+                status="open",
+                decisions="None.",
+                execution_heads=(
+                    "## Execution heads\n\n"
+                    f"- Repository: {repo}; Code base: {base}; "
+                    f"Reviewed code head: {head}; Closure state: pending; PR: none; "
+                    "Review receipt: review.md"
+                ),
+                repository_execution="in-scope",
+            )
+        )
+        self.assertEqual(errors, [])
+
     def test_resolved_execution_head_rejects_pending_review(self) -> None:
         repo, base, _ = self.make_repo()
         (self.root / "issues/01-ticket.md").write_text(ticket(kind="task"))
@@ -303,6 +322,30 @@ class ValidatorTest(unittest.TestCase):
         self.assertTrue(any("review receipt range" in e for e in errors))
         self.assertTrue(any("lacks Checks" in e for e in errors))
         self.assertTrue(any("lacks Findings and gaps" in e for e in errors))
+
+    def test_execution_review_receipt_rejects_blank_checks(self) -> None:
+        repo, base, head = self.make_repo()
+        (self.root / "review.md").write_text(
+            f"Review range: {base}..{head}\n"
+            "Decision: approved\n"
+            "Checks:\n"
+            "Findings and gaps: none\n"
+        )
+        (self.root / "issues/01-ticket.md").write_text(ticket(kind="task"))
+        errors = validate(
+            self.write_map(
+                decisions="None.",
+                findings="- [Ticket](issues/01-ticket.md) — done.",
+                execution_heads=(
+                    "## Execution heads\n\n"
+                    f"- Repository: {repo}; Code base: {base}; "
+                    f"Reviewed code head: {head}; Closure state: {head}; PR: none; "
+                    "Review receipt: review.md"
+                ),
+                repository_execution="in-scope",
+            )
+        )
+        self.assertTrue(any("review receipt lacks Checks" in e for e in errors))
 
     def test_resolved_tracker_must_be_clean(self) -> None:
         repo, base, head = self.make_repo()
@@ -519,6 +562,43 @@ class ValidatorTest(unittest.TestCase):
         errors = validate(map_path)
         self.assertTrue(any("Tracker state commit changed files" in e for e in errors))
 
+    def test_linked_worktree_tracker_state_rejects_unreviewed_code(self) -> None:
+        repo, base, head = self.make_repo()
+        linked = self.exec_root / "linked"
+        self.run_git(repo, "worktree", "add", "-b", "tracker", str(linked), head)
+        tracker = linked / ".scratch/test"
+        (tracker / "issues").mkdir(parents=True)
+        (tracker / "issues/01-ticket.md").write_text(ticket(kind="task"))
+        (tracker / "review.md").write_text(self.review(base, head))
+        map_path = tracker / "map.md"
+        map_path.write_text(
+            MAP.format(
+                status="resolved",
+                repository_execution="in-scope",
+                tracker_state="pending",
+                execution_heads=(
+                    "## Execution heads\n\n"
+                    f"- Repository: {repo}; Code base: {base}; "
+                    f"Reviewed code head: {head}; Closure state: {head}; PR: none; "
+                    "Review receipt: review.md"
+                ),
+                decisions="None.",
+                findings="- [Ticket](issues/01-ticket.md) — done.",
+            )
+        )
+        self.run_git(linked, "add", ".scratch/test")
+        (linked / "file.txt").write_text("unreviewed closure code\n")
+        self.run_git(linked, "commit", "-am", "prepare tracker with code")
+        tracker_state = self.run_git(linked, "rev-parse", "HEAD").stdout.strip()
+        map_path.write_text(
+            map_path.read_text().replace(
+                "Tracker state: pending", f"Tracker state: {tracker_state}"
+            )
+        )
+        self.run_git(linked, "commit", "-am", "attest tracker closure")
+        errors = validate(map_path)
+        self.assertTrue(any("Tracker state commit changed files" in e for e in errors))
+
     def test_tracker_attestation_rejects_unreviewed_code(self) -> None:
         repo, base, head = self.make_repo()
         tracker = repo / ".scratch/test"
@@ -690,14 +770,14 @@ class ValidatorTest(unittest.TestCase):
         head = self.run_git(repo, "rev-parse", "HEAD").stdout.strip()
         return repo, base, head
 
-    def write_review(self, base: str, head: str) -> None:
-        (self.root / "review.md").write_text(self.review(base, head))
+    def write_review(self, base: str, head: str, *, decision: str = "approved") -> None:
+        (self.root / "review.md").write_text(self.review(base, head, decision=decision))
 
     @staticmethod
-    def review(base: str, head: str) -> str:
+    def review(base: str, head: str, *, decision: str = "approved") -> str:
         return (
             f"Review range: {base}..{head}\n"
-            "Decision: approved\n"
+            f"Decision: {decision}\n"
             "Checks: focused tests passed\n"
             "Findings and gaps: none\n"
         )

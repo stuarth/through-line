@@ -1,6 +1,8 @@
 # Review
 
-Review one fixed candidate as a read-only leaf. Do not coordinate or implement.
+Review one fixed candidate as a read-only leaf. A fresh reviewer receives only the
+review packet, never the implementer's or supervisor's conversation. Do not
+coordinate or implement.
 
 For an initial review, use the ticket, premises, candidate receipt, and fixed range.
 For a correction, use the prior review receipt and correction range: confirm the
@@ -10,7 +12,9 @@ everything untouched stands on the prior receipt.
 For map closure, review the whole effort from its recorded base through the proposed
 closure head. Prior ticket reviews are context, not inherited proof. Compare every
 protected meaning to its cited human verdict and construct failures across authority,
-currentness, concurrency, and consumer boundaries.
+currentness, concurrency, and consumer boundaries. Before deciding, verify each
+execution repository has a clean worktree and its current HEAD is the proposed
+closure state; record that observation in Checks.
 
 Report only material findings: acceptance failures or evidenced correctness,
 security, or data-integrity failures. Leave optional hardening, adjacent cleanup, and

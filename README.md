@@ -33,6 +33,9 @@ under Claude Code and Codex (see [agents/openai.yaml](./agents/openai.yaml)).
 Maps and tickets live on the repo's issue tracker when one is wired up;
 otherwise the skill falls back to the bundled local-markdown tracker and its
 validator (see [trackers/](./trackers/) and [scripts/](./scripts/)).
+When updating a legacy local map, add `Repository execution: out-of-scope` for a
+decision-only effort; use `in-scope` and add execution heads when its destination
+includes repository deliverables.
 
 ## How it works
 
@@ -57,17 +60,19 @@ meaning, external promises, irreversible effects. Direction is never delegated.
 **One round or ticket per Work session, hard stop.** The tracker, map, and
 principles — not the conversation — are the shared state. A session takes one
 round or ticket, records the outcome with provenance (the quoted human verdict,
-or the principle that determined it), reports the frontier, and stops. Automatic
-continuations and resumed turns do not widen that boundary. Research tickets are
-the exception: `/research` subagents burn them down in parallel, leaving findings
-on throwaway branches the tickets point to.
+or the principle that determined it), reports the frontier, and stops. Its receipt
+retires that worker; automatic continuations and resumed turns may only finish the
+same unresolved claim. Research tickets are the exception: `/research` subagents
+burn them down in parallel, leaving findings on throwaway branches the tickets point
+to.
 
-**Unattended when you want it.** Invoke with an existing map and say
-**advance unattended**: a supervisor runs a fresh minimal-context Work session
-per ticket, continuing through builder-owned decisions and legwork, and returns
-only durable transitions plus terse host-required status. It waits event-by-event
-rather than polling; when the host cannot wait without waking the model, it dispatches
-once and resumes from the later receipt instead of narrating unchanged state.
+**Unattended when the host supports it.** Invoke with an existing map and say
+**advance unattended**: a supervisor runs a fresh no-history Work session per ticket,
+continuing through builder-owned decisions and legwork, and returns only durable
+transitions plus terse host-required status. A completion event advances the loop
+without polling. On a timeout-only host, the supervisor names the limitation,
+dispatches one unit, and resumes from its later receipt instead of paying for an
+unchanged polling loop.
 
 ## It's working if
 
@@ -82,8 +87,8 @@ once and resumes from the later receipt instead of narrating unchanged state.
   next frontier recorded for a fresh session.
 - A repository-execution map closes only at the exact code head covered by a fresh
   whole-effort review and records an immutable tracker-only closure boundary. Later
-  repository work does not rewrite that boundary; in-scope corrections reopen its
-  durable record.
+  repository work does not rewrite that boundary; in-scope corrections reopen the
+  same canonical map while its prior closure remains immutable in Git history.
 
 ## Repo layout
 
