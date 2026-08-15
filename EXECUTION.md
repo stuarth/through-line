@@ -6,6 +6,9 @@ artifact. Finished means durable: a stranger could continue from the tracker,
 receipts, and commits alone. A leaf still in flight, a finding unrecorded, or a
 tracker unreconciled means the session has not finished.
 
+At every scout, implementer, reviewer, or specialist dispatch, follow [receipt-only
+coordination](./SKILL.md#coordination).
+
 ## Resume
 
 Load the ticket and its receipts, then continue from the first unfinished or invalid
@@ -87,7 +90,8 @@ cycles, revisit the unit's shape and checkpoint it for a fresh Work session unle
 one bounded correction clearly closes the review.
 Related fixes split across tickets share `Correction of` and `Concern`; return to
 [Falsify](./WORK.md#falsify) before charting a third material correction of the same
-invariant.
+invariant or root, or any correction that changes how acceptance is judged instead
+of only repairing implementation.
 
 ## Verify and record
 

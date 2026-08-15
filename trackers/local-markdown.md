@@ -20,13 +20,16 @@ Use this fallback only when the repo has no issue-tracker doc.
 - **Reference:** `.scratch/<effort>/references/<topic>.md`, linked from the digest
   and relevant tickets when a reusable discovery needs more depth. Keep one note per
   topic and load it only for work it reaches.
+- **History:** `.scratch/<effort>/history/NN-<slug>.md`, created only when a ticket
+  has superseded material worth retaining and linked from that ticket. History is
+  context, not authority.
 - **Child:** `.scratch/<effort>/issues/NN-<slug>.md`, with `Type:
   decision|research|prototype|task`, `Status: open|claimed|blocked|resolved`, and the
   question under `## Question`. A correction also records `Correction of: <root
   ticket>; Concern: <stable invariant>`; every later correction for that invariant
   names the same root and concern. Further sections—`## Derived implications`,
-  `## Builder discretion`, `## Provisional verdict`, `## Verdict history`,
-  `## Resolution`, `## Resumption checkpoint`—carry the meanings
+  `## Builder discretion`, `## Provisional verdict`, `## Resolution`, `## Resumption
+  checkpoint`—carry the meanings
   [Map and tickets](../SKILL.md#map-and-tickets) defines.
 - **Claim:** add `Assignee: <dev>` and set `Status: claimed` before work. Work that
   lands in a repository also adds `Repository: <repo>` when the map spans more than

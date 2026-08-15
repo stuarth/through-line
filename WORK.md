@@ -13,6 +13,9 @@ result, commits, remaining work, review findings, and verification state. Unclai
 ticket, reconcile the tracker, and stop so a fresh session can resume from durable
 state.
 
+At every subagent dispatch, follow [receipt-only
+coordination](./SKILL.md#coordination).
+
 ## Orient
 
 1. Load the effort's `PRINCIPLES.md` (placed per
@@ -98,7 +101,7 @@ asking the human another question.
 
 1. Record the new result in its ticket and map index. Keep non-final premises in
    **Provisional verdict** and final ones in **Resolution**; move replaced premises
-   to **Verdict history**.
+   to the ticket's linked history artifact.
 2. When a premise changes, trace its dependents. Remove conclusions it no longer
    supports and reopen closures whose rationale no longer holds.
 3. Reclassify the affected map: resolve determined builder-owned work, collect
@@ -139,6 +142,26 @@ Before charting its third material correction, pause execution and audit the cha
 one builder-owned architecture or principle-candidate ticket: test whether the rule,
 representation, authority boundary, or review frame is wrong. Resume only after the
 audit propagates. Any doctrine change still requires human Admission.
+
+Different Concern names can still hide one non-converging root. Create or update one
+standing **Convergence verdict** decision for a correction root when:
+
+- the root is about to receive its third material correction, regardless of Concern
+  name;
+- a correction changes the evaluator, oracle, acceptance target, or prompt policy
+  instead of only repairing implementation;
+- a new Concern appears after a root-level architecture or Falsify audit; or
+- a correction would take priority over an open, independent non-correction
+  frontier without a current verdict that ranks it higher.
+
+Keep all later premise changes in that same decision. Judge the root from its current
+failure-class inventory, acceptance target, audit findings, and the value of the
+competing frontier. Record one current verdict: **continue**, **re-slice**,
+**redesign**, or **defer**. A continue verdict remains current only while those
+premises remain unchanged. Once the decision exists, cite or update its current
+verdict before dispatching another correction for that root. Apply normal decision
+rights: changes to protected meaning, the acceptance bar, doctrine, scope, or
+reversal budget return to the human.
 
 Take a real counterexample through [Admission](./ADMISSION.md) as a proposed boundary,
 split, priority, or refutation. The human decides the doctrine change; then propagate

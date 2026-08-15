@@ -104,14 +104,16 @@ For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in
 **Builder discretion**.
 
-Keep tickets as state, not transcripts. A decision ticket carries its question,
-decisive evidence, alternatives, verdict, and implications; move a durable full
-contract to its ADR or domain documentation. A resolved task keeps one final receipt,
-not a chronological copy of candidate, review, and test chatter.
-
-An unresolved ticket may carry one **Provisional verdict**. **Resolution** is its
-final premise; replaced premises move to **Verdict history**, which is context rather
-than authority.
+Keep ticket bodies as current state, not transcripts. An unresolved ticket retains
+its current question, live alternatives and premises, applicable acceptance
+criteria, one **Provisional verdict**, derived implications, and direct pointers to
+the current candidate and authoritative review receipt when they exist. A resolved
+ticket retains its accepted question or criteria, final **Resolution**, and the
+evidence pointers needed for later closure review. Move only superseded analysis,
+replaced verdicts and receipts, and chronological chatter to one linked history
+artifact; leave one line pointing to it. History is context, not authority. The
+active body must support the next action and a later audit without loading history.
+Put a durable full contract in its ADR or domain documentation.
 
 Ticket every sharp human question. Ticket builder choices only when they block the
 map, test a principle, or deserve a durable record. Leave unshaped uncertainty in
@@ -165,6 +167,18 @@ An ADR records one hard-to-reverse decision and its trade-off. A principle disti
 several decisions. Cross-cite them.
 
 ## Coordination
+
+Use **receipt-only coordination** at every dispatch depth:
+
+- give the agent one selected unit with its reaching premises, references, and
+  completion checks;
+- require one terminal receipt, with earlier communication only for a blocker or
+  durable checkpoint that needs coordination;
+- when that receipt is the next critical-path input, keep the coordinator active
+  with the host's completion-aware wait at its maximum timeout; and
+- treat an expired wait or unrelated mailbox wake as no state change: re-arm the
+  wait without reloading durable state, inspecting the agent tree, or reporting
+  unchanged progress. Reload durable state after the terminal receipt.
 
 The tracker, map, principles, and linked artifacts—not conversation—carry state
 between sessions. The Work session owns claims, human questions, propagation, and

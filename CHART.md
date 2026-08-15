@@ -19,7 +19,8 @@ decisions.
    Record completed legwork as Findings.
 6. **Fire research.** Dispatch a `/research` subagent for each research ticket to
    resolve it in parallel, capturing findings on a throwaway `research/<name>`
-   branch with a context pointer from the ticket. Dispatch only for a named ticket.
+   branch with a context pointer from the ticket. Dispatch only for a named ticket
+   and follow [receipt-only coordination](./SKILL.md#coordination).
 7. **Validate and stop.** Reconcile through [Record](./SKILL.md#record). A Work
    session, not Chart, resolves the route.
 
