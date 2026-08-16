@@ -18,26 +18,22 @@ not complete supervision.
    doctrine or scope change, an external unblock, or ownership resolution. Report
    that frontier.
 3. Otherwise dispatch a `/research` subagent for each open, unclaimed research
-   ticket — research does not consume a session's unit — and choose one non-human
-   unit: a builder-owned round or decision, a prototype ticket, or an in-scope task.
+   ticket through [receipt-only coordination](./SKILL.md#coordination) — research
+   does not consume a session's unit — and choose one non-human unit: a builder-owned
+   round or decision, a prototype ticket, or an in-scope task. Select a correction
+   ahead of an independent non-correction frontier only when the current
+   [Convergence verdict](./WORK.md#falsify) for its root ranks it ahead.
 4. Start a fresh Work session with [WORK.md](./WORK.md) from an explicit packet: map
    reference, exact selection, reaching premises, useful references, checks, and
    execution receipts. Use the host's no-history option (`fork_turns: none` in
    Codex); never pass the supervisor's conversation. Dispatch at the host's default
-   reasoning effort and reserve elevated effort for a named risk. Require one
-   terminal receipt, blocker, or checkpoint as inter-agent communication; omit
-   progress chatter. A terminal receipt retires that worker—the next unit always
-   gets a new Work session.
-5. Keep the supervisor turn active and wait for the selected worker's terminal
-   receipt. Use the host's completion-aware wait at its maximum allowed timeout. In
-   Codex, `wait_agent` wakes on mailbox updates; the selected worker's receipt is the
-   supervisor's next critical-path input, so waiting is required. Its timeout only
-   bounds one wait call. If the wait expires or another agent reports first, re-arm
-   it without reloading state, selecting work, inspecting the agent tree, or
-   reporting unchanged status. When the selected receipt arrives, reload durable
-   state and repeat from step 1. A failed worker leaves a live claim: recover it from
-   its receipts, inspecting the agent tree only when the claim does not identify its
-   owner.
+   reasoning effort and reserve elevated effort for a named risk. Follow
+   [receipt-only coordination](./SKILL.md#coordination). A terminal receipt retires
+   that worker—the next unit always gets a new Work session.
+5. Keep the supervisor turn active under receipt-only coordination until the selected
+   receipt arrives, then reload durable state and repeat from step 1. A failed worker
+   leaves a live claim: recover it from its receipts, inspecting the agent tree only
+   when the claim does not identify its owner.
 
 Run workers serially because propagation can change the next frontier. A worker
 report or generic continuation coordinates the effort; it never supplies a human

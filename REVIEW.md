@@ -29,6 +29,9 @@ each semantic claim needs an independently failing counterexample.
 If one named risk needs expertise you do not have, return that risk for one specialist
 instead of delegating the review.
 
+Use receipt-only coordination: send one terminal receipt; communicate earlier only
+for a blocker or durable checkpoint that needs coordination.
+
 Return a compact receipt with the reviewed ranges, decision, material findings and
 evidence, resolved prior findings, risks covered, checks run, and direct testing gaps.
 For local-Markdown closure, write a dedicated receipt with the machine-readable
