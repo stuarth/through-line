@@ -54,7 +54,7 @@ Tracker state: pending
 
 ## Execution heads
 
-- Repository: <path>; Code base: <full commit hash>; Reviewed code head: <full commit hash or pending>; Closure state: <full commit hash or pending>; PR: <URL, none, or pending>; Review receipt: <durable reference or pending>
+- Repository: <path>; Code base: <full commit hash>; Integration head: <full commit hash>; Reviewed code head: <full commit hash or pending>; Closure state: <full commit hash or pending>; PR: <URL, none, or pending>; Review receipt: <durable reference or pending>
 -->
 
 ## Notes
@@ -75,7 +75,7 @@ Tracker state: pending
 
 ## Not yet specified
 
-<!-- In-scope fog not yet sharp enough to ticket. -->
+<!-- In-scope fog and sharp work consciously deferred from the confirmed route. -->
 
 ## Out of scope
 
@@ -91,14 +91,14 @@ Ticket types:
 - **prototype** — one cheap artifact to react to, built with `/prototype` and kept
   as runnable evidence on a throwaway `prototype/<name>` branch the resolution
   points to;
-- **task** — one reviewable unit of execution or manual legwork, authored with its
-  acceptance criteria.
+- **task** — one execution or manual outcome acceptable as a whole, authored with
+  its acceptance criteria.
 
-A ticket is atomic when its answer or result can be accepted as a whole. Split an
-independently decidable, landable, or verifiable part: a task whose acceptance
-criteria name several results, each acceptable as a whole on its own, is several
-tickets wired by dependencies. When work exposes a separate human judgment, create
-that decision ticket and block the original work on it.
+A ticket is one decision or one outcome acceptable as a whole. Split only for a
+separate human verdict, an outcome releasable on its own across an exposure boundary,
+or a distinct authority boundary. Separately implementable steps are plan packets
+inside one ticket and compose together. When work exposes a separate human judgment,
+create that decision ticket and block the original work on it.
 
 For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in
@@ -107,9 +107,9 @@ settled consequences in **Derived implications** and small aligned choices in
 Keep ticket bodies as current state, not transcripts. An unresolved ticket retains
 its current question, live alternatives and premises, applicable acceptance
 criteria, one **Provisional verdict**, derived implications, and direct pointers to
-the current candidate and authoritative review receipt when they exist. A resolved
-ticket retains its accepted question or criteria, final **Resolution**, and the
-evidence pointers needed for later closure review. Move only superseded analysis,
+the current candidate and each authoritative review receipt when they exist. A
+resolved ticket retains its accepted question or criteria, final **Resolution**, and
+the evidence pointers needed for later closure review. Move only superseded analysis,
 replaced verdicts and receipts, and chronological chatter to one linked history
 artifact; leave one line pointing to it. History is context, not authority. The
 active body must support the next action and a later audit without loading history.
@@ -119,9 +119,14 @@ Ticket every sharp human question. Ticket builder choices only when they block t
 map, test a principle, or deserve a durable record. Leave unshaped uncertainty in
 **Not yet specified** and work beyond the destination in **Out of scope**.
 
-Work created to correct an accepted candidate or resolved task records `Correction
-of: <root ticket>; Concern: <stable invariant>`; every later correction for that
-invariant names the same root and concern.
+When an accepted result proves wrong while the map is open, reopen its ticket. Move
+the old **Resolution** to the ticket's linked history artifact, leave a one-line
+pointer, increment `Reopened: <count>`, record the defect and current **Convergence
+verdict**, and list the resolved dependents that consumed the old result.
+Re-resolution gives every listed dependent one disposition: **stands** or
+**reopens**. Integrated behavior with no single root becomes one new outcome ticket.
+A closed map still reopens through a correction ticket against its immutable closure
+state.
 
 Claim a ticket before work. Respect another session's claim. Repository work also
 records its repository and branch. Use native dependencies so the **frontier** is
@@ -134,7 +139,8 @@ Recording is done when the tracker agrees with reality:
 
 - status, assignee, dependencies, and claims are current;
 - each decision, research, or prototype resolution records its outcome and
-  provenance; each task resolution records its outcome and repository commit or PR;
+  provenance; each repository task resolution records its candidate and integrated
+  commits, plus its PR when one exists;
 - checkpoints exist only on unfinished work;
 - **Decisions so far**, **Findings**, and **Out of scope** index the right closures,
   each gist at most two lines;

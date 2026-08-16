@@ -14,14 +14,21 @@ decisions.
    commitments. Take each candidate through [Admission](./ADMISSION.md).
 4. **Map breadth-first.** Create a ticket for every sharp residual question and
    above-threshold builder choice. Keep settled implications outside the human
-   Question and leave genuinely unshaped uncertainty as fog.
+   Question and leave genuinely unshaped uncertainty as fog. A ticket that adds a
+   durable mechanism, persisted artifact, or acceptance gate names the current
+   consumer or protected invariant it serves and the existing path it extends; a
+   replacement carries the human verdict approving that change. Defer the rest in
+   **Not yet specified**.
 5. **Create, then wire.** Create the map and tickets before adding dependency edges.
    Record completed legwork as Findings.
-6. **Fire research.** Dispatch a `/research` subagent for each research ticket to
-   resolve it in parallel, capturing findings on a throwaway `research/<name>`
-   branch with a context pointer from the ticket. Dispatch only for a named ticket
-   and follow [receipt-only coordination](./SKILL.md#coordination).
-7. **Validate and stop.** Reconcile through [Record](./SKILL.md#record). A Work
+6. **Confirm the route.** Show the mapped route beside the smallest credible route:
+   what each reuses, what each defers, and what deferring the difference costs. The
+   human confirms only the route shown; expanding it requires another verdict.
+7. **Fire research.** Dispatch a `/research` subagent for each research ticket on the
+   confirmed route, capturing findings on a throwaway `research/<name>` branch with
+   a context pointer from the ticket. Dispatch only for a named ticket and follow
+   [receipt-only coordination](./SKILL.md#coordination).
+8. **Validate and stop.** Reconcile through [Record](./SKILL.md#record). A Work
    session, not Chart, resolves the route.
 
 If the whole journey is already clear enough for one session, skip the map and ask
