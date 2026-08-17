@@ -394,34 +394,42 @@ class ValidatorTest(unittest.TestCase):
 
         self.assertEqual(errors, [])
 
-    def test_second_reopening_requires_convergence_evidence(self) -> None:
+    def test_reopening_requires_one_convergence_verdict(self) -> None:
         (self.root / "issues/01-ticket.md").write_text(
-            ticket(status="open", extra="\nReopened: 2\n")
+            ticket(status="open", extra="\nReopened: 1\n")
         )
 
         errors = validate(self.write_map(status="open", decisions="None."))
 
         self.assertTrue(any("Convergence verdict" in error for error in errors))
-        self.assertTrue(any("Falsify audit" in error for error in errors))
-        self.assertTrue(
-            any("Affected resolved dependents" in error for error in errors)
-        )
 
-    def test_first_reopening_accepts_one_current_convergence_record(self) -> None:
+    def test_reopening_process_sections_are_optional_and_unambiguous(self) -> None:
+        required = (
+            "\nReopened: 2\n"
+            "\n## Convergence verdict\n\ncontinue — bounded defect\n"
+        )
         (self.root / "issues/01-ticket.md").write_text(
-            ticket(
-                status="open",
-                extra=(
-                    "\nReopened: 1\n"
-                    "\n## Convergence verdict\n\ncontinue — bounded defect\n"
-                    "\n## Affected resolved dependents\n\nNone.\n"
-                ),
-            )
+            ticket(status="open", extra=required)
         )
 
         errors = validate(self.write_map(status="open", decisions="None."))
 
         self.assertEqual(errors, [])
+
+        for heading in (
+            "Falsify audit",
+            "Affected resolved dependents",
+            "Dependent disposition",
+        ):
+            with self.subTest(heading=heading):
+                duplicate = f"\n## {heading}\n\nFirst.\n\n## {heading}\n\nSecond.\n"
+                (self.root / "issues/01-ticket.md").write_text(
+                    ticket(status="open", extra=required + duplicate)
+                )
+                errors = validate(self.write_map(status="open", decisions="None."))
+                self.assertTrue(
+                    any(f"more than one ## {heading}" in error for error in errors)
+                )
 
     def test_open_execution_head_preserves_rejected_review(self) -> None:
         repo, base, head = self.make_repo()

@@ -55,10 +55,11 @@ widen the leaf's assignment.
 Implement the plan — directly, or by landing the delegated packets' receipts — and
 run the focused checks, committing only the plan's files. The candidate is ready
 when every criterion and reaching premise maps to implementation and a verification
-path: green focused evidence, a review check, or a named deferred check. Record the
-base and candidate commits, changed files, acceptance mapping, focused checks, and
-any remaining gap when the candidate hands off to a reviewer or a checkpoint; a
-ticket closing in this session records that evidence once, in its Resolution.
+path: green focused evidence, a review check, or a named deferred check recorded as
+a `Deferred review` when it waits for a seam. Record the base and candidate commits,
+changed files, acceptance mapping, focused checks, and any remaining gap when the
+candidate hands off to a reviewer or a checkpoint; a ticket closing in this session
+records that evidence once, in its Resolution.
 
 For each protected invariant touched, the acceptance mapping names its verdict,
 implementing authority, persistence fence when applicable, positive test, adversarial
@@ -85,20 +86,6 @@ checks with every criterion's verification path intact and record the review wai
 and reason. A candidate in both classes receives its required pre-composition review
 and still records the seam deferral.
 
-Review the immutable object against the exact claim defined in
-[REVIEW.md](./REVIEW.md). A paid or externally consequential effect proceeds only
-when an approved receipt covers its exact execution state and safe execution; an
-earlier receipt suffices when it already covers both. Run its launch-time
-preconditions immediately before the effect, record their results on the ticket, and
-include them with its outputs. If one fails, do not execute; rerun every precondition
-before a later attempt, and reuse the receipt only while its object and claim remain
-unchanged.
-
-After a paid or externally consequential effect, review its immutable outputs before
-relying on their claim. An approved receipt validates that claim, not the candidate.
-Resolve a fixed-candidate evaluation with its honest result. For other tasks, apply
-the ticket's completion criteria and the correction and Falsify gates below.
-
 When review runs, record its exact object and claim on the ticket, then give one fresh
 integrated reviewer the ticket or seam, premises, object, claim, only the references
 that reach them, and [REVIEW.md](./REVIEW.md). Add a specialist only for a named risk
@@ -118,6 +105,19 @@ cycles, revisit the unit's shape and checkpoint it for a fresh Work session unle
 one bounded correction clearly closes the review.
 When evidence invalidates a previously accepted result, return to
 [Falsify](./WORK.md#falsify) and reopen its root before producing another candidate.
+
+### Consequential effects
+
+A paid or externally consequential effect proceeds only when an approved receipt
+covers its exact execution state and safe execution; an earlier receipt suffices
+when it already covers both. Run its launch-time preconditions immediately before
+the effect, record their results on the ticket, and include them with its outputs.
+Execute only with every precondition green; after a failure, rerun them all before a
+later attempt, and reuse the receipt only while its object and claim remain unchanged.
+
+After the effect, review its immutable outputs before relying on their claim. An
+approved receipt validates that claim, not the candidate. Resolve a fixed-candidate
+evaluation with its honest result.
 
 ## Verify and record
 
@@ -144,7 +144,4 @@ edit returns to review or correction; afterward rerun every check it invalidated
 Resolve the ticket when its recorded evidence — candidate commit, integrated commit,
 reviews run or deferred with their seam named, and verification — describes the same
 final work. Advance the map's **Integration head**, propagate through the map,
-reconcile the tracker, validate it, and stop after this ticket's cascade. A resolution
-with a seam deferral accepts implemented, composed, adversarially checked work while
-recording independent review debt; the integration head cannot cross an exposure
-boundary until a seam review receipt discharges it.
+reconcile the tracker, validate it, and stop after this ticket's cascade.

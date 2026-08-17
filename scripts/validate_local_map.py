@@ -488,9 +488,6 @@ def validate_execution_heads(
 
         integration_heads.append((repo, integration))
 
-    if pending_deferred_review and map_status != "resolved":
-        warnings.append("map: integration head carries pending seam-review debt")
-
     return integration_heads
 
 
@@ -597,45 +594,21 @@ def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
                     f"{ticket.path}: reopened ticket requires exactly one "
                     "## Convergence verdict"
                 )
-            if ticket.reopened >= 2 and ticket.falsify_audits != 1:
-                errors.append(
-                    f"{ticket.path}: second reopening requires exactly one "
-                    "## Falsify audit"
-                )
-            if ticket.status == "resolved":
-                if ticket.dependent_dispositions != 1:
-                    errors.append(
-                        f"{ticket.path}: re-resolved ticket requires exactly one "
-                        "## Dependent disposition"
-                    )
-                if ticket.affected_dependents:
-                    errors.append(
-                        f"{ticket.path}: re-resolved ticket still carries "
-                        "## Affected resolved dependents"
-                    )
-            else:
-                if ticket.affected_dependents != 1:
-                    errors.append(
-                        f"{ticket.path}: reopened ticket requires exactly one "
-                        "## Affected resolved dependents"
-                    )
-                if ticket.dependent_dispositions:
-                    errors.append(
-                        f"{ticket.path}: unresolved ticket already carries "
-                        "## Dependent disposition"
-                    )
         elif ticket.convergence_verdicts:
             errors.append(
                 f"{ticket.path}: ## Convergence verdict requires Reopened"
             )
+        for heading, count in (
+            ("Falsify audit", ticket.falsify_audits),
+            ("Affected resolved dependents", ticket.affected_dependents),
+            ("Dependent disposition", ticket.dependent_dispositions),
+        ):
+            if count > 1:
+                errors.append(f"{ticket.path}: more than one ## {heading}")
         if bool(ticket.candidate_commit) != bool(ticket.integrated_commit):
             errors.append(
                 f"{ticket.path}: Candidate commit and Integrated commit must "
                 "appear together"
-            )
-        if ticket.integrated_commit and ticket.status != "resolved":
-            errors.append(
-                f"{ticket.path}: Integrated commit belongs in a resolved ticket"
             )
         for deferred_review in ticket.deferred_reviews:
             if not re.fullmatch(

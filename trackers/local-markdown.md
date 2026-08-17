@@ -12,9 +12,7 @@ Use this fallback only when the repo has no issue-tracker doc.
   <local Markdown path or pending>` line per repository. Use a local
   `integration/<effort>` branch as the canonical head and advance it only through
   [Execution](../EXECUTION.md). A PR URL means the current integration head is
-  exposed; set it to `pending` before advancing local work beyond that head and keep
-  the earlier URL in history. Replace every closure `pending` before final
-  validation. For a
+  exposed. Replace every closure `pending` before final validation. For a
   cross-repository effort, Notes carries the exact `Tracker authority: Repository:
   <path>; Ref: <branch>; Map: <repository-relative path>` line. Each secondary
   repository stores that same line at `.scratch/<effort>/tracker-pointer.md`; never
@@ -44,9 +42,8 @@ Use this fallback only when the repo has no issue-tracker doc.
 - **Frontier:** open, unblocked, unclaimed child files, ordered by number.
 - **Resolve:** append `## Resolution`, set `Status: resolved`, retain the assignee,
   then update the map through [Record](../SKILL.md#record). Repository resolutions
-  record `Candidate commit` and `Integrated commit`; a deferred seam review records
-  `Deferred review: seam pending — <named invariant>`, then replaces it with
-  `Deferred review: discharged — <receipt>` when the seam review approves.
+  record `Candidate commit` and `Integrated commit`; deferred seam reviews follow
+  [Execution](../EXECUTION.md#review-and-correction).
 - **Reopen:** while the map is open, move the old Resolution to the ticket's history
   artifact and leave one linked `History: <path>` pointer; remove it from the map's
   closure index, remove its assignee, set `Status: open` or `blocked`, increment

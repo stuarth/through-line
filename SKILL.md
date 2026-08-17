@@ -95,10 +95,11 @@ Ticket types:
   its acceptance criteria.
 
 A ticket is one decision or one outcome acceptable as a whole. Split only for a
-separate human verdict, an outcome releasable on its own across an exposure boundary,
-or a distinct authority boundary. Separately implementable steps are plan packets
-inside one ticket and compose together. When work exposes a separate human judgment,
-create that decision ticket and block the original work on it.
+separate human verdict, an outcome releasable on its own across an [exposure
+boundary](./EXECUTION.md#review-and-correction), or a distinct authority boundary.
+Separately implementable steps are plan packets inside one ticket and compose
+together. When work exposes a separate human judgment, create that decision ticket
+and block the original work on it.
 
 For a human-owned decision, keep only the residual judgment in **Question**. Put
 settled consequences in **Derived implications** and small aligned choices in

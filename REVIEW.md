@@ -16,20 +16,17 @@ otherwise load only references that reach the object.
 For an initial review, use the ticket, premises, object, and claim. For a correction
 under the same claim, use the prior receipt and changed object range: confirm the
 prior findings are resolved and judge what changed. Coverage of everything untouched
-stands on the prior receipt. A changed claim requires a fresh review of the whole
-object.
+stands on the prior receipt. A changed or distinct downstream claim requires a fresh
+review of the whole object; it may cite the earlier receipt.
 
-For a seam review, the object is the composed range holding both sides; the claim is
-the named invariant across producer and first consumer, lock and racing writers, or
-transition and consumers. Trace that complete path instead of treating either
-candidate in isolation. Include the deferred-review receipts the seam reaches.
+For a seam review, the object is the composed range holding both sides and the claim
+is the named invariant across them. Trace that complete path instead of treating
+either candidate in isolation. Include the deferred-review receipts the seam reaches.
 
 When the claim authorizes a paid or externally consequential effect, the object is
 the exact state that will execute. Review its head and configuration, budgets and
 stop conditions, recovery behavior, and executable launch-time preconditions for
-time-sensitive facts. Do not request another review merely because execution is
-next: an earlier receipt suffices when its object covers that complete state and its
-claim covers safe execution.
+time-sensitive facts.
 
 When the object is run evidence, review its claim against the ticket's acceptance
 criteria and the receipt that authorized execution. Verify provenance, terminal
@@ -69,11 +66,7 @@ Return a compact receipt with:
   evidence; and
 - `Prior receipt` when correcting an earlier review. Cite other receipts in `Checks`.
 
-A seam receipt also names every deferral it discharges. Reuse an approved receipt
-while its object and claim are unchanged. If work returns under the same claim after
-its object changes, treat it as a correction and include the prior receipt plus the
-changed range. A changed or distinct downstream claim is a new review: it may cite an
-earlier receipt but must judge the whole object against its own claim.
+A seam receipt also names every deferral it discharges.
 
 `Decision` judges whether the object supports the claim, so valid evidence that a
 candidate failed may be approved. For local-Markdown closure, also follow its
