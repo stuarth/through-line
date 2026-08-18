@@ -35,6 +35,7 @@ class Ticket:
     affected_dependents: int
     dependent_dispositions: int
     deferred_reviews: tuple[str, ...]
+    repository: str | None
     candidate_commit: str | None
     integrated_commit: str | None
 
@@ -164,12 +165,29 @@ def git_common_dir(repo: Path) -> Path | None:
     return common_dir.resolve()
 
 
+def recorded_repository(map_path: Path, value: str | None) -> Path | None:
+    if value is None:
+        return None
+    supplied = Path(value).expanduser()
+    if not supplied.is_absolute():
+        supplied = map_path.parent / supplied
+    return git_root(supplied) if supplied.is_dir() else None
+
+
 def full_commit(repo: Path, value: str) -> bool:
     object_format = git(repo, "rev-parse", "--show-object-format")
     expected_length = 64 if object_format.stdout.strip() == "sha256" else 40
     return (
         bool(re.fullmatch(rf"[0-9a-fA-F]{{{expected_length}}}", value))
         and not git(repo, "cat-file", "-e", f"{value}^{{commit}}").returncode
+    )
+
+
+def commit_is_ancestor(repo: Path, earlier: str, later: str) -> bool:
+    return (
+        full_commit(repo, earlier)
+        and full_commit(repo, later)
+        and not git(repo, "merge-base", "--is-ancestor", earlier, later).returncode
     )
 
 
@@ -193,7 +211,7 @@ def validate_execution_heads(
     map_status: str | None,
     errors: list[str],
     warnings: list[str],
-    pending_deferred_review: bool,
+    pending_deferred_reviews: tuple[tuple[Path | None, str | None], ...],
 ) -> list[tuple[Path, str]]:
     matches = list(re.finditer(r"(?m)^## Execution heads\s*$", map_text))
     if len(matches) != 1:
@@ -311,6 +329,14 @@ def validate_execution_heads(
                 f"map: Code base {base} is not an ancestor of integration head "
                 f"{integration}"
             )
+        pending_seam_reaches_head = any(
+            (
+                deferred_repository is None
+                or git_common_dir(deferred_repository) == repository_identity
+            )
+            and (commit is None or commit_is_ancestor(repo, commit, integration))
+            for deferred_repository, commit in pending_deferred_reviews
+        )
 
         head_is_exact = False
         if head == "pending":
@@ -406,23 +432,28 @@ def validate_execution_heads(
                 )
 
         pr = values["pr"]
+        pr_is_url = bool(re.match(r"^https?://", pr))
         if pr == "pending" and map_status == "resolved":
             errors.append("map: resolved execution PR is still pending")
-        elif pr not in {"none", "pending"} and not re.match(r"^https?://", pr):
+        elif pr not in {"none", "pending"} and not pr_is_url:
             errors.append(f"map: PR must be a URL, `none`, or `pending`: {pr}")
-        elif re.match(r"^https?://", pr):
+        elif pr_is_url:
             if not head_is_exact or not integration_is_exact or head != integration:
                 errors.append(
                     "map: PR exposure requires Integration head to equal Reviewed "
                     f"code head in {repo}"
                 )
-            if pending_deferred_review:
+            if pending_seam_reaches_head:
                 errors.append("map: PR exposure has a pending seam review")
 
         receipt = values["receipt"]
         if receipt == "pending":
             if map_status == "resolved":
                 errors.append("map: resolved execution review receipt is still pending")
+            if pr_is_url:
+                errors.append(
+                    "map: PR exposure requires an approved review receipt"
+                )
         elif re.match(r"^https?://", receipt):
             errors.append("map: local Markdown requires a local review receipt")
         else:
@@ -466,7 +497,11 @@ def validate_execution_heads(
                 if not field(receipt_text, "Claim"):
                     errors.append(f"map: review receipt lacks Claim: {receipt_path}")
                 decision = field(receipt_text, "Decision")
-                if map_status == "resolved" and decision != "approved":
+                if pr_is_url and decision != "approved":
+                    errors.append(
+                        "map: PR exposure requires an approved review receipt"
+                    )
+                elif map_status == "resolved" and decision != "approved":
                     errors.append(
                         f"map: review receipt Decision must be `approved`: "
                         f"{receipt_path}"
@@ -561,6 +596,7 @@ def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
                     re.findall(r"(?m)^## Dependent disposition\s*$", text)
                 ),
                 deferred_reviews=fields(resolution_text, "Deferred review"),
+                repository=field(text, "Repository"),
                 candidate_commit=field(resolution_text, "Candidate commit"),
                 integrated_commit=field(resolution_text, "Integrated commit"),
             )
@@ -615,6 +651,16 @@ def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
                 r"(?:seam pending|discharged) — .+", deferred_review
             ):
                 errors.append(f"{ticket.path}: malformed Deferred review state")
+        if (
+            any(
+                review.startswith("seam pending — ")
+                for review in ticket.deferred_reviews
+            )
+            and not ticket.integrated_commit
+        ):
+            errors.append(
+                f"{ticket.path}: pending seam review requires Integrated commit"
+            )
         if ticket.status == "resolved":
             if ticket.resolutions != 1:
                 errors.append(
@@ -716,10 +762,21 @@ def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
 
     repository_execution = field(map_text, "Repository execution")
     integration_heads: list[tuple[Path, str]] = []
-    pending_deferred_review = any(
-        deferred_review.startswith("seam pending — ")
+    ticket_repositories: dict[Path, Path] = {}
+    for ticket in tickets:
+        repository = recorded_repository(map_path, ticket.repository)
+        if ticket.repository and repository is None:
+            errors.append(
+                f"{ticket.path}: Repository is not a Git repository: "
+                f"{ticket.repository}"
+            )
+        elif repository is not None:
+            ticket_repositories[ticket.path] = repository
+    pending_deferred_reviews = tuple(
+        (ticket_repositories.get(ticket.path), ticket.integrated_commit)
         for ticket in tickets
         for deferred_review in ticket.deferred_reviews
+        if deferred_review.startswith("seam pending — ")
     )
     if repository_execution not in {"in-scope", "out-of-scope"}:
         errors.append("map: Repository execution must be `in-scope` or `out-of-scope`")
@@ -730,28 +787,42 @@ def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
             map_status,
             errors,
             warnings,
-            pending_deferred_review,
+            pending_deferred_reviews,
         )
 
     for ticket in tickets:
-        commit = ticket.integrated_commit
-        if not commit:
+        candidate = ticket.candidate_commit
+        integrated = ticket.integrated_commit
+        if not integrated:
             continue
-        if not any(
-            full_commit(repository, commit)
-            and full_commit(repository, integration)
-            and not git(
-                repository,
-                "merge-base",
-                "--is-ancestor",
-                commit,
-                integration,
-            ).returncode
+        ticket_repository = ticket_repositories.get(ticket.path)
+        if len(integration_heads) > 1 and ticket_repository is None:
+            errors.append(
+                f"{ticket.path}: repository task requires Repository when the map "
+                "spans multiple execution repositories"
+            )
+        repositories = [
+            repository
             for repository, integration in integration_heads
-        ):
+            if (
+                ticket_repository is None
+                or git_common_dir(repository) == git_common_dir(ticket_repository)
+            )
+            and commit_is_ancestor(repository, integrated, integration)
+        ]
+        if not repositories:
             errors.append(
                 f"{ticket.path}: Integrated commit is not contained in an "
-                f"Integration head: {commit}"
+                f"Integration head: {integrated}"
+            )
+        elif candidate and not any(
+            commit_is_ancestor(repository, candidate, integrated)
+            for repository in repositories
+        ):
+            errors.append(
+                f"{ticket.path}: Candidate commit is not an ancestor of "
+                f"Integrated commit in its execution repository: "
+                f"{candidate} -> {integrated}"
             )
 
     if map_status == "resolved":
@@ -762,7 +833,7 @@ def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
             errors.append(
                 f"map: resolved with unresolved tickets: {', '.join(unresolved)}"
             )
-        if pending_deferred_review:
+        if pending_deferred_reviews:
             errors.append("map: resolved with a pending seam review")
 
     if map_status == "resolved" and repository_execution == "in-scope":

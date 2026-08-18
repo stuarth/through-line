@@ -23,11 +23,8 @@ Keep an uncommitted worktree claimed; never expose it as resumable frontier work
 
 ## Plan
 
-Keep the task atomic per [Map and tickets](./SKILL.md#map-and-tickets). Planning is
-where size becomes measurable: a plan that reveals a separate human verdict,
-independently releasable outcome, or authority boundary returns to the tracker as a
-split before implementation. Keep separately implementable steps that compose into
-one outcome as packets in this ticket's plan.
+Apply the [Map and tickets](./SKILL.md#map-and-tickets) split rule before
+implementation, returning a newly exposed split to the tracker.
 
 Before editing, record a compact plan on the ticket — only what the ticket does not
 already settle: exact entry points and constraints, route choices the implementation

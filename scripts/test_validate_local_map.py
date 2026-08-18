@@ -118,6 +118,19 @@ class ValidatorTest(unittest.TestCase):
             self.run_git(self.root, "commit", "-am", "attest tracker state")
         return map_path
 
+    def validate_open_execution(
+        self, execution_heads: str, *, findings: str = "None."
+    ) -> list[str]:
+        return validate(
+            self.write_map(
+                status="open",
+                decisions="None.",
+                findings=findings,
+                execution_heads=execution_heads,
+                repository_execution="in-scope",
+            )
+        )
+
     def test_valid_map(self) -> None:
         (self.root / "issues/01-ticket.md").write_text(ticket())
         self.assertEqual(validate(self.write_map()), [])
@@ -243,22 +256,37 @@ class ValidatorTest(unittest.TestCase):
         integration = self.run_git(repo, "rev-parse", "HEAD").stdout.strip()
         (self.root / "issues/01-ticket.md").write_text(ticket(status="open"))
 
-        errors = validate(
-            self.write_map(
-                status="open",
-                decisions="None.",
-                execution_heads=(
-                    "## Execution heads\n\n"
-                    f"- Repository: {repo}; Code base: {base}; "
-                    f"Integration head: {integration}; "
-                    f"Reviewed code head: {reviewed}; Closure state: pending; "
-                    "PR: https://example.com/pr/1; Review receipt: review.md"
-                ),
-                repository_execution="in-scope",
-            )
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {integration}; Reviewed code head: {reviewed}; "
+            "Closure state: pending; PR: https://example.com/pr/1; "
+            "Review receipt: review.md"
         )
 
         self.assertTrue(any("PR exposure requires" in error for error in errors))
+
+    def test_pr_exposure_requires_an_approved_review(self) -> None:
+        repo, base, head = self.make_repo()
+        (self.root / "issues/01-ticket.md").write_text(ticket(status="open"))
+
+        for receipt, decision in (("pending", None), ("review.md", "rejected")):
+            with self.subTest(receipt=receipt):
+                if decision:
+                    self.write_review(base, head, decision=decision)
+                errors = self.validate_open_execution(
+                    "## Execution heads\n\n"
+                    f"- Repository: {repo}; Code base: {base}; "
+                    f"Integration head: {head}; Reviewed code head: {head}; "
+                    "Closure state: pending; PR: https://example.com/pr/1; "
+                    f"Review receipt: {receipt}"
+                )
+                self.assertTrue(
+                    any(
+                        "PR exposure requires an approved review receipt" in error
+                        for error in errors
+                    )
+                )
 
     def test_pending_seam_review_blocks_exposure(self) -> None:
         repo, base, head = self.make_repo()
@@ -273,20 +301,13 @@ class ValidatorTest(unittest.TestCase):
             )
         )
 
-        errors = validate(
-            self.write_map(
-                status="open",
-                decisions="None.",
-                findings="- [Ticket](issues/01-ticket.md) — done.",
-                execution_heads=(
-                    "## Execution heads\n\n"
-                    f"- Repository: {repo}; Code base: {base}; "
-                    f"Integration head: {head}; Reviewed code head: {head}; "
-                    "Closure state: pending; PR: https://example.com/pr/1; "
-                    "Review receipt: review.md"
-                ),
-                repository_execution="in-scope",
-            )
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {head}; Reviewed code head: {head}; "
+            "Closure state: pending; PR: https://example.com/pr/1; "
+            "Review receipt: review.md",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
         )
 
         self.assertTrue(any("pending seam review" in error for error in errors))
@@ -303,23 +324,76 @@ class ValidatorTest(unittest.TestCase):
             )
         )
 
-        errors = validate(
-            self.write_map(
-                status="open",
-                decisions="None.",
-                findings="- [Ticket](issues/01-ticket.md) — done.",
-                execution_heads=(
-                    "## Execution heads\n\n"
-                    f"- Repository: {repo}; Code base: {base}; "
-                    f"Integration head: {head}; Reviewed code head: {head}; "
-                    "Closure state: pending; PR: https://example.com/pr/1; "
-                    "Review receipt: review.md"
-                ),
-                repository_execution="in-scope",
-            )
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {head}; Reviewed code head: {head}; "
+            "Closure state: pending; PR: https://example.com/pr/1; "
+            "Review receipt: review.md",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
         )
 
         self.assertEqual(errors, [])
+
+    def test_pending_seam_review_blocks_only_the_head_it_reaches(self) -> None:
+        chili, chili_base, chili_head = self.make_repo(name="chili")
+        croft, croft_base, croft_head = self.make_repo(name="croft")
+        (self.root / "croft-review.md").write_text(
+            self.review(croft_base, croft_head)
+        )
+        (self.root / "issues/01-ticket.md").write_text(
+            ticket(
+                kind="task",
+                extra=f"\nRepository: {chili}\n",
+                resolution_extra=(
+                    f"\nCandidate commit: {chili_base}\n"
+                    f"Integrated commit: {chili_head}\n"
+                    "Deferred review: seam pending — Chili import contract\n"
+                ),
+            )
+        )
+
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {chili}; Code base: {chili_base}; "
+            f"Integration head: {chili_head}; Reviewed code head: pending; "
+            "Closure state: pending; PR: pending; Review receipt: pending\n"
+            f"- Repository: {croft}; Code base: {croft_base}; "
+            f"Integration head: {croft_head}; Reviewed code head: {croft_head}; "
+            "Closure state: pending; PR: https://example.com/pr/2; "
+            "Review receipt: croft-review.md",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
+        )
+
+        self.assertEqual(errors, [])
+
+    def test_pending_seam_review_requires_an_integrated_commit(self) -> None:
+        repo, base, head = self.make_repo()
+        self.write_review(base, head)
+        (self.root / "issues/01-ticket.md").write_text(
+            ticket(
+                kind="task",
+                resolution_extra=(
+                    "\nDeferred review: seam pending — persisted wage contract\n"
+                ),
+            )
+        )
+
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {head}; Reviewed code head: {head}; "
+            "Closure state: pending; PR: https://example.com/pr/1; "
+            "Review receipt: review.md",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
+        )
+
+        self.assertTrue(
+            any(
+                "pending seam review requires Integrated commit" in error
+                for error in errors
+            )
+        )
 
     def test_integrated_commit_must_reach_integration_head(self) -> None:
         repo, base, head = self.make_repo()
@@ -333,19 +407,12 @@ class ValidatorTest(unittest.TestCase):
             )
         )
 
-        errors = validate(
-            self.write_map(
-                status="open",
-                decisions="None.",
-                findings="- [Ticket](issues/01-ticket.md) — done.",
-                execution_heads=(
-                    "## Execution heads\n\n"
-                    f"- Repository: {repo}; Code base: {base}; "
-                    f"Integration head: {head}; Reviewed code head: pending; "
-                    "Closure state: pending; PR: pending; Review receipt: pending"
-                ),
-                repository_execution="in-scope",
-            )
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {head}; Reviewed code head: pending; "
+            "Closure state: pending; PR: pending; Review receipt: pending",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
         )
 
         self.assertTrue(any("not contained" in error for error in errors))
@@ -377,22 +444,45 @@ class ValidatorTest(unittest.TestCase):
             )
         )
 
-        errors = validate(
-            self.write_map(
-                status="open",
-                decisions="None.",
-                findings="- [Ticket](issues/01-ticket.md) — done.",
-                execution_heads=(
-                    "## Execution heads\n\n"
-                    f"- Repository: {repo}; Code base: {base}; "
-                    f"Integration head: {head}; Reviewed code head: pending; "
-                    "Closure state: pending; PR: pending; Review receipt: pending"
-                ),
-                repository_execution="in-scope",
-            )
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {head}; Reviewed code head: pending; "
+            "Closure state: pending; PR: pending; Review receipt: pending",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
         )
 
         self.assertEqual(errors, [])
+
+    def test_candidate_commit_must_reach_integrated_commit(self) -> None:
+        repo, base, integrated = self.make_repo()
+        self.run_git(repo, "checkout", "--detach", base)
+        (repo / "candidate.txt").write_text("candidate\n")
+        self.run_git(repo, "add", "candidate.txt")
+        self.run_git(repo, "commit", "-m", "candidate")
+        candidate = self.run_git(repo, "rev-parse", "HEAD").stdout.strip()
+        self.run_git(repo, "checkout", "--detach", integrated)
+        (self.root / "issues/01-ticket.md").write_text(
+            ticket(
+                kind="task",
+                resolution_extra=(
+                    f"\nCandidate commit: {candidate}\n"
+                    f"Integrated commit: {integrated}\n"
+                ),
+            )
+        )
+
+        errors = self.validate_open_execution(
+            "## Execution heads\n\n"
+            f"- Repository: {repo}; Code base: {base}; "
+            f"Integration head: {integrated}; Reviewed code head: pending; "
+            "Closure state: pending; PR: pending; Review receipt: pending",
+            findings="- [Ticket](issues/01-ticket.md) — done.",
+        )
+
+        self.assertTrue(
+            any("Candidate commit is not an ancestor" in error for error in errors)
+        )
 
     def test_reopening_requires_one_convergence_verdict(self) -> None:
         (self.root / "issues/01-ticket.md").write_text(
@@ -982,8 +1072,10 @@ class ValidatorTest(unittest.TestCase):
             check=True,
         )
 
-    def make_repo(self, object_format: str = "sha1") -> tuple[Path, str, str]:
-        repo = self.exec_root / "repo"
+    def make_repo(
+        self, object_format: str = "sha1", name: str = "repo"
+    ) -> tuple[Path, str, str]:
+        repo = self.exec_root / name
         repo.mkdir()
         self.run_git(repo, "init", f"--object-format={object_format}")
         self.run_git(repo, "config", "user.email", "test@example.com")
