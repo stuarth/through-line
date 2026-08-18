@@ -13,16 +13,18 @@ not complete supervision.
    step 5; do not dispatch another worker.
 2. When the map is open and no unresolved destination ticket remains, ensure one
    unresolved **Final map closure** task exists and select it. It uses ordinary claim,
-   blocker, and checkpoint mechanics; review findings block it on correction tickets.
+   blocker, and checkpoint mechanics; review findings reopen affected roots or create
+   one integrated outcome ticket when no root owns them.
    Otherwise stop when the map is resolved or progress needs human judgment, a
    doctrine or scope change, an external unblock, or ownership resolution. Report
    that frontier.
 3. Otherwise dispatch a `/research` subagent for each open, unclaimed research
    ticket through [receipt-only coordination](./SKILL.md#coordination) — research
    does not consume a session's unit — and choose one non-human unit: a builder-owned
-   round or decision, a prototype ticket, or an in-scope task. Select a correction
-   ahead of an independent non-correction frontier only when the current
-   [Convergence verdict](./WORK.md#falsify) for its root ranks it ahead.
+   round or decision, a prototype ticket, or an in-scope task. Select a reopened root
+   next when its current [Convergence verdict](./WORK.md#falsify) is **continue**,
+   **re-slice**, or **redesign**. A **defer** verdict yields to the independent
+   frontier; if none remains, stop at that verdict.
 4. Start a fresh Work session with [WORK.md](./WORK.md) from an explicit packet: map
    reference, exact selection, reaching premises, useful references, checks, and
    execution receipts. Use the host's no-history option (`fork_turns: none` in

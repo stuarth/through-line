@@ -5,12 +5,12 @@ bottleneck isn't code generation, it's **decisions**: the agent re-asks
 questions you already answered, forgets verdicts after compaction, or quietly
 decides things that were yours to decide.
 
-`through-line` makes decisions the unit of work. A huge effort hides recurring
-commitments beneath its many choices; the skill distills those into standing
-principles you adopt, then propagates every verdict through a map of atomic
-decision tickets, so each answer resolves or narrows as many later questions as
-it can. You only ever see the residual judgment your previous answers couldn't
-settle.
+`through-line` makes decisions and integrated outcomes the units of work. A huge
+effort hides recurring commitments beneath its many choices; the skill distills those
+into standing principles you adopt, then propagates every verdict through a map of
+outcome tickets. Implementation packets and corrections stay inside those outcomes
+unless they cross a decision, authority, or release boundary. You only ever see the
+residual judgment your previous answers couldn't settle.
 
 ## Install
 
@@ -49,8 +49,13 @@ confirm.
 
 **Every verdict propagates.** After each answer, the agent sweeps the remaining
 map: decisions the answer determines resolve, constrained questions shrink to
-their residual judgment, moot ones close. Replacing an earlier premise reopens
-and rechecks its dependents before the replacement propagates.
+their residual judgment, moot ones close. Replacing an earlier premise reopens its
+root, accounts for each resolved dependent, and rechecks what no longer stands.
+
+**Accepted work stays composed.** Each execution repository has one local integration
+head. A task resolves only after its candidate composes there and the checks
+invalidated by composition pass. Reviews run before dangerous exposure or at the
+first complete producer-consumer or concurrency seam.
 
 **Decision rights are explicit.** Once per effort you agree on what the builder
 may decide (cheaply reversible route choices, within a stated reversal budget)

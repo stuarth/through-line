@@ -1,13 +1,36 @@
 # Review
 
-Review one fixed candidate as a read-only leaf. A fresh reviewer receives only the
-review packet, never the implementer's or supervisor's conversation. Do not
+Review one immutable **object** against one explicit **claim** as a read-only leaf.
+Its receipt stands until the object or claim changes. A fresh reviewer receives only
+the review packet, never the implementer's or supervisor's conversation. Do not
 coordinate or implement.
 
-For an initial review, use the ticket, premises, candidate receipt, and fixed range.
-For a correction, use the prior review receipt and correction range: confirm the
-prior findings are resolved and judge the files the correction touches. Coverage of
-everything untouched stands on the prior receipt.
+The claim is the assertion the caller will rely on. It must cover the applicable
+acceptance criteria, not a proxy such as `checks passed` or `artifacts exist`.
+Approval alone authorizes nothing: a gate passes only when both the receipt's object
+and claim match the object and claim that gate requires.
+
+Load the map's orientation digest only when the review spans tickets or repositories;
+otherwise load only references that reach the object.
+
+For an initial review, use the ticket, premises, object, and claim. For a correction
+under the same claim, use the prior receipt and changed object range: confirm the
+prior findings are resolved and judge what changed. Coverage of everything untouched
+stands on the prior receipt. A changed or distinct downstream claim requires a fresh
+review of the whole object; it may cite the earlier receipt.
+
+For a seam review, the object is the composed range holding both sides and the claim
+is the named invariant across them. Trace that complete path instead of treating
+either candidate in isolation. Include the deferred-review receipts the seam reaches.
+
+When the claim authorizes a paid or externally consequential effect, the object is
+the exact state that will execute. Review its head and configuration, budgets and
+stop conditions, recovery behavior, and executable launch-time preconditions for
+time-sensitive facts.
+
+When the object is run evidence, review its claim against the ticket's acceptance
+criteria and the receipt that authorized execution. Verify provenance, terminal
+accounting, safety claims, and an independently checkable basis for the result.
 
 For map closure, review the whole effort from its recorded base through the proposed
 closure head. Prior ticket reviews are context, not inherited proof. Compare every
@@ -32,8 +55,20 @@ instead of delegating the review.
 Use receipt-only coordination: send one terminal receipt; communicate earlier only
 for a blocker or durable checkpoint that needs coordination.
 
-Return a compact receipt with the reviewed ranges, decision, material findings and
-evidence, resolved prior findings, risks covered, checks run, and direct testing gaps.
-For local-Markdown closure, write a dedicated receipt with the machine-readable
-fields `Review range: <base>..<head>`, `Decision: <approved or rejected>`, `Checks`,
-and `Findings and gaps`; the latter two may link to detail but must not be empty.
+Return a compact receipt with:
+
+- `Object`: an identity that fixes the reviewed bytes and execution configuration,
+  such as full commit hashes, an immutable version, or content digests;
+- `Claim`: the exact assertion reviewed;
+- `Decision`: `approved` or `rejected`;
+- `Checks`;
+- `Findings and gaps`, with each finding's open or resolved state and resolution
+  evidence; and
+- `Prior receipt` when correcting an earlier review. Cite other receipts in `Checks`.
+
+A seam receipt also names every deferral it discharges.
+
+`Decision` judges whether the object supports the claim, so valid evidence that a
+candidate failed may be approved. For local-Markdown closure, also follow its
+[closure review receipt
+format](./trackers/local-markdown.md#local-markdown-wayfinding-operations).

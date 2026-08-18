@@ -109,8 +109,9 @@ asking the human another question.
    close moot or out-of-scope work, and audit contradicted principles.
 4. Respect active claims. Coordinate instead of rewriting work owned by another
    session.
-5. Reconcile the tracker and report what reopened, resolved, narrowed, and still
-   needs human judgment.
+5. Reconcile the tracker immediately at claim, human verdict, checkpoint, resolution,
+   and map closure; batch writes between those points. Report what reopened,
+   resolved, narrowed, and still needs human judgment.
 
 Propagation is complete when the tracker reflects the new premise and the next human
 question, if any, contains only residual judgment.
@@ -136,32 +137,21 @@ Principles are strong priors, not laws. When code, decisions, or new evidence
 contradicts one—or recurring exceptions show it has stopped predicting useful
 answers—pause derivation and audit it.
 
-Each correction ticket records `Correction of: <root ticket>; Concern: <stable
-invariant>`; later corrections for that invariant keep the same root and concern.
-Before charting its third material correction, pause execution and audit the chain as
-one builder-owned architecture or principle-candidate ticket: test whether the rule,
-representation, authority boundary, or review frame is wrong. Resume only after the
-audit propagates. Any doctrine change still requires human Admission.
+Each reopening increments the root ticket's `Reopened` count and updates its
+**Convergence verdict**: **continue**, **re-slice**, **redesign**, or **defer**. Judge
+the root from its failure inventory, acceptance target, audit findings, and the value
+of the competing frontier. **Continue**, **re-slice**, and **redesign** make that root
+the next unit; **defer** yields to the independent frontier and stops when none
+remains. A redesign names the smallest credible alternative.
 
-Different Concern names can still hide one non-converging root. Create or update one
-standing **Convergence verdict** decision for a correction root when:
-
-- the root is about to receive its third material correction, regardless of Concern
-  name;
-- a correction changes the evaluator, oracle, acceptance target, or prompt policy
-  instead of only repairing implementation;
-- a new Concern appears after a root-level architecture or Falsify audit; or
-- a correction would take priority over an open, independent non-correction
-  frontier without a current verdict that ranks it higher.
-
-Keep all later premise changes in that same decision. Judge the root from its current
-failure-class inventory, acceptance target, audit findings, and the value of the
-competing frontier. Record one current verdict: **continue**, **re-slice**,
-**redesign**, or **defer**. A continue verdict remains current only while those
-premises remain unchanged. Once the decision exists, cite or update its current
-verdict before dispatching another correction for that root. Apply normal decision
-rights: changes to protected meaning, the acceptance bar, doctrine, scope, or
-reversal budget return to the human.
+Before a second reopening of one root, or any reopening that changes the evaluator,
+oracle, acceptance target, or prompt policy, record a **Falsify audit** on that root:
+test whether its rule, representation, authority boundary, or review frame is wrong.
+Keep one current audit on the ticket and move superseded audits to its history.
+Resume only after the audit propagates. A continue verdict remains current only
+while its premises stand. Changes to protected meaning, the acceptance bar,
+doctrine, scope, or reversal budget return to the human; any doctrine change still
+requires human Admission.
 
 Take a real counterexample through [Admission](./ADMISSION.md) as a proposed boundary,
 split, priority, or refutation. The human decides the doctrine change; then propagate
@@ -183,5 +173,5 @@ that deserve admission as standing principles; leave the rest with the closed ma
 For repository execution, the claimable **Final map closure** task completes
 [Review](./REVIEW.md), verifies every recorded execution repository is still at its
 reviewed clean head, then follows [Record](./SKILL.md#record)'s closure gate. A
-rejected review blocks that task on its correction tickets instead of closing the
-map.
+rejected review reopens the affected roots, or creates one outcome ticket when no
+single root owns the integrated defect, instead of closing the map.

@@ -29,6 +29,15 @@ class Ticket:
     checkpoints: int
     provisionals: int
     legacy_actives: int
+    reopened: int
+    convergence_verdicts: int
+    falsify_audits: int
+    affected_dependents: int
+    dependent_dispositions: int
+    deferred_reviews: tuple[str, ...]
+    repository: str | None
+    candidate_commit: str | None
+    integrated_commit: str | None
 
 
 FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
@@ -75,9 +84,18 @@ def section_bodies(text: str, name: str) -> str:
     return "\n".join(bodies)
 
 
+def fields(text: str, name: str) -> tuple[str, ...]:
+    return tuple(
+        match.group(1).strip()
+        for match in re.finditer(
+            rf"(?m)^{re.escape(name)}:[ \t]*(.+?)[ \t]*$", text
+        )
+    )
+
+
 def field(text: str, name: str) -> str | None:
-    match = re.search(rf"(?m)^{re.escape(name)}:[ \t]*(.+?)[ \t]*$", text)
-    return match.group(1).strip() if match else None
+    values = fields(text, name)
+    return values[0] if values else None
 
 
 def ticket_number(path: Path) -> str | None:
@@ -98,6 +116,16 @@ def blockers(text: str, path: Path, errors: list[str]) -> tuple[str, ...]:
         else:
             errors.append(f"{path}: cannot resolve blocker {token.strip()!r}")
     return tuple(numbers)
+
+
+def count_field(text: str, name: str, path: Path, errors: list[str]) -> int:
+    value = field(text, name)
+    if value is None:
+        return 0
+    if re.fullmatch(r"[1-9]\d*", value):
+        return int(value)
+    errors.append(f"{path}: {name} must be a positive integer")
+    return 0
 
 
 def section(text: str, name: str, errors: list[str]) -> str:
@@ -137,12 +165,29 @@ def git_common_dir(repo: Path) -> Path | None:
     return common_dir.resolve()
 
 
+def recorded_repository(map_path: Path, value: str | None) -> Path | None:
+    if value is None:
+        return None
+    supplied = Path(value).expanduser()
+    if not supplied.is_absolute():
+        supplied = map_path.parent / supplied
+    return git_root(supplied) if supplied.is_dir() else None
+
+
 def full_commit(repo: Path, value: str) -> bool:
     object_format = git(repo, "rev-parse", "--show-object-format")
     expected_length = 64 if object_format.stdout.strip() == "sha256" else 40
     return (
         bool(re.fullmatch(rf"[0-9a-fA-F]{{{expected_length}}}", value))
         and not git(repo, "cat-file", "-e", f"{value}^{{commit}}").returncode
+    )
+
+
+def commit_is_ancestor(repo: Path, earlier: str, later: str) -> bool:
+    return (
+        full_commit(repo, earlier)
+        and full_commit(repo, later)
+        and not git(repo, "merge-base", "--is-ancestor", earlier, later).returncode
     )
 
 
@@ -165,13 +210,15 @@ def validate_execution_heads(
     map_text: str,
     map_status: str | None,
     errors: list[str],
-) -> None:
+    warnings: list[str],
+    pending_deferred_reviews: tuple[tuple[Path | None, str | None], ...],
+) -> list[tuple[Path, str]]:
     matches = list(re.finditer(r"(?m)^## Execution heads\s*$", map_text))
     if len(matches) != 1:
         errors.append(
             "map: in-scope repository execution requires exactly one ## Execution heads"
         )
-        return
+        return []
 
     start = matches[0].end()
     next_heading = re.search(r"(?m)^## ", map_text[start:])
@@ -183,11 +230,12 @@ def validate_execution_heads(
     ]
     if not head_lines:
         errors.append("map: in-scope repository execution has no execution head")
-        return
+        return []
 
     pattern = re.compile(
         r"^\s*-\s+Repository:\s*(?P<repo>.+?);\s*"
         r"Code base:\s*(?P<base>[^;]+);\s*"
+        r"(?:Integration head:\s*(?P<integration>[^;]+);\s*)?"
         r"Reviewed code head:\s*(?P<head>[^;]+);\s*"
         r"Closure state:\s*(?P<closure>[^;]+);\s*"
         r"PR:\s*(?P<pr>[^;]+);\s*"
@@ -214,13 +262,23 @@ def validate_execution_heads(
         ]
 
     seen_repositories: set[Path] = set()
+    integration_heads: list[tuple[Path, str]] = []
     for line in head_lines:
         match = pattern.match(line)
         if not match:
             errors.append(f"map: malformed execution head: {line.strip()}")
             continue
 
-        values = {name: value.strip() for name, value in match.groupdict().items()}
+        values = {
+            name: value.strip() if value is not None else None
+            for name, value in match.groupdict().items()
+        }
+        assert values["repo"] is not None
+        assert values["base"] is not None
+        assert values["head"] is not None
+        assert values["closure"] is not None
+        assert values["pr"] is not None
+        assert values["receipt"] is not None
         repo = Path(values["repo"]).expanduser()
         if not repo.is_absolute():
             repo = map_path.parent / repo
@@ -246,6 +304,40 @@ def validate_execution_heads(
             )
 
         head = values["head"]
+        integration_value = values["integration"]
+        if integration_value is None:
+            integration = head if head != "pending" else base
+            warnings.append(
+                f"map: execution head for {repo} uses legacy format without "
+                "Integration head"
+            )
+        else:
+            integration = integration_value
+
+        integration_is_exact = full_commit(repo, integration)
+        if not integration_is_exact:
+            errors.append(
+                "map: Integration head is not a commit named by its full hash "
+                f"in {repo}: {integration}"
+            )
+        if (
+            base_is_exact
+            and integration_is_exact
+            and git(repo, "merge-base", "--is-ancestor", base, integration).returncode
+        ):
+            errors.append(
+                f"map: Code base {base} is not an ancestor of integration head "
+                f"{integration}"
+            )
+        pending_seam_reaches_head = any(
+            (
+                deferred_repository is None
+                or git_common_dir(deferred_repository) == repository_identity
+            )
+            and (commit is None or commit_is_ancestor(repo, commit, integration))
+            for deferred_repository, commit in pending_deferred_reviews
+        )
+
         head_is_exact = False
         if head == "pending":
             if map_status == "resolved":
@@ -265,6 +357,21 @@ def validate_execution_heads(
             errors.append(
                 f"map: Code base {base} is not an ancestor of reviewed head {head}"
             )
+        if (
+            head_is_exact
+            and integration_is_exact
+            and git(repo, "merge-base", "--is-ancestor", head, integration).returncode
+        ):
+            errors.append(
+                f"map: reviewed head {head} is not an ancestor of integration head "
+                f"{integration}"
+            )
+        if map_status == "resolved" and head_is_exact and integration_is_exact:
+            if head != integration:
+                errors.append(
+                    "map: resolved Integration head must equal Reviewed code head: "
+                    f"{integration} != {head}"
+                )
 
         closure = values["closure"]
         closure_is_exact = False
@@ -278,13 +385,15 @@ def validate_execution_heads(
                     "map: Closure state is not a commit named by its full hash "
                     f"in {repo}: {closure}"
                 )
-        if head_is_exact and closure_is_exact:
-            if git(repo, "merge-base", "--is-ancestor", head, closure).returncode:
+        if integration_is_exact and closure_is_exact:
+            if git(
+                repo, "merge-base", "--is-ancestor", integration, closure
+            ).returncode:
                 errors.append(
-                    f"map: reviewed head {head} is not an ancestor of closure state "
-                    f"{closure}"
+                    f"map: integration head {integration} is not an ancestor of "
+                    f"closure state {closure}"
                 )
-            else:
+            elif head_is_exact:
                 touched = git(
                     repo,
                     "log",
@@ -323,15 +432,28 @@ def validate_execution_heads(
                 )
 
         pr = values["pr"]
+        pr_is_url = bool(re.match(r"^https?://", pr))
         if pr == "pending" and map_status == "resolved":
             errors.append("map: resolved execution PR is still pending")
-        elif pr not in {"none", "pending"} and not re.match(r"^https?://", pr):
+        elif pr not in {"none", "pending"} and not pr_is_url:
             errors.append(f"map: PR must be a URL, `none`, or `pending`: {pr}")
+        elif pr_is_url:
+            if not head_is_exact or not integration_is_exact or head != integration:
+                errors.append(
+                    "map: PR exposure requires Integration head to equal Reviewed "
+                    f"code head in {repo}"
+                )
+            if pending_seam_reaches_head:
+                errors.append("map: PR exposure has a pending seam review")
 
         receipt = values["receipt"]
         if receipt == "pending":
             if map_status == "resolved":
                 errors.append("map: resolved execution review receipt is still pending")
+            if pr_is_url:
+                errors.append(
+                    "map: PR exposure requires an approved review receipt"
+                )
         elif re.match(r"^https?://", receipt):
             errors.append("map: local Markdown requires a local review receipt")
         else:
@@ -372,8 +494,14 @@ def validate_execution_heads(
                         f"map: review receipt range must be {expected_range}: "
                         f"{receipt_path}"
                     )
+                if not field(receipt_text, "Claim"):
+                    errors.append(f"map: review receipt lacks Claim: {receipt_path}")
                 decision = field(receipt_text, "Decision")
-                if map_status == "resolved" and decision != "approved":
+                if pr_is_url and decision != "approved":
+                    errors.append(
+                        "map: PR exposure requires an approved review receipt"
+                    )
+                elif map_status == "resolved" and decision != "approved":
                     errors.append(
                         f"map: review receipt Decision must be `approved`: "
                         f"{receipt_path}"
@@ -392,6 +520,10 @@ def validate_execution_heads(
                     errors.append(
                         f"map: review receipt lacks Findings and gaps: {receipt_path}"
                     )
+
+        integration_heads.append((repo, integration))
+
+    return integration_heads
 
 
 def index_paths(
@@ -416,8 +548,9 @@ def index_paths(
     return paths
 
 
-def validate(map_path: Path) -> list[str]:
+def validate(map_path: Path, warnings: list[str] | None = None) -> list[str]:
     errors: list[str] = []
+    warnings = warnings if warnings is not None else []
     map_path = map_path.resolve()
     if not map_path.is_file():
         return [f"{map_path}: map file does not exist"]
@@ -429,6 +562,7 @@ def validate(map_path: Path) -> list[str]:
     tickets: list[Ticket] = []
     for path in sorted(issues_dir.glob("*.md")):
         text = scannable_text(path.read_text())
+        resolution_text = section_bodies(text, "Resolution")
         tickets.append(
             Ticket(
                 path=path.resolve(),
@@ -448,6 +582,23 @@ def validate(map_path: Path) -> list[str]:
                         section_bodies(text, "Verdict history"),
                     )
                 ),
+                reopened=count_field(text, "Reopened", path, errors),
+                convergence_verdicts=len(
+                    re.findall(r"(?m)^## Convergence verdict\s*$", text)
+                ),
+                falsify_audits=len(
+                    re.findall(r"(?m)^## Falsify audit\s*$", text)
+                ),
+                affected_dependents=len(
+                    re.findall(r"(?m)^## Affected resolved dependents\s*$", text)
+                ),
+                dependent_dispositions=len(
+                    re.findall(r"(?m)^## Dependent disposition\s*$", text)
+                ),
+                deferred_reviews=fields(resolution_text, "Deferred review"),
+                repository=field(text, "Repository"),
+                candidate_commit=field(resolution_text, "Candidate commit"),
+                integrated_commit=field(resolution_text, "Integrated commit"),
             )
         )
 
@@ -472,6 +623,43 @@ def validate(map_path: Path) -> list[str]:
             errors.append(
                 f"{ticket.path}: legacy `State: active` marker requires migration "
                 "to ## Provisional verdict"
+            )
+        if ticket.reopened:
+            if ticket.convergence_verdicts != 1:
+                errors.append(
+                    f"{ticket.path}: reopened ticket requires exactly one "
+                    "## Convergence verdict"
+                )
+        elif ticket.convergence_verdicts:
+            errors.append(
+                f"{ticket.path}: ## Convergence verdict requires Reopened"
+            )
+        for heading, count in (
+            ("Falsify audit", ticket.falsify_audits),
+            ("Affected resolved dependents", ticket.affected_dependents),
+            ("Dependent disposition", ticket.dependent_dispositions),
+        ):
+            if count > 1:
+                errors.append(f"{ticket.path}: more than one ## {heading}")
+        if bool(ticket.candidate_commit) != bool(ticket.integrated_commit):
+            errors.append(
+                f"{ticket.path}: Candidate commit and Integrated commit must "
+                "appear together"
+            )
+        for deferred_review in ticket.deferred_reviews:
+            if not re.fullmatch(
+                r"(?:seam pending|discharged) — .+", deferred_review
+            ):
+                errors.append(f"{ticket.path}: malformed Deferred review state")
+        if (
+            any(
+                review.startswith("seam pending — ")
+                for review in ticket.deferred_reviews
+            )
+            and not ticket.integrated_commit
+        ):
+            errors.append(
+                f"{ticket.path}: pending seam review requires Integrated commit"
             )
         if ticket.status == "resolved":
             if ticket.resolutions != 1:
@@ -573,10 +761,69 @@ def validate(map_path: Path) -> list[str]:
         errors.append(f"map: unknown Status {map_status!r}")
 
     repository_execution = field(map_text, "Repository execution")
+    integration_heads: list[tuple[Path, str]] = []
+    ticket_repositories: dict[Path, Path] = {}
+    for ticket in tickets:
+        repository = recorded_repository(map_path, ticket.repository)
+        if ticket.repository and repository is None:
+            errors.append(
+                f"{ticket.path}: Repository is not a Git repository: "
+                f"{ticket.repository}"
+            )
+        elif repository is not None:
+            ticket_repositories[ticket.path] = repository
+    pending_deferred_reviews = tuple(
+        (ticket_repositories.get(ticket.path), ticket.integrated_commit)
+        for ticket in tickets
+        for deferred_review in ticket.deferred_reviews
+        if deferred_review.startswith("seam pending — ")
+    )
     if repository_execution not in {"in-scope", "out-of-scope"}:
         errors.append("map: Repository execution must be `in-scope` or `out-of-scope`")
     elif repository_execution == "in-scope":
-        validate_execution_heads(map_path, map_text, map_status, errors)
+        integration_heads = validate_execution_heads(
+            map_path,
+            map_text,
+            map_status,
+            errors,
+            warnings,
+            pending_deferred_reviews,
+        )
+
+    for ticket in tickets:
+        candidate = ticket.candidate_commit
+        integrated = ticket.integrated_commit
+        if not integrated:
+            continue
+        ticket_repository = ticket_repositories.get(ticket.path)
+        if len(integration_heads) > 1 and ticket_repository is None:
+            errors.append(
+                f"{ticket.path}: repository task requires Repository when the map "
+                "spans multiple execution repositories"
+            )
+        repositories = [
+            repository
+            for repository, integration in integration_heads
+            if (
+                ticket_repository is None
+                or git_common_dir(repository) == git_common_dir(ticket_repository)
+            )
+            and commit_is_ancestor(repository, integrated, integration)
+        ]
+        if not repositories:
+            errors.append(
+                f"{ticket.path}: Integrated commit is not contained in an "
+                f"Integration head: {integrated}"
+            )
+        elif candidate and not any(
+            commit_is_ancestor(repository, candidate, integrated)
+            for repository in repositories
+        ):
+            errors.append(
+                f"{ticket.path}: Candidate commit is not an ancestor of "
+                f"Integrated commit in its execution repository: "
+                f"{candidate} -> {integrated}"
+            )
 
     if map_status == "resolved":
         unresolved = [
@@ -586,6 +833,8 @@ def validate(map_path: Path) -> list[str]:
             errors.append(
                 f"map: resolved with unresolved tickets: {', '.join(unresolved)}"
             )
+        if pending_deferred_reviews:
+            errors.append("map: resolved with a pending seam review")
 
     if map_status == "resolved" and repository_execution == "in-scope":
         tracker_root = git_root(map_path.parent)
@@ -721,7 +970,10 @@ def main() -> int:
         print("usage: validate_local_map.py PATH/TO/map.md", file=sys.stderr)
         return 2
 
-    errors = validate(Path(sys.argv[1]))
+    warnings: list[str] = []
+    errors = validate(Path(sys.argv[1]), warnings)
+    for warning in warnings:
+        print(f"WARN: {warning}", file=sys.stderr)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
