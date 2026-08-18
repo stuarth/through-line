@@ -125,6 +125,11 @@ the evidence or trade-off that could change the verdict. Use `/grilling` and
 `/domain-modeling` for genuine human judgment. Resolve builder-owned choices only
 while they remain clearly inside the decision-rights agreement.
 
+Stay on the mapped route: a recommendation must stand within the current Destination,
+Local policies, and decision rights as written. If the best path requires an excluded
+control or an amendment to any of them, recommend only what stands without it and
+present the amendment itself as the residual judgment.
+
 ## Task
 
 For repository work, follow [EXECUTION.md](./EXECUTION.md). Return here after it
