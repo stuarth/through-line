@@ -33,6 +33,14 @@ governing schema and an isolated database check. The plan is ready when
 implementation can proceed from those entry points without a new product or
 architecture decision.
 
+Scale acceptance criteria, checks, and evidence to the claim's exposure. A claim
+confined to a fenced disposable environment needs only source isolation, effect
+fences, and honest output; it does not inherit production-grade lifecycle, recovery,
+or exhaustive evidence machinery unless one of those is itself the claim. Until the
+first end-to-end result exists, focus checks on its exposed boundaries and
+highest-risk assumptions; defer broad test matrices around internal interfaces still
+moving with the implementation.
+
 Use independently falsifiable authority and consumer boundaries to shape packets and
 checks. Keep parts that must land together to avoid two live authorities in one
 ticket and compose their candidate commits before acceptance. A packet that cannot
@@ -66,10 +74,10 @@ verdict stops before candidate freeze.
 ## Review and correction
 
 An **exposure boundary** is a PR, a human approval gate, shared or production data or
-effects, or map closure. Review a candidate before composition when it reaches
-security-sensitive surfaces (authorization, untrusted input, secrets, crypto),
-destructive behavior, a migration or command executed beyond a disposable
-environment, or a human-owned class.
+effects, or map closure. Review a candidate before composition when it reaches a
+security-sensitive surface (authorization, untrusted input, secrets, crypto), a
+human-owned class, or any destructive behavior, migration, or command outside a
+fenced disposable environment.
 
 A candidate reaching persisted contracts or concurrency may compose on its
 acceptance mapping and green adversarial checks. Defer its independent review to the
@@ -97,9 +105,11 @@ prior receipt.
 Start over only when the correction materially changes the candidate's architecture,
 authority, persistence, destructive behavior, or overall shape.
 
-Keep adjacent hardening out of the correction loop. After two material correction
-cycles, revisit the unit's shape and checkpoint it for a fresh Work session unless
-one bounded correction clearly closes the review.
+Keep adjacent hardening out of the correction loop. A correction cycle spent on
+machinery that runs, tests, or evidences the work is material when it produces no new
+product evidence. After two material correction cycles, revisit the unit's shape and
+checkpoint it for a fresh Work session unless one bounded correction clearly closes
+the review.
 When evidence invalidates a previously accepted result, return to
 [Falsify](./WORK.md#falsify) and reopen its root before producing another candidate.
 

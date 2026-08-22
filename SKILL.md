@@ -116,9 +116,14 @@ artifact; leave one line pointing to it. History is context, not authority. The
 active body must support the next action and a later audit without loading history.
 Put a durable full contract in its ADR or domain documentation.
 
-Ticket every sharp human question. Ticket builder choices only when they block the
-map, test a principle, or deserve a durable record. Leave unshaped uncertainty in
-**Not yet specified** and work beyond the destination in **Out of scope**.
+Without repository execution, ticket every sharp human question; ticket builder
+choices only when they block the map, test a principle, or need a durable record.
+With execution in scope, ticket a question or choice only when it blocks the
+route, crosses an authority or exposure boundary, tests a principle, or changes the
+exposed result. Keep internal implementation questions in **Not yet specified** until
+the thin complete path exercises them; its evidence either turns them into tickets or
+dissolves them. Leave other unshaped uncertainty there and keep work beyond the
+destination in **Out of scope**.
 
 When an accepted result proves wrong while the map is open, reopen its ticket. Move
 the old **Resolution** to the ticket's linked history artifact, leave a one-line

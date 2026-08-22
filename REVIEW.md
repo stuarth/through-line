@@ -29,8 +29,9 @@ stop conditions, recovery behavior, and executable launch-time preconditions for
 time-sensitive facts.
 
 When the object is run evidence, review its claim against the ticket's acceptance
-criteria and the receipt that authorized execution. Verify provenance, terminal
-accounting, safety claims, and an independently checkable basis for the result.
+criteria and the receipt that authorized execution. Verify the provenance, terminal
+accounting, safety claims, and independently checkable basis the stated claim relies
+on; do not demand guarantees that belong only to a later exposure boundary.
 
 For map closure, review the whole effort from its recorded base through the proposed
 closure head. Prior ticket reviews are context, not inherited proof. Compare every

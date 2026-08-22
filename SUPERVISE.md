@@ -16,13 +16,16 @@ not complete supervision.
    blocker, and checkpoint mechanics; review findings reopen affected roots or create
    one integrated outcome ticket when no root owns them.
    Otherwise stop when the map is resolved or progress needs human judgment, a
-   doctrine or scope change, an external unblock, or ownership resolution. Report
-   that frontier.
+   doctrine or scope change, an external unblock, ownership resolution, or the
+   recorded active-effort expectation for the first end-to-end result is spent and no
+   frontier work advances its thin complete path. Report that frontier.
 3. Otherwise dispatch a `/research` subagent for each open, unclaimed research
    ticket through [receipt-only coordination](./SKILL.md#coordination) — research
    does not consume a session's unit — and choose one non-human unit: a builder-owned
-   round or decision, a prototype ticket, or an in-scope task. Select a reopened root
-   next when its current [Convergence verdict](./WORK.md#falsify) is **continue**,
+   round or decision, a prototype ticket, or an in-scope task. Before the first
+   end-to-end result, choose an available unit that produces new product evidence on
+   its thin complete path ahead of other frontier work. Otherwise select a reopened
+   root next when its current [Convergence verdict](./WORK.md#falsify) is **continue**,
    **re-slice**, or **redesign**. A **defer** verdict yields to the independent
    frontier; if none remains, stop at that verdict.
 4. Start a fresh Work session with [WORK.md](./WORK.md) from an explicit packet: map

@@ -164,8 +164,10 @@ it through every dependent ticket.
 
 ## Finish the session
 
-Re-chart newly sharp questions, reconcile through [Record](./SKILL.md#record), report
-the frontier, and stop. A fresh session takes the next unit.
+Re-chart newly ticketable questions under [Map and
+tickets](./SKILL.md#map-and-tickets), reconcile through
+[Record](./SKILL.md#record), report the frontier, and stop. A fresh session takes the
+next unit.
 
 New work required by the unchanged destination is discovery, not a scope amendment:
 record its added units and risk, then chart it under the existing decision rights.
