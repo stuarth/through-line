@@ -1,154 +1,85 @@
 # Execution
 
-Use this branch for repository work. The Work session implements its task directly.
-Compact receipts carry progress; store them on the task ticket or in one linked
-artifact. Finished means durable: a stranger could continue from the tracker,
-receipts, and commits alone. A leaf still in flight, a finding unrecorded, or a
-tracker unreconciled means the session has not finished.
-
-At every scout, implementer, reviewer, or specialist dispatch, follow [receipt-only
-coordination](./SKILL.md#coordination).
-
-## Resume
-
-Load the ticket and its receipts, then continue from the first unfinished or invalid
-stage. Keep earlier work when its commits still exist and later edits have not changed
-what it established. A checkpoint names that stage and the next plan so resumption
-does not repeat orientation, implementation, or review.
-
-A repository checkpoint is durable only when edits are committed on the task branch,
-or stored as a durable patch artifact against a verified base. Record **Base**,
-**Checkpoint head** or patch, **Dirty state**, completed stage, checks, and next stage.
-Keep an uncommitted worktree claimed; never expose it as resumable frontier work.
+Execute one claimed outcome unit, then return its result to
+[Advance](./ADVANCE.md) for propagation. The unit and charter bound repository work.
 
 ## Plan
 
-Apply the [Map and tickets](./SKILL.md#map-and-tickets) split rule before
-implementation, returning a newly exposed split to the tracker.
+Load the unit, reaching premises and principles, relevant receipts, and repository
+state. Record only unsettled details: intended outcome, exact entry points,
+constraints, consequential boundaries, and focused checks. Return an unresolved
+product, architecture, or human-owned decision to the route.
 
-Before editing, record a compact plan on the ticket — only what the ticket does not
-already settle: exact entry points and constraints, route choices the implementation
-fixes, focused checks, and exclusions. For persistent data work, include the
-governing schema and an isolated database check. The plan is ready when
-implementation can proceed from those entry points without a new product or
-architecture decision.
+Scale checks to maturity and consequence. For the first end-to-end result, test its
+observable boundaries and highest-risk assumptions; defer broad matrices around
+moving internal interfaces. Add integration, regression, recovery, and operational
+evidence as the result stabilizes or approaches a consequential boundary. A **fenced
+disposable** environment has isolated expendable inputs and state, effects that
+cannot escape, and honest output. Shared or durable state is not disposable.
 
-Scale acceptance criteria, checks, and evidence to the claim's exposure. A claim
-confined to a fenced disposable environment needs only source isolation, effect
-fences, and honest output; it does not inherit production-grade lifecycle, recovery,
-or exhaustive evidence machinery unless one of those is itself the claim. Until the
-first end-to-end result exists, focus checks on its exposed boundaries and
-highest-risk assumptions; defer broad test matrices around internal interfaces still
-moving with the implementation.
+## Implement and integrate
 
-Use independently falsifiable authority and consumer boundaries to shape packets and
-checks. Keep parts that must land together to avoid two live authorities in one
-ticket and compose their candidate commits before acceptance. A packet that cannot
-reach a committed candidate before a human gate sharpens the remaining plan; split
-the ticket only when the resulting outcome meets the ticket rule above.
+Implement directly or send a self-contained leaf packet with
+[IMPLEMENT.md](./IMPLEMENT.md). Give a leaf its exact repository, base hash, isolated
+worktree, owned files, entry points, constraints, and focused checks. The coordinator
+retains integration and route ownership.
 
-Route material to the one context that must hold it: bulk reading to read-only
-scouts per [Coordination](./SKILL.md#coordination) when conclusions suffice,
-discovery to the leaf that will edit the same files, failing evidence to the leaf
-that owns the fix. Delegate implementation only when work is disjoint enough to run
-in parallel: give each fresh leaf the ticket and its plan as a packet with
-[IMPLEMENT.md](./IMPLEMENT.md). A returned gap sharpens the packet; it does not
-widen the leaf's assignment.
+Each repository has one route-named integration **Ref**, created at its recorded Base
+through the tracker adapter. It is the sole integration identity. Compose a checked
+leaf onto the hash currently at Ref, verify that old hash is an ancestor of the new
+hash, rerun checks on the composed result, then advance Ref with compare-and-swap:
 
-## Candidate
+```sh
+git update-ref <Ref> <new-hash> <expected-old-hash>
+```
 
-Implement the plan — directly, or by landing the delegated packets' receipts — and
-run the focused checks, committing only the plan's files. The candidate is ready
-when every criterion and reaching premise maps to implementation and a verification
-path: green focused evidence, a review check, or a named deferred check recorded as
-a `Deferred review` when it waits for a seam. Record the base and candidate commits,
-changed files, acceptance mapping, focused checks, and any remaining gap when the
-candidate hands off to a reviewer or a checkpoint; a ticket closing in this session
-records that evidence once, in its Resolution.
+If the compare-and-swap loses, reload, recompose, and rerun checks the changed range
+could invalidate. Record each integration check's command, exact hash, status,
+duration, and useful failure excerpt.
 
-For each protected invariant touched, the acceptance mapping names its verdict,
-implementing authority, persistence fence when applicable, positive test, adversarial
-test, and affected transition consumers. A missing or contradictory human-owned
-verdict stops before candidate freeze.
+## Review stable boundaries
 
-## Review and correction
+Review the exact integrated head and relied-on claim with
+[REVIEW.md](./REVIEW.md) when it establishes an architecture, provider, security, or
+human-owned contract that later work will rely on. Also review the exact integrated
+head set and relevant configuration before a PR or publication, shared or production
+effect, paid or irreversible action, dependent human gate, or closure. Integrating
+reversible local work alone does not require review.
 
-An **exposure boundary** is a PR, a human approval gate, shared or production data or
-effects, or map closure. Review a candidate before composition when it reaches a
-security-sensitive surface (authorization, untrusted input, secrets, crypto), a
-human-owned class, or any destructive behavior, migration, or command outside a
-fenced disposable environment.
+Reuse a receipt only while its exact object, configuration, and claim remain
+unchanged. `Claim supported: no` stops advancement past that boundary and returns the
+finding to the owning unit.
 
-A candidate reaching persisted contracts or concurrency may compose on its
-acceptance mapping and green adversarial checks. Defer its independent review to the
-first **seam** where the integration head holds both sides: contract and first
-consumer, lock and racing writers, or transition and its consumers. Record
-`Deferred review: seam pending — <named invariant>` in the candidate receipt and
-carry it into the resolution while that seam remains incomplete. Discharge every
-deferral before the head crosses an exposure boundary, replacing it with `Deferred
-review: discharged — <receipt>`. Other candidates proceed to Verify on green focused
-checks with every criterion's verification path intact and record the review waiver
-and reason. A candidate in both classes receives its required pre-composition review
-and still records the seam deferral.
+## Consequential effects
 
-When review runs, record its exact object and claim on the ticket, then give one fresh
-integrated reviewer the ticket or seam, premises, object, claim, only the references
-that reach them, and [REVIEW.md](./REVIEW.md). Add a specialist only for a named risk
-the reviewer cannot judge. Record the receipt and any seam deferrals it discharges.
+`Claim supported: yes` is evidence, never authorization. Effects follow
+[Advance's effect procedure](./ADVANCE.md#resolve).
 
-When a receipt rejects implementation that the ticket authorizes correcting, fix
-related findings together as the smallest complete correction. Return the correction
-range and prior receipt for a targeted pass — to the same reviewer when resumption
-answers at once, otherwise to a fresh reviewer. Judge the correction range against
-the prior findings. Coverage of work the correction leaves untouched stands on the
-prior receipt.
-Start over only when the correction materially changes the candidate's architecture,
-authority, persistence, destructive behavior, or overall shape.
+Record terminal result, provenance, outputs, and accounting honestly. A negative
+predeclared evaluation stands; do not change its object to manufacture success.
 
-Keep adjacent hardening out of the correction loop. A correction cycle spent on
-machinery that runs, tests, or evidences the work is material when it produces no new
-product evidence. After two material correction cycles, revisit the unit's shape and
-checkpoint it for a fresh Work session unless one bounded correction clearly closes
-the review.
-When evidence invalidates a previously accepted result, return to
-[Falsify](./WORK.md#falsify) and reopen its root before producing another candidate.
+## Correct or finish
 
-### Consequential effects
+Correct related findings as the smallest complete change. Give the reviewer the
+prior receipt and changed range; use the same reviewer only immediately, otherwise a
+fresh one. After two failed cycles that produce no new outcome evidence, return to
+Advance to rechart the unit's representation, boundary, or success basis.
 
-A paid or externally consequential effect proceeds only when an approved receipt
-covers its exact execution state and safe execution; an earlier receipt suffices
-when it already covers both. Run its launch-time preconditions immediately before
-the effect, record their results on the ticket, and include them with its outputs.
-Execute only with every precondition green; after a failure, rerun them all before a
-later attempt, and reuse the receipt only while its object and claim remain unchanged.
+On completion, return a Resolution naming integrated hashes, outcome, provenance,
+checks, reviews, and effect evidence to Advance. If unfinished, commit coherent state
+or store a durable patch against a verified base, then return a checkpoint with base
+and Ref hashes, dirty state, completed work, evidence, blocker, and exact next step.
+Keep an uncommitted worktree claimed.
 
-After the effect, review its immutable outputs before relying on their claim. An
-approved receipt validates that claim, not the candidate. Resolve a fixed-candidate
-evaluation with its honest result.
+## Close the route
 
-## Verify and record
+Prepare the final map and units, then obtain a fresh closure review under
+[REVIEW.md](./REVIEW.md) of their exact bytes, every Base-to-Ref range, relevant
+configuration, and the destination claim. If the claim is unsupported, reopen the
+unit that owns each finding or create one correction outcome when none does, and
+return to Advance.
 
-After review, waiver, or a recorded seam deferral, compose the candidate onto the
-map's current local integration head. Use the candidate commit directly when it
-descends from the recorded head; otherwise create a merge commit. Advance the ref
-atomically with `git update-ref <ref> <new> <expected-old>`; when another session
-wins that compare-and-swap, rebuild the composition and rerun the checks that change
-invalidated.
-Publishing a branch or PR remains an external promise under the map's decision
-rights. When new local work follows an earlier exposure, retain its URL in history
-and set the current `PR` field to `pending` before advancing the integration head.
-
-After composition and before resolution, inspect every pending seam deferral the
-candidate reaches. When the new head completes a named seam, dispatch that seam
-review now and discharge its receipts; do not leave a complete seam for closure.
-
-Run the plan's focused and integration checks on the composed state, keeping full
-output outside conversation and recording only command, integrated commit, status,
-duration, and useful failure excerpt. The full suite follows the map's verification
-policy and defaults to once before each exposure boundary. A material reconciliation
-edit returns to review or correction; afterward rerun every check it invalidated.
-
-Resolve the ticket when its recorded evidence — candidate commit, integrated commit,
-reviews run or deferred with their seam named, and verification — describes the same
-final work. Advance the map's **Integration head**, propagate through the map,
-reconcile the tracker, validate it, and stop after this ticket's cascade.
+If supported, record the route-state digest, exact reviewed heads, checks, and
+findings in the closure receipt, then resolve the route through the active tracker
+adapter. The closure commit records route state; it does not advance an integration
+Ref. Return to Advance for final validation and stop.
