@@ -1,124 +1,97 @@
 # through-line
 
-A skill for driving efforts too large for one agent session — where the
-bottleneck isn't code generation, it's **decisions**: the agent re-asks
-questions you already answered, forgets verdicts after compaction, or quietly
-decides things that were yours to decide.
+`through-line` carries a large effort across many agent sessions without losing its
+direction. It keeps the route durable: the destination, open choices, settled
+results, and their downstream consequences.
 
-`through-line` makes decisions and integrated outcomes the units of work. A huge
-effort hides recurring commitments beneath its many choices; the skill distills those
-into standing principles you adopt, then propagates every verdict through a map of
-outcome tickets. Implementation packets and corrections stay inside those outcomes
-unless they cross a decision, authority, or release boundary. You only ever see the
-residual judgment your previous answers couldn't settle.
+The product is built around decisions and outcomes rather than a task backlog. A
+chartered route advances one meaningful unit at a time and derives its next frontier
+from recorded state, so it still makes sense to a fresh worker.
 
-## Install
+## Install and invoke
+
+Install from the skills registry:
 
 ```bash
 npx skills@latest add stuarth/through-line
 ```
 
-Later, `npx skills update through-line` picks up new versions. Or, to track the
-repo directly, clone and symlink — a `git pull` then keeps the installed skill
-current:
+Update with `npx skills update through-line`. To follow the repository directly,
+clone it and symlink the skill directory:
 
 ```bash
 git clone https://github.com/stuarth/through-line ~/dev/through-line
 ln -s ~/dev/through-line ~/.claude/skills/through-line
 ```
 
-Invoke with `/through-line` — the agent won't reach for it on its own. It works
-under Claude Code and Codex (see [agents/openai.yaml](./agents/openai.yaml)).
-
-Maps and tickets live on the repo's issue tracker when one is wired up;
-otherwise the skill falls back to the bundled local-markdown tracker and its
-validator (see [trackers/](./trackers/) and [scripts/](./scripts/)).
-When updating a legacy local map, add `Repository execution: out-of-scope` for a
-decision-only effort; use `in-scope` and add execution heads when its destination
-includes repository deliverables.
+Invoke it explicitly as `/through-line` in Claude Code or `$through-line` in
+Codex. Automatic invocation is disabled; see
+[agents/openai.yaml](./agents/openai.yaml). When an issue tracker is configured,
+the route can live there. Otherwise, the bundled [local Markdown
+tracker](./trackers/local-markdown.md) and
+[validator](./scripts/validate_local_map.py) provide a self-contained option.
 
 ## How it works
 
-**You adopt principles; the agent proposes them.** Recurring commitments are
-distilled into `PRINCIPLES.md`. Admission is deliberately slow — a candidate
-must recur across independent decisions, be atomic and falsifiable, and survive
-a counterexample — because one bad principle mis-decides many cases. Once
-adopted, a principle is a strong prior, not a law: evidence strong enough to
-contradict it triggers re-examination, and re-examination is still yours to
-confirm.
+**The charter fixes the route.** It names the destination, the boundaries of the
+effort, the first end-to-end result worth reaching, the premises currently being
+relied on, and who may decide what. This is the boundary for autonomous progress:
+discoveries inside it can extend the map, while a proposed change to the charter
+comes back to the human.
 
-**Every verdict propagates.** After each answer, the agent sweeps the remaining
-map: decisions the answer determines resolve, constrained questions shrink to
-their residual judgment, moot ones close. Replacing an earlier premise reopens its
-root, accounts for each resolved dependent, and rechecks what no longer stands.
+**Decision rights keep direction human-owned.** The human retains control of the
+destination, protected meanings, external promises, and consequential or
+irreversible effects. The builder can make ordinary reversible choices that follow
+the charter and settled decisions. A route can reserve additional choices for the
+human when the work needs tighter control.
 
-**Accepted work stays composed.** Each execution repository has one local integration
-head. A task resolves only after its candidate composes there and the checks
-invalidated by composition pass. Reviews run before dangerous exposure or at the
-first complete producer-consumer or concurrency seam.
+**A unit records either a decision or an outcome.** Each unit carries the question
+or result, the premises and acceptance evidence that matter, and its eventual
+resolution with provenance. The route has at most one claimed builder unit. Human
+choices remain independent units even when several ready questions share one concise
+prompt. Finishing or checkpointing builder work leaves a durable handoff before a
+fresh session takes another unit.
 
-**Decision rights are explicit.** Once per effort you agree on what the builder
-may decide (cheaply reversible route choices, within a stated reversal budget)
-and what always comes back to you: destination, scope, doctrine, domain
-meaning, external promises, irreversible effects. Direction is never delegated.
+**Every resolution propagates.** When a premise, decision, or result changes,
+Through-line revisits every resolved dependent and records whether it still stands
+or reopens. Open work is then recomputed rather than manually curated. The visible
+frontier is simply the work that is open, unblocked, and unclaimed; only items that
+need human judgment form the human frontier.
 
-**One round or ticket per Work session, hard stop.** The tracker, map, and
-principles — not the conversation — are the shared state. A session takes one
-round or ticket, records the outcome with provenance (the quoted human verdict,
-or the principle that determined it), reports the frontier, and stops. Its receipt
-retires that worker; automatic continuations and resumed turns may only finish the
-same unresolved claim. Research tickets are the exception: `/research` subagents
-burn them down in parallel, leaving findings on throwaway branches the tickets point
-to.
+**Principles are optional leverage.** If a commitment recurs, rules out a plausible
+choice, and survives counterexamples, the agent may propose it as a standing
+principle. It becomes active only when the human adopts it. Principles help future
+units inherit hard-won judgment, but a route does not need them, and contradictory
+evidence can put one back in question.
 
-**Advance unattended to a real frontier.** Invoke with an existing map and say
-**advance unattended**: the supervisor remains active, runs a fresh no-history Work
-session per ticket, and continues through builder-owned decisions and legwork until
-the map closes or genuinely needs human judgment or an external unblock. It waits on
-worker completion instead of polling. An expired wait is re-armed without reloading
-or narrating unchanged state; it does not end supervision. A host without a
-completion-aware wait cannot offer this mode.
+**Repository execution is optional.** A route may stop at durable decisions and
+outcomes, or include implementation. When code is in scope, each repository moves
+through one integration ref so composition is observable. Review covers the exact
+integrated ref at stable architecture or provider boundaries and before an external
+effect, publication, dependent human gate, or completion. It reports whether the
+stated claim is supported; it does not grant authority for an effect.
 
-## It's working if
-
-- Every adopted principle lets a reader name, from the statement alone, one
-  choice it requires and one it forbids.
-- Every human-owned ticket asks exactly one residual judgment.
-- Every human verdict produces a propagation delta: what resolved, what
-  narrowed, what still needs you.
-- Every closed decision preserves why it closed — quoted verdict, linked
-  artifact, or the determining principle.
-- Each Work session ends after one round or ticket and its cascade, with the
-  next frontier recorded for a fresh session.
-- A repository-execution map closes only at the exact code head covered by a fresh
-  whole-effort review and records an immutable tracker-only closure boundary. Later
-  repository work does not rewrite that boundary; in-scope corrections reopen the
-  same canonical map while its prior closure remains immutable in Git history.
+**Unattended mode uses fresh workers.** A supervisor sends one explicit unit packet
+to a fresh worker with no conversation history, waits for its terminal result, and
+then derives the next unit or route transition. The loop continues serially until the
+route reaches a human frontier, needs a charter change, completes, or reaches its
+first-result effort trigger without path evidence. Fresh workers make recorded state,
+not conversational memory, prove that the route is resumable.
 
 ## Repo layout
 
-This repo **is** the skill — [SKILL.md](./SKILL.md) at the root, with its phase
-runbooks alongside:
+This repository is the skill. [SKILL.md](./SKILL.md) introduces the model and
+routes into the focused guides:
 
-- [CHART.md](./CHART.md) — turn a loose idea into a map
-- [WORK.md](./WORK.md) — advance an existing map, one round or ticket per session
-- [SUPERVISE.md](./SUPERVISE.md) — opt-in unattended advancement
-- [ADMISSION.md](./ADMISSION.md), [REVIEW.md](./REVIEW.md),
-  [IMPLEMENT.md](./IMPLEMENT.md), [EXECUTION.md](./EXECUTION.md) — supporting
-  stages
-- [PRINCIPLES-FORMAT.md](./PRINCIPLES-FORMAT.md) — the shape of adopted doctrine
+- [CHART.md](./CHART.md) — turn an idea into a chartered route
+- [ADVANCE.md](./ADVANCE.md) — resolve a unit or complete a route transition
+- [SUPERVISE.md](./SUPERVISE.md) — continue through units unattended
+- [EXECUTION.md](./EXECUTION.md) and [IMPLEMENT.md](./IMPLEMENT.md) — plan,
+  integrate, and verify repository work
+- [REVIEW.md](./REVIEW.md) — test a claim against one immutable object
+- [PRINCIPLES-GUIDE.md](./PRINCIPLES-GUIDE.md) — propose, adopt, and challenge
+  standing principles
 
-## Where it fits
-
-`through-line` began inside a fork of
-[mattpocock/skills](https://github.com/mattpocock/skills) and grew until it was
-the fork's entire purpose; this repo carries that full history. It builds on
-that ecosystem rather than forking it: it is the principle-driven sibling of
-[wayfinder](https://aihero.dev/skills-wayfinder) (multi-session maps without
-standing doctrine), draws on [grilling](https://aihero.dev/skills-grilling) and
-[domain-modeling](https://aihero.dev/skills-domain-modeling) for decisions no
-principle determines, and hands a completed map to
-[to-spec](https://aihero.dev/skills-to-spec) unless execution was put in scope.
-Install mattpocock/skills separately for those — `claude plugins install
-mattpocock-skills` under Claude Code, or its `skills.sh` for other harnesses;
-without its tracker wiring, through-line uses the bundled local-markdown tracker.
+The tracker adapter defines storage; the skill defines the product model. That
+separation lets Through-line stay useful across hosts without coupling the route to
+another mandatory skill.

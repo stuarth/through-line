@@ -1,74 +1,44 @@
 # Review
 
-Review one immutable **object** against one explicit **claim** as a read-only leaf.
-Its receipt stands until the object or claim changes. A fresh reviewer receives only
-the review packet, never the implementer's or supervisor's conversation. Do not
-coordinate or implement.
+Review one immutable **object** against one explicit **claim** as a fresh, read-only
+leaf. Fix bytes and configuration with full hashes, immutable versions, or digests.
+The claim states the relied-on outcome; `checks passed` and `artifacts exist` are
+proxies. A receipt stands only while object and claim are unchanged.
 
-The claim is the assertion the caller will rely on. It must cover the applicable
-acceptance criteria, not a proxy such as `checks passed` or `artifacts exist`.
-Approval alone authorizes nothing: a gate passes only when both the receipt's object
-and claim match the object and claim that gate requires.
+Judge evidence relative to the claim and present consequences. Trace relevant authority,
+persistence, concurrency, and consumer boundaries; seek a counterexample that would
+falsify a semantic claim. Reproduction alone does not prove meaning. Do not require
+later-boundary guarantees.
 
-Load the map's orientation digest only when the review spans tickets or repositories;
-otherwise load only references that reach the object.
+For an integrated-range review, inspect the full range at the named integration
+`Ref`, including current consumers. Verify Base matches its first committed route
+value. Identify the object by base, exact head, and necessary configuration, not
+isolated leaf commits.
 
-For an initial review, use the ticket, premises, object, and claim. For a correction
-under the same claim, use the prior receipt and changed object range: confirm the
-prior findings are resolved and judge what changed. Coverage of everything untouched
-stands on the prior receipt. A changed or distinct downstream claim requires a fresh
-review of the whole object; it may cite the earlier receipt.
+For a consequential effect, review the exact state and configuration that would
+execute, including limits, stops, recovery, and executable launch preconditions. The
+verdict does not authorize the effect.
 
-For a seam review, the object is the composed range holding both sides and the claim
-is the named invariant across them. Trace that complete path instead of treating
-either candidate in isolation. Include the deferred-review receipts the seam reaches.
+For run evidence, verify provenance, terminal accounting, safety assertions, and an
+independently checkable basis. Honest failure evidence can support a failure claim.
 
-When the claim authorizes a paid or externally consequential effect, the object is
-the exact state that will execute. Review its head and configuration, budgets and
-stop conditions, recovery behavior, and executable launch-time preconditions for
-time-sensitive facts.
+For closure, review the exact proposed map and unit bytes plus every recorded
+Base-to-Ref range. Identify the route state by the tracker's deterministic digest.
+An earlier receipt applies only when its exact object, configuration, and closure
+claim are unchanged. Verify each Ref resolves to its reviewed hash and each repository
+worktree is clean, then follow the tracker's closure-receipt format.
 
-When the object is run evidence, review its claim against the ticket's acceptance
-criteria and the receipt that authorized execution. Verify provenance, terminal
-accounting, safety claims, and an independently checkable basis for the result.
+Report only evidenced, material failures of the claim in required behavior,
+correctness, security, or data integrity. Exclude optional hardening and adjacent
+cleanup.
 
-For map closure, review the whole effort from its recorded base through the proposed
-closure head. Prior ticket reviews are context, not inherited proof. Compare every
-protected meaning to its cited human verdict and construct failures across authority,
-currentness, concurrency, and consumer boundaries. Before deciding, verify each
-execution repository has a clean worktree and its current HEAD is the proposed
-closure state; record that observation in Checks.
+Return one compact receipt:
 
-Report only material findings: acceptance failures or evidenced correctness,
-security, or data-integrity failures. Leave optional hardening, adjacent cleanup, and
-broader completeness ideas outside this ticket. Run only the checks named for review.
+- `Object`: exact identity, including configuration when relevant;
+- `Claim`: the assertion reviewed;
+- `Claim supported`: `yes` or `no`;
+- `Checks`: evidence examined or run, with exact object identities; and
+- `Findings`: material findings, or `none`.
 
-For persisted authorities, probe alternate writers, temporal bounds, exact
-provenance, replacement and equal recapture, reassignment, both concurrency race
-directions, transition-to-consumer coverage, and scope or visibility isolation where
-they apply. Deterministic replay proves reproducibility, not semantic correctness;
-each semantic claim needs an independently failing counterexample.
-
-If one named risk needs expertise you do not have, return that risk for one specialist
-instead of delegating the review.
-
-Use receipt-only coordination: send one terminal receipt; communicate earlier only
-for a blocker or durable checkpoint that needs coordination.
-
-Return a compact receipt with:
-
-- `Object`: an identity that fixes the reviewed bytes and execution configuration,
-  such as full commit hashes, an immutable version, or content digests;
-- `Claim`: the exact assertion reviewed;
-- `Decision`: `approved` or `rejected`;
-- `Checks`;
-- `Findings and gaps`, with each finding's open or resolved state and resolution
-  evidence; and
-- `Prior receipt` when correcting an earlier review. Cite other receipts in `Checks`.
-
-A seam receipt also names every deferral it discharges.
-
-`Decision` judges whether the object supports the claim, so valid evidence that a
-candidate failed may be approved. For local-Markdown closure, also follow its
-[closure review receipt
-format](./trackers/local-markdown.md#local-markdown-wayfinding-operations).
+For a correction under the same claim, cite the prior receipt and judge the changed
+range against its findings. A changed claim needs whole-object review.

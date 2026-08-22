@@ -1,23 +1,24 @@
 # Implement
 
-Implement one packet as a leaf. The packet is the route; do not load the through-line
-map or coordinate more work.
+Implement one self-contained leaf packet. It names the repository, exact base,
+isolated worktree, outcome, owned files, entry points, constraints, and focused
+checks. Do not load the map, check out the integration Ref, or coordinate work.
 
-If a missing boundary prevents an aligned implementation, return the smallest useful
-gap before editing. Otherwise inspect the named entry points, make the change, run the
-focused checks, and commit only the packet's files.
+If a missing boundary or decision prevents the change, return the smallest useful
+gap before editing. Otherwise change only the owned files, run focused checks, and
+commit them while preserving unrelated worktree changes.
 
-Use receipt-only coordination: send the coordinator one final receipt, or earlier
-only a blocker or durable checkpoint that needs coordination. Keep host-required
-user updates terse; do not relay them as inter-agent progress chatter.
+The packet permits those edits and their local commit only. It does not authorize
+publication, shared or production mutation, spending, or destructive effects; return
+such a need to the coordinator.
 
-Return a compact receipt:
+Send one compact final receipt containing:
 
-- base and candidate commits;
+- base and leaf commit hashes;
 - changed-file summary;
-- acceptance mapping;
-- check command and result; and
+- delivered outcome and supporting evidence;
+- check commands and results; and
 - any unresolved gap.
 
-The coordinator owns further packets, review, full-suite verification, propagation,
-and tracker state.
+Communicate earlier only for a blocker or durable checkpoint. The coordinator owns
+integration, review, effects, propagation, and tracker state.
