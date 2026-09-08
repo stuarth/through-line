@@ -1,18 +1,16 @@
 # Develop judgment through concrete choices
 
-## Earn the interruption
+## When to discuss
 
 Discuss when the answer could materially change the current work or prevent a
 credible future misinterpretation. Useful signals include a consequential tradeoff
 with no settled direction, a user correction with wider implications, conflicting
 commitments, and a counterexample to an adopted principle.
 
-Do not ask for a philosophy interview, manufacture a principle for every task, repeat
-a settled question, or use discussion to avoid ordinary judgment. Do not repeatedly
-resurface a declined candidate without new evidence. An absent principles collection
-is not itself a problem to solve.
+Proceed with settled choices and routine work. Revisit a declined candidate when
+new evidence could change the decision.
 
-## Make the question do work
+## Frame the choice
 
 Ground it in the user's actual task. State the choice and plausible alternative,
 your recommendation and main downside, and the boundary that needs a human decision.
@@ -32,7 +30,7 @@ to a broader policy. A user can settle the immediate task and decline generaliza
 
 When the user clearly says "Use that distinction for all accepted events going
 forward," adoption is explicit. Record it accurately when authorized; do not ask the
-same question again in a formal ritual.
+same adoption question again.
 
 ## Admit only consequential commitments
 
@@ -54,7 +52,7 @@ slogan followed by a long list of exceptions. Do not encode task plans, temporar
 workarounds, stylistic preferences unrelated to this workspace, or generic engineering
 wisdom as principles merely because they sound reasonable.
 
-## Handle challenges honestly
+## Resolve challenges
 
 A failed implementation does not by itself falsify a principle. Identify whether the
 case challenges a factual premise, exposes an ambiguous term, changes the tradeoff,
@@ -68,9 +66,9 @@ applications or silently choose a replacement doctrine. Continue independent wor
 
 A current user request can override an earlier workspace commitment within the user's
 authority. Establish whether it is an exception or a lasting revision only when that
-is unclear. Do not turn yesterday's record into a veto over an explicit new decision.
+is unclear.
 
-## Preserve the verdict, not an invented consensus
+## Record the decision
 
 Separate what was explicitly adopted from your proposed formulation and inferences.
 For an exception, record its case and limits without weakening the general commitment.
@@ -79,6 +77,5 @@ For a decision without broader adoption, leave a contextual decision only when i
 future value warrants it. When a declined generalization is likely to recur, retain
 the reason and what new evidence would warrant revisiting it in that decision's
 existing home. Link it as contextual evidence from the relevant discovery entry
-when later work should consult it. No response means no adoption. If the human is unavailable,
-make the consequential open choice visible and continue only work that does not
-require inventing an answer.
+when later work should consult it. If the human is unavailable, leave the candidate
+unadopted, identify the open choice, and continue independent work.

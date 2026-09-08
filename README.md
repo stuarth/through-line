@@ -63,12 +63,40 @@ builds on that account of judgment. Its records help a later worker recover the
 reasoning relevant to a change, while recognizing Naur's argument that documentation
 cannot capture the whole understanding.
 
-[DESIGN.md](DESIGN.md) covers the design in more detail.
-
 ## Installation
 
-[HOSTS.md](HOSTS.md) has installation instructions for Codex and Claude Code,
-including the workspace entry in `AGENTS.md` or `CLAUDE.md`. The skill supports
-automatic invocation and the explicit commands `$through-line` and `/through-line`.
+Clone the repository:
+
+```sh
+git clone https://github.com/stuarth/through-line.git ~/dev/through-line
+```
+
+For Codex:
+
+```sh
+mkdir -p ~/.agents/skills
+ln -s ~/dev/through-line ~/.agents/skills/through-line
+```
+
+For Claude Code:
+
+```sh
+mkdir -p ~/.claude/skills
+ln -s ~/dev/through-line ~/.claude/skills/through-line
+```
+
+Add a workspace entry to `AGENTS.md` for Codex or `CLAUDE.md` for Claude Code,
+using the location of the workspace's principles:
+
+```markdown
+## Through-line
+
+Apply the installed through-line skill during substantive work in this workspace.
+Read its SKILL.md entry point and revisit discovery when the task's scope changes.
+Principles entry: principles/index.md.
+```
+
+The skill supports automatic invocation and the explicit commands `$through-line`
+in Codex and `/through-line` in Claude Code.
 
 [SKILL.md](SKILL.md) contains the operating instructions.
