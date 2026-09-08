@@ -1,104 +1,130 @@
-# through-line v2
+# through-line
 
 **Work together without starting over in judgment.**
 
-Through-line helps an agent discover the commitments relevant to everyday work,
-apply them to its choices, and discuss consequential gaps or counterexamples with
-the human. Useful judgment survives the session that produced it. The collection
-stays small because each addition must prevent a plausible future misinterpretation.
+Consider a makerspace that sells prepaid workshop visits alongside monthly access.
+Its pause flow consumes a prepaid visit each week because someone reused calendar
+logic. A later agent working on renewals could follow that behavior as though it
+were intentional policy. Reading the code accurately would still leave the business
+question unanswered: should a pause use up something the customer already paid for?
 
-This is a fresh-start draft. It replaces v1's substantial-change coordination model
-with a practice that fits ordinary engineering, product, and operating work.
+Through-line is a skill for carrying that judgment through everyday engineering,
+product, and operating work. It helps an agent find relevant commitments, use them
+in its choices, and start a focused discussion when the current work exposes a gap.
+The aim is for one well-examined decision to improve many later changes, while
+keeping its conclusions open to challenge.
 
-## What it feels like
+## Why now
 
-You ask for managers to correct recorded times. The agent notices that overwriting
-an observation and recording a later correction mean different things. It explains
-the tradeoff and asks whether the distinction should govern future cases or just this
-workflow. You adopt a bounded commitment, with a contrasting example that tests its
-scope.
+Agents can shorten the path from a request to a proposed implementation. Establishing
+that it is correct still takes judgment. With separate sessions handling different
+parts of a system, each can produce a plausible change from the context it has.
+The reasoning that informed one session does not automatically inform the next.
 
-A new session later handles an export. It discovers the observation/correction
-commitment through the affected meaning, even though the task concerns a different
-part of the system. It explains the consequence for the export and checks that
-consequence. If the reporting policy is still undecided, it asks that question
-rather than inventing an answer from the principle.
+Successive edits can spread a mistaken interpretation before anyone questions its
+basis. A workaround becomes a pattern; tests preserve it; later features depend on
+it. The cost is more than explaining yourself again. A product can acquire rules
+that nobody deliberately chose, making them harder to change later.
 
-A routine typo fix finishes without an interview, a new principle, or a knowledge-base
-cleanup. Most work should not grow the collection. These are fictional examples of
-the intended behavior, not reports of evaluated performance.
+Human teams face this too, and design records, review, and people who remember help.
+Agents can use those resources and their own memory. Remembering a workaround,
+however, does not establish that anyone adopted it as policy. As producing changes
+gets easier, carrying the reasons and qualifications behind them deserves deliberate
+attention.
 
-## The practice
+## What it should feel like
 
-**Discover selectively.** Start at a small workspace index, read the few always-consult
-records, and follow applicability descriptions into relevant scoped commitments.
-Read supporting cases when they can change the current choice. Stop when enough is
-understood to act responsibly.
+In the makerspace example, Through-line should bring the distinction between prepaid
+visits and time-based access into discussion. You might decide that a pause must
+preserve unused prepaid visits, with monthly access explicitly outside that rule.
+The record carries your decision, its reason, and that boundary.
 
-**Discuss real choices.** Prompt discussion when a consequential choice lacks
-direction, a correction exposes reusable judgment, or existing commitments no longer
-fit. Help the human form a principle by testing a concrete alternative and boundary.
-Silence and one-off decisions do not establish standing doctrine.
+A later session changing booking should discover the commitment, preserve unused
+visits, and check the result. It should leave the monthly-pass question open. If a
+new case challenges the commitment, it should bring the evidence back to you. A
+routine typo fix should finish without a principles discussion. This illustrates
+the intended experience; live reliability remains to be evaluated.
 
-**Apply and revise.** Make principles affect proposals, implementations, and reviews.
-Reference the particular consequence instead of announcing compliance. When a human
-changes a commitment, inspect known and likely consumers, apply authorized changes,
-and distinguish confirmed impacts from areas not investigated.
+## Core ideas
 
-## A small corpus, progressively discovered
+**Keep commitments that change a choice.** A principle earns its place by preventing
+a plausible future mistake or disagreement. Preserve the alternative it rules out,
+the reason for choosing it, its scope, and a contrasting case where it stops.
+Most tasks should add nothing to the collection.
 
-The installed skill contains the practice. Each workspace owns its knowledge. Reuse
-existing authoritative locations; when a new collection is needed, the default is
-`principles/index.md` with focused records underneath it. Longer decision evidence
-stays in its existing home.
+**Develop judgment through real work.** Discussion helps form principles when a
+concrete tradeoff needs deciding. The agent can recommend and challenge; the human
+adopts the commitment. A one-off choice, an observed behavior, and a working
+explanation remain useful without becoming policy. A new case can expose a weak
+premise or justify a revision.
 
-A discovery entry says when a concern matters, not merely what a file is called.
-An adopted record states the commitment, its tradeoff, scope, boundary example, and
-human source. Observations and tentative explanations remain useful without being
-promoted into policy. Prefer amending or consolidating a record to adding overlapping
-ones. Do not build a monolithic principles file, duplicate canon, or candidate backlog.
+**Discover by meaning.** A small index describes when a concern matters and points
+to its authoritative record. A principle about prepaid visits may affect booking
+and renewals in different directories. Read the relevant records and their
+supporting cases, then stop when the present choice has enough context to proceed.
 
-No corpus is required to begin work. No principle is required to finish it.
+**Make the consequence visible.** A commitment should change a proposal,
+implementation, or review, with evidence appropriate to the choice. When the
+commitment changes, inspect its known and likely consequences and distinguish what
+was checked from what remains unknown. The prose still requires interpretation;
+that interpretation should be open to inspection and correction.
 
-## Install and activate
+Existing architecture decision records, domain documentation, and policies can stay
+authoritative in their established locations. Through-line adds the practice of
+consulting, applying, and questioning that judgment during work. The workspace owns
+the records; the installed skill supplies the practice. A new collection defaults
+to `principles/index.md` and focused records. None is required to begin a task.
 
-Follow [HOSTS.md](HOSTS.md) for local installation and the small workspace instruction
-for `AGENTS.md` or `CLAUDE.md`. For draft review, use the extracted skill folder or
-branch `v2/shared-judgment` after publication. Installing the draft does not change
-`main`.
+## Where the ideas come from
 
-Automatic invocation is enabled in the package. The workspace instruction also directs
-ordinary work through the skill's entry point without loading the corpus at startup.
-This draft does not install hooks or claim deterministic activation. Explicit
-invocation remains available as `$through-line` or `/through-line` for diagnosis.
+[Peter Naur's *Programming as Theory Building*](https://pages.cs.wisc.edu/~remzi/Naur.pdf)
+describes programming knowledge as an understanding of how a program relates to the
+world, why it is constructed as it is, and how to respond to new demands. He also
+argues that this knowledge exceeds what rules and documentation can express.
+Through-line's records support the reconstruction of relevant judgment; they cannot
+contain the whole understanding.
 
-## Scope and authority
+[Sean Goedecke's *In defense of not understanding your codebase*](https://www.seangoedecke.com/in-defense-of-not-understanding-your-codebase/)
+challenges Naur's pessimism about recovering lost understanding and argues for useful
+work with partial understanding. Through-line takes a practical limit from that:
+recover what the current decision needs and leave unrelated gaps alone.
 
-V2 has no routes, charters, task graph, supervisor, tracker dependency, integration refs,
-or special execution process. It operates alongside the tools doing the task, including
-non-code work. It neither claims to encode a complete theory of a system nor requires
-comprehensive understanding before action.
+An Inferal manifesto by Through-line's author, *Edit the business, not the software*,
+explores directly editable business rules with governed consequences. It contributes
+the demand that changing a commitment should visibly change the work. Through-line
+applies that idea through an interpreting agent; its principles are not executable
+business rules.
 
-A human adopts commitments. The agent may propose and apply them within scope.
-Neither a principle nor automatic invocation authorizes publication, deployment,
-messages, spending, destructive actions, or changes to host permissions.
+Through-line brings these influences together. [DESIGN.md](DESIGN.md) describes the
+author-supplied manifesto and explains the distinctions and design choices.
 
-## Files and checks
+## Try it
 
-[SKILL.md](SKILL.md) is the compact operating entry point. Load focused guides only
-when needed: [discovery](DISCOVER.md), [discussion](DISCUSS.md), and
-[records](RECORDS.md). [DESIGN.md](DESIGN.md) explains the sources and design choices.
+Follow [HOSTS.md](HOSTS.md) to install the skill for Codex or Claude Code and add the
+small workspace instruction to `AGENTS.md` or `CLAUDE.md`. The intended experience
+is automatic attention during ordinary work, with discussion only when it helps.
+Explicit invocation is available as `$through-line` or `/through-line`.
 
-Run the dependency-free package checks with Python 3.10 or later:
+Start with one real task where a business distinction matters. Then try a related
+change in a fresh session without naming the principle. Check whether the agent
+finds the relevant judgment and makes an appropriate choice.
+
+## Status and checks
+
+This is a draft. Package checks pass; reliable invocation, useful discussion, and
+selective retrieval across fresh sessions remain to be tested. Automatic invocation
+is enabled but not deterministically enforced. See [the evaluation protocol](evals/README.md).
+
+V2 replaces v1's route coordination and works alongside existing execution tools and
+authorization rules. V1 remains in Git history; existing workspace records are not
+automatically migrated.
+
+Run the dependency-free checks with Python 3.10 or later:
 
 ```sh
 python3 -m unittest discover -s tests -v
 ```
 
-Or use `just check` when `just` is installed. These checks validate metadata, local
-links, loading budgets, and evaluation fixtures. They do not establish model behavior.
-[The evaluation protocol](evals/README.md) covers automatic activation, selective
-retrieval, contextual application, discussion, restraint, and revision in fresh sessions.
-
-V1 remains in Git history. Existing routes and workspace knowledge are not migrated
-or modified by installing v2.
+Or run `just check`. These checks cover package integrity and fixtures, not model
+behavior. The operating entry point is [SKILL.md](SKILL.md), with focused guides for
+[discovery](DISCOVER.md), [discussion](DISCUSS.md), and [records](RECORDS.md).
