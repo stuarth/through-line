@@ -1,118 +1,74 @@
 # through-line
 
-**Work together without starting over in judgment.**
+Work together without starting over in judgment.
 
-Consider a makerspace that sells prepaid workshop visits alongside monthly access.
-Its pause flow consumes a prepaid visit each week because someone reused calendar
-logic. A later agent working on renewals could follow that behavior as though it
-were intentional policy. Reading the code accurately would still leave the business
-question unanswered: should a pause use up something the customer already paid for?
-
-Through-line is a skill for carrying that judgment through everyday engineering,
-product, and operating work. It helps an agent find relevant commitments, use them
-in its choices, and start a focused discussion when the current work exposes a gap.
-The aim is for one well-examined decision to improve many later changes, while
-keeping its conclusions open to challenge.
+Through-line is an agent skill that preserves the reasoning behind product and
+engineering decisions and brings it into later work. It helps people and agents
+develop shared principles as they work, then uses those principles to guide
+related changes across sessions.
 
 ## Why now
 
-Agents can shorten the path from a request to a proposed implementation. Establishing
-that it is correct still takes judgment. With separate sessions handling different
-parts of a system, each can produce a plausible change from the context it has.
-The reasoning that informed one session does not automatically inform the next.
+Agents make it easier to change several parts of a system in separate sessions.
+Each session has the code in front of it, but may lack the reasoning behind an
+earlier decision. A temporary workaround can become the precedent for a new feature.
+Tests can reinforce it. Over time, the product acquires behavior that nobody chose
+as policy.
 
-Successive edits can spread a mistaken interpretation before anyone questions its
-basis. A workaround becomes a pattern; tests preserve it; later features depend on
-it. The cost is more than explaining yourself again. A product can acquire rules
-that nobody deliberately chose, making them harder to change later.
+Code and conversation history can explain what happened. They do not always explain
+which decisions still apply, why they were made, or which cases they cover.
+As the volume of agent-written changes grows, those gaps affect more of the product.
+Through-line makes that judgment available where the next decision happens.
 
-Human teams face this too, and design records, review, and people who remember help.
-Agents can use those resources and their own memory. Remembering a workaround,
-however, does not establish that anyone adopted it as policy. As producing changes
-gets easier, carrying the reasons and qualifications behind them deserves deliberate
-attention.
+## How it works
 
-## What it should feel like
+Through-line runs alongside ordinary work. The agent looks for relevant principles
+and follows links to the records that explain them. When a task exposes an unresolved
+tradeoff, it raises that choice for discussion. The discussion can produce a local
+decision or a principle for future work. The human decides which.
 
-In the makerspace example, Through-line should bring the distinction between prepaid
-visits and time-based access into discussion. You might decide that a pause must
-preserve unused prepaid visits, with monthly access explicitly outside that rule.
-The record carries your decision, its reason, and that boundary.
+A principle records a commitment, the reason for choosing it over an alternative,
+and the limits of its application. Each principle must rule out a plausible future
+mistake or disagreement. Observed behavior and provisional explanations remain
+distinct from adopted policy.
 
-A later session changing booking should discover the commitment, preserve unused
-visits, and check the result. It should leave the monthly-pass question open. If a
-new case challenges the commitment, it should bring the evidence back to you. A
-routine typo fix should finish without a principles discussion. This illustrates
-the intended experience; live reliability remains to be evaluated.
+For example, a makerspace might sell both prepaid workshop visits and monthly
+access. Reusing calendar logic for both could make a pause consume prepaid visits.
+A decision to preserve unused visits would affect renewals as well as booking.
+Recording why that decision applies to prepaid visits also leaves the monthly
+access policy open for a separate decision.
 
-## Core ideas
+A small index describes when a principle matters and links to its authoritative
+record. An agent working on renewals can find the prepaid-visit decision even if
+it originated in a booking task. The agent loads the relevant context without
+reading the entire collection.
 
-**Keep commitments that change a choice.** A principle earns its place by preventing
-a plausible future mistake or disagreement. Preserve the alternative it rules out,
-the reason for choosing it, its scope, and a contrasting case where it stops.
-Most tasks should add nothing to the collection.
+In the makerspace example, the renewal change would preserve unused visits, with
+a test for that behavior. If a later case challenges the principle, the agent brings
+the conflict back for discussion. Revising a principle includes examining the work
+affected by the change.
 
-**Develop judgment through real work.** Discussion helps form principles when a
-concrete tradeoff needs deciding. The agent can recommend and challenge; the human
-adopts the commitment. A one-off choice, an observed behavior, and a working
-explanation remain useful without becoming policy. A new case can expose a weak
-premise or justify a revision.
+Existing architecture decision records, domain documentation, and policies can
+remain in their current locations. Through-line links to them. New records default
+to `principles/index.md` and focused files in the workspace. The skill calls for
+discussion when a consequential choice needs it; routine work does not require a
+new principle or a review of the collection.
 
-**Discover by meaning.** A small index describes when a concern matters and points
-to its authoritative record. A principle about prepaid visits may affect booking
-and renewals in different directories. Read the relevant records and their
-supporting cases, then stop when the present choice has enough context to proceed.
-
-**Make the consequence visible.** A commitment should change a proposal,
-implementation, or review, with evidence appropriate to the choice. When the
-commitment changes, inspect its known and likely consequences and distinguish what
-was checked from what remains unknown. The prose still requires interpretation;
-that interpretation should be open to inspection and correction.
-
-Existing architecture decision records, domain documentation, and policies can stay
-authoritative in their established locations. Through-line adds the practice of
-consulting, applying, and questioning that judgment during work. The workspace owns
-the records; the installed skill supplies the practice. A new collection defaults
-to `principles/index.md` and focused records. None is required to begin a task.
-
-## Where the ideas come from
+## Heritage
 
 [Peter Naur's *Programming as Theory Building*](https://pages.cs.wisc.edu/~remzi/Naur.pdf)
 describes programming knowledge as an understanding of how a program relates to the
-world, why it is constructed as it is, and how to respond to new demands. He also
-argues that this knowledge exceeds what rules and documentation can express.
-Through-line's records support the reconstruction of relevant judgment; they cannot
-contain the whole understanding.
+world, why it is constructed as it is, and how to respond to new demands. Through-line
+builds on that account of judgment. Its records help a later worker recover the
+reasoning relevant to a change, while recognizing Naur's argument that documentation
+cannot capture the whole understanding.
 
-[DESIGN.md](DESIGN.md) explains the design choices in more detail.
+[DESIGN.md](DESIGN.md) covers the design in more detail.
 
-## Try it
+## Installation
 
-Follow [HOSTS.md](HOSTS.md) to install the skill for Codex or Claude Code and add the
-small workspace instruction to `AGENTS.md` or `CLAUDE.md`. The intended experience
-is automatic attention during ordinary work, with discussion only when it helps.
-Explicit invocation is available as `$through-line` or `/through-line`.
+[HOSTS.md](HOSTS.md) has installation instructions for Codex and Claude Code,
+including the workspace entry in `AGENTS.md` or `CLAUDE.md`. The skill supports
+automatic invocation and the explicit commands `$through-line` and `/through-line`.
 
-Start with one real task where a business distinction matters. Then try a related
-change in a fresh session without naming the principle. Check whether the agent
-finds the relevant judgment and makes an appropriate choice.
-
-## Status and checks
-
-This is a draft. Package checks pass; reliable invocation, useful discussion, and
-selective retrieval across fresh sessions remain to be tested. Automatic invocation
-is enabled but not deterministically enforced. See [the evaluation protocol](evals/README.md).
-
-V2 replaces v1's route coordination and works alongside existing execution tools and
-authorization rules. V1 remains in Git history; existing workspace records are not
-automatically migrated.
-
-Run the dependency-free checks with Python 3.10 or later:
-
-```sh
-python3 -m unittest discover -s tests -v
-```
-
-Or run `just check`. These checks cover package integrity and fixtures, not model
-behavior. The operating entry point is [SKILL.md](SKILL.md), with focused guides for
-[discovery](DISCOVER.md), [discussion](DISCUSS.md), and [records](RECORDS.md).
+[SKILL.md](SKILL.md) contains the operating instructions.
