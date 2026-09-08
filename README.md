@@ -84,19 +84,7 @@ argues that this knowledge exceeds what rules and documentation can express.
 Through-line's records support the reconstruction of relevant judgment; they cannot
 contain the whole understanding.
 
-[Sean Goedecke's *In defense of not understanding your codebase*](https://www.seangoedecke.com/in-defense-of-not-understanding-your-codebase/)
-challenges Naur's pessimism about recovering lost understanding and argues for useful
-work with partial understanding. Through-line takes a practical limit from that:
-recover what the current decision needs and leave unrelated gaps alone.
-
-An Inferal manifesto by Through-line's author, *Edit the business, not the software*,
-explores directly editable business rules with governed consequences. It contributes
-the demand that changing a commitment should visibly change the work. Through-line
-applies that idea through an interpreting agent; its principles are not executable
-business rules.
-
-Through-line brings these influences together. [DESIGN.md](DESIGN.md) describes the
-author-supplied manifesto and explains the distinctions and design choices.
+[DESIGN.md](DESIGN.md) explains the design choices in more detail.
 
 ## Try it
 
