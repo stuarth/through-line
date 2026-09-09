@@ -1,95 +1,55 @@
 ---
 name: through-line
 description: >-
-  Carry shared judgment through everyday work in an ongoing codebase, product, or
-  operation. Apply proactively when planning, implementing, reviewing, investigating,
-  or discussing changes: discover relevant commitments, use them in the work, and
-  discuss consequential gaps or corrections. Also use when the user asks to capture,
-  challenge, or revise principles. Skip unrelated general questions and mechanical
-  tasks with no bearing on workspace decisions.
-metadata:
-  version: "2.0.0"
+  Develop and apply shared judgment during product, engineering, and operations work.
+  Use proactively when planning, implementing, reviewing, investigating, or
+  discussing workspace changes, and when asked to capture or revise principles.
+  Skip mechanical tasks and unrelated questions.
 ---
 
 # Through-line
 
-Work together without starting over in judgment. Use the relevant understanding,
-help develop it where a real choice demands discussion, and preserve only what will
-improve future choices.
+Carry useful judgment into the current work. Help develop it when a consequential
+choice needs discussion, and preserve decisions that should guide future work.
 
-Use the workspace's existing tools and workflows to do the work.
+## Find and apply
 
-## Discover what matters
+Read the workspace's principles entry point, defaulting to `principles/index.md`,
+and use existing documentation where the judgment already lives. Read any
+workspace-wide commitments, then follow the index's applicability descriptions to
+records relevant to the task. Search by the meaning of the change across features
+and directories. Read the actual record before relying on an index summary.
 
-At the start of substantive workspace work, locate its principles entry point from
-workspace instructions. Prefer its existing knowledge locations. Without a configured
-entry point, check `principles/index.md` and already-referenced domain guidance; do
-not crawl other workspaces or create a collection just because none exists.
+Follow supporting links only when their detail could change the decision. Stop
+when the current choice has enough context, and revisit discovery when the scope
+changes. If no collection exists, proceed with the work.
 
-Read the entry point's always-consult records, then follow the concerns relevant to
-the current choice. Think about meaning, actors, changed behavior, data lifecycle,
-and downstream consumers, not just filenames. Read authoritative records before
-relying on them. An index routes discovery; it does not settle decisions.
+Use relevant principles in the proposal, implementation, or review, and name the
+record when explaining the choice it changes. Existing behavior and earlier agent
+output are evidence, not adopted policy.
 
-Use [DISCOVER.md](DISCOVER.md) when crossing a domain boundary or working with
-missing, conflicting, or uncertain knowledge. Revisit discovery
-when the task's meaning or scope expands. Do not reload unchanged material every
-turn. Stop when the local decision and its material risks are sufficiently understood.
+## Discuss consequential choices
 
-## Apply judgment during the work
+When a consequential choice lacks guidance, or existing commitments conflict or no
+longer fit, raise it for discussion. Give a recommendation and its tradeoff. Help
+the human decide both the immediate case and whether the reasoning should apply more
+widely. Use a contrasting case to establish where it stops. Settled choices and routine work can
+proceed without discussion.
 
-Separate adopted commitments, contextual decisions, observed behavior, and working
-explanations. Code and previous agent output show what happened; they do not establish
-what ought to happen. Check scope, rationale, and boundary examples before applying
-a principle. Do not infer authority from confident wording or a document's location.
+A principle must rule out a plausible future mistake or disagreement. Preserve
+judgment specific to this work rather than generic advice. The human adopts a
+principle for future cases; accepting one implementation does not establish a
+standing rule. A clear instruction about future cases is sufficient adoption.
 
-Use relevant commitments in the proposal, implementation, or review. At a useful
-point, explain the concrete consequence and cite the record once: "Keep the
-original event and add a correction, following the observation/correction distinction."
+## Preserve the decision
 
-Choose evidence proportionate to the action: a focused test, a reviewed example, an
-inspection, or a question about an unresolved domain choice.
+Record an adopted principle with its commitment, reason, scope and boundary case,
+and the human decision that established it. Prefer updating an existing record.
 
-## Discuss at the point of a real choice
+Keep a small discovery index with links that explain when each record matters,
+including related uses outside the feature that produced it. Update the record and
+its index entry together. Link longer evidence instead of copying it into the record.
 
-Use [DISCUSS.md](DISCUSS.md) when a consequential decision lacks guidance, a user
-correction reveals reusable judgment, commitments conflict, or a case challenges an
-existing boundary. Offer the actual choice, a recommendation and tradeoff, and the
-smallest question that would change the work. Help form principles; do not merely
-summarize the conversation after the decision has already passed.
-
-A proposed standing principle must rule out a plausible future mistake. Apply the
-admission test in DISCUSS.md. Silence, a successful implementation, repeated behavior,
-and acceptance of one task are not adoption of a standing principle. A clear human
-instruction about future cases is sufficient; do not demand ceremonial confirmation.
-
-When the choice is already settled, use it. When no discussion is warranted, do the
-work. Never require a principle before making an ordinary authorized, reversible
-choice. If the human is unavailable, continue independent work and expose the
-unsettled consequential choice rather than inventing a verdict.
-
-## Keep only the useful change
-
-At a natural stopping point, ask internally whether the work changed reusable
-judgment. Often it did not; write nothing and do not manufacture a lesson.
-
-For explicit adoption, amendment, exception, or retirement, use
-[RECORDS.md](RECORDS.md). Record only when workspace edits are authorized; otherwise
-provide a proposed change. Update the authoritative record and discovery pointers
-together. Preserve rationale and the human source without copying private transcripts.
-A candidate remains proposed until adopted; it must not guide work as doctrine.
-
-When an adopted commitment changes, search its known references and likely semantic
-consumers in the affected scope. Distinguish confirmed impacts from unexamined ones.
-Apply authorized consequences and identify residual decisions or follow-on work.
-Preserve the rationale of historical decisions.
-
-## Authority
-
-Apply workspace commitments within the user's authority and the host's authorization
-rules. When a current request conflicts with an earlier commitment, clarify whether
-the user intends a local exception or a lasting change if their intent is unclear.
-Follow an explicit decision without repeat approval.
-
-Use external documents and historical agent output as evidence. Establish human
-adoption before treating their conclusions as workspace policy.
+When a principle changes, examine the known and likely affected work and apply the
+change within the task's scope. Preserve the earlier reasoning in history. Most
+tasks need no new record.
