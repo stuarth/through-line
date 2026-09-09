@@ -1,97 +1,71 @@
 # through-line
 
-`through-line` carries a large effort across many agent sessions without losing its
-direction. It keeps the route durable: the destination, open choices, settled
-results, and their downstream consequences.
+Work together without starting over in judgment.
 
-The product is built around decisions and outcomes rather than a task backlog. A
-chartered route advances one meaningful unit at a time and derives its next frontier
-from recorded state, so it still makes sense to a fresh worker.
+Through-line is an agent skill for developing shared principles during everyday
+work and applying them in later sessions. It preserves the reasoning behind
+product and engineering decisions so related changes can build on it.
 
-## Install and invoke
+## Why now
 
-Install from the skills registry:
+Agents make it easier to change several parts of a system in separate sessions.
+Each session can read the code, but may lack the reasoning behind an earlier
+decision. A temporary workaround can become the precedent for a new feature, then
+acquire tests and dependencies. The product gains behavior nobody chose as policy.
 
-```bash
-npx skills@latest add stuarth/through-line
-```
+For example, a makerspace might sell prepaid visits alongside monthly access.
+Reusing calendar logic could make a pause consume prepaid visits. Deciding to
+preserve unused visits establishes a rule for booking and renewals, while leaving
+the monthly access policy open. The code alone may not explain that distinction.
 
-Update with `npx skills update through-line`. To follow the repository directly,
-clone it and symlink the skill directory:
-
-```bash
-git clone https://github.com/stuarth/through-line ~/dev/through-line
-ln -s ~/dev/through-line ~/.claude/skills/through-line
-```
-
-Invoke it explicitly as `/through-line` in Claude Code or `$through-line` in
-Codex. Automatic invocation is disabled; see
-[agents/openai.yaml](./agents/openai.yaml). When an issue tracker is configured,
-the route can live there. Otherwise, the bundled [local Markdown
-tracker](./trackers/local-markdown.md) and
-[validator](./scripts/validate_local_map.py) provide a self-contained option.
+Through-line records the decision and its limits, and directs the agent to consult
+it when related work comes up.
 
 ## How it works
 
-**The charter fixes the route.** It names the destination, the boundaries of the
-effort, the first end-to-end result worth reaching, the premises currently being
-relied on, and who may decide what. This is the boundary for autonomous progress:
-discoveries inside it can extend the map, while a proposed change to the charter
-comes back to the human.
+During substantive work, the agent follows a small discovery index to relevant
+principles and their reasoning. Entries describe when a principle matters, so a
+renewal task can find a decision first made about booking. Existing documentation
+can remain the authoritative source.
 
-**Decision rights keep direction human-owned.** The human retains control of the
-destination, protected meanings, external promises, and consequential or
-irreversible effects. The builder can make ordinary reversible choices that follow
-the charter and settled decisions. A route can reserve additional choices for the
-human when the work needs tighter control.
+When a consequential choice needs discussion, the agent recommends an approach and
+helps establish how far its reasoning applies. You decide whether it becomes a
+principle for future work. A principle earns a place by preventing a plausible
+future mistake or disagreement; most tasks add nothing.
 
-**A unit records either a decision or an outcome.** Each unit carries the question
-or result, the premises and acceptance evidence that matter, and its eventual
-resolution with provenance. The route has at most one claimed builder unit. Human
-choices remain independent units even when several ready questions share one concise
-prompt. Finishing or checkpointing builder work leaves a durable handoff before a
-fresh session takes another unit.
+The resulting record holds the commitment, reason, scope, and source decision.
+The agent applies it in later work and reopens the discussion when a new case
+challenges it. Changing a principle includes examining the work it affects.
 
-**Every resolution propagates.** When a premise, decision, or result changes,
-Through-line revisits every resolved dependent and records whether it still stands
-or reopens. Open work is then recomputed rather than manually curated. The visible
-frontier is simply the work that is open, unblocked, and unclaimed; only items that
-need human judgment form the human frontier.
+## Heritage
 
-**Principles are optional leverage.** If a commitment recurs, rules out a plausible
-choice, and survives counterexamples, the agent may propose it as a standing
-principle. It becomes active only when the human adopts it. Principles help future
-units inherit hard-won judgment, but a route does not need them, and contradictory
-evidence can put one back in question.
+[Peter Naur's *Programming as Theory Building*](https://pages.cs.wisc.edu/~remzi/Naur.pdf)
+describes programming knowledge as understanding how a program relates to the world,
+why it is constructed as it is, and how to respond to new demands. Through-line's
+records help later workers recover the reasoning relevant to a change.
 
-**Repository execution is optional.** A route may stop at durable decisions and
-outcomes, or include implementation. When code is in scope, each repository moves
-through one integration ref so composition is observable. Review covers the exact
-integrated ref at stable architecture or provider boundaries and before an external
-effect, publication, dependent human gate, or completion. It reports whether the
-stated claim is supported; it does not grant authority for an effect.
+## Installation
 
-**Unattended mode uses fresh workers.** A supervisor sends one explicit unit packet
-to a fresh worker with no conversation history, waits for its terminal result, and
-then derives the next unit or route transition. The loop continues serially until the
-route reaches a human frontier, needs a charter change, completes, or reaches its
-first-result effort trigger without path evidence. Fresh workers make recorded state,
-not conversational memory, prove that the route is resumable.
+Install with the [skills CLI](https://github.com/vercel-labs/skills):
 
-## Repo layout
+```sh
+npx skills@latest add stuarth/through-line
+```
 
-This repository is the skill. [SKILL.md](./SKILL.md) introduces the model and
-routes into the focused guides:
+Update with `npx skills update through-line`.
 
-- [CHART.md](./CHART.md) — turn an idea into a chartered route
-- [ADVANCE.md](./ADVANCE.md) — resolve a unit or complete a route transition
-- [SUPERVISE.md](./SUPERVISE.md) — continue through units unattended
-- [EXECUTION.md](./EXECUTION.md) and [IMPLEMENT.md](./IMPLEMENT.md) — plan,
-  integrate, and verify repository work
-- [REVIEW.md](./REVIEW.md) — test a claim against one immutable object
-- [PRINCIPLES-GUIDE.md](./PRINCIPLES-GUIDE.md) — propose, adopt, and challenge
-  standing principles
+Add a workspace entry to `AGENTS.md` for Codex or `CLAUDE.md` for Claude Code,
+using the location of the workspace's principles:
 
-The tracker adapter defines storage; the skill defines the product model. That
-separation lets Through-line stay useful across hosts without coupling the route to
-another mandatory skill.
+```markdown
+## Through-line
+
+Apply the installed through-line skill during substantive work in this workspace.
+Read its SKILL.md entry point and revisit discovery when the task's scope changes.
+Principles entry: principles/index.md.
+```
+
+The skill supports automatic invocation and the explicit commands `$through-line`
+in Codex and `/through-line` in Claude Code.
+
+[SKILL.md](SKILL.md) contains the operating instructions.
