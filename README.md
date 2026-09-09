@@ -46,25 +46,13 @@ records help later workers recover the reasoning relevant to a change.
 
 ## Installation
 
-Clone the repository:
+Install with the [skills CLI](https://github.com/vercel-labs/skills):
 
 ```sh
-git clone https://github.com/stuarth/through-line.git ~/dev/through-line
+npx skills@latest add stuarth/through-line
 ```
 
-For Codex:
-
-```sh
-mkdir -p ~/.agents/skills
-ln -s ~/dev/through-line ~/.agents/skills/through-line
-```
-
-For Claude Code:
-
-```sh
-mkdir -p ~/.claude/skills
-ln -s ~/dev/through-line ~/.claude/skills/through-line
-```
+Update with `npx skills update through-line`.
 
 Add a workspace entry to `AGENTS.md` for Codex or `CLAUDE.md` for Claude Code,
 using the location of the workspace's principles:
