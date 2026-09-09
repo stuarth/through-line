@@ -3,23 +3,26 @@
 Work together without starting over in judgment.
 
 Through-line is an agent skill for developing shared principles during everyday
-work and applying them in later sessions. It preserves the reasoning behind
-product and engineering decisions so related changes can build on it.
+work and applying them in later sessions.
 
-## Why now
+Experienced colleagues build an understanding of the business over time. They
+remember why apparently similar cases need different treatment and which shortcuts
+were temporary. That understanding informs decisions nobody thought to spell out
+in the next task.
 
-Agents make it easier to change several parts of a system in separate sessions.
-Each session can read the code, but may lack the reasoning behind an earlier
-decision. A temporary workaround can become the precedent for a new feature, then
-acquire tests and dependencies. The product gains behavior nobody chose as policy.
+A coding agent is a worker on its first day, every day. Each fresh session builds
+its understanding from the context available to it. Without the reasoning behind
+previous decisions, it has to infer intent from a prompt and the behavior of the
+code.
 
-For example, a makerspace might sell prepaid visits alongside monthly access.
-Reusing calendar logic could make a pause consume prepaid visits. Deciding to
-preserve unused visits establishes a rule for booking and renewals, while leaving
-the monthly access policy open. The code alone may not explain that distinction.
+A workaround can then become the model for a new feature. The next session sees
+both implementations and treats the pattern as deliberate. Each change can carry
+an earlier guess further into the product, until you have to explain the same
+distinction again or undo behavior you never intended.
 
-Through-line records the decision and its limits, and directs the agent to consult
-it when related work comes up.
+Through-line records those decisions and the reasoning behind them for later
+sessions. As new work exposes unresolved choices, you and the agent develop that
+understanding further.
 
 ## How it works
 
@@ -36,13 +39,6 @@ future mistake or disagreement; most tasks add nothing.
 The resulting record holds the commitment, reason, scope, and source decision.
 The agent applies it in later work and reopens the discussion when a new case
 challenges it. Changing a principle includes examining the work it affects.
-
-## Heritage
-
-[Peter Naur's *Programming as Theory Building*](https://pages.cs.wisc.edu/~remzi/Naur.pdf)
-describes programming knowledge as understanding how a program relates to the world,
-why it is constructed as it is, and how to respond to new demands. Through-line's
-records help later workers recover the reasoning relevant to a change.
 
 ## Installation
 
