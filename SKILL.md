@@ -1,10 +1,8 @@
 ---
 name: through-line
 description: >-
-  Develop and apply shared judgment during product, engineering, and operations work.
-  Use proactively when planning, implementing, reviewing, investigating, or
-  discussing workspace changes, and when asked to capture or revise principles.
-  Skip mechanical tasks and unrelated questions.
+  Use during substantive workspace work to apply and develop shared principles,
+  or when asked to capture or revise them. Skip mechanical tasks.
 ---
 
 # Through-line
@@ -35,6 +33,10 @@ longer fit, raise it for discussion. Give a recommendation and its tradeoff. Hel
 the human decide both the immediate case and whether the reasoning should apply more
 widely. Use a contrasting case to establish where it stops. Settled choices and routine work can
 proceed without discussion.
+
+Continue already-authorized work that does not depend on the unresolved choice.
+Adopting a standing principle is a separate decision from completing the immediate
+task.
 
 A principle must rule out a plausible future mistake or disagreement. Preserve
 judgment specific to this work rather than generic advice. The human adopts a
