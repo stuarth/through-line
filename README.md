@@ -56,8 +56,7 @@ using the location of the workspace's principles:
 ```markdown
 ## Through-line
 
-Apply the installed through-line skill during substantive work in this workspace.
-Read its SKILL.md entry point and revisit discovery when the task's scope changes.
+Apply the through-line skill during substantive work.
 Principles entry: principles/index.md.
 ```
 
